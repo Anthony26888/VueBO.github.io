@@ -30,9 +30,9 @@
             </div>
             <div class="mt-2 d-flex flex-column gap-2">
                 <button type="button" class="btn btn-success w-100">BUY</button>
-                <span class="badge bg-secondary w-100">
-                    <h6>Please Order</h6>
-                    <p>13s</p>
+                <span class="badge text-dark">
+                    <p class="text-order">Please Order</p>
+                    <p class="text-count">15s</p>
                 </span>
                 <button type="button" class="btn btn-danger w-100">SELL</button>
             </div>
@@ -44,64 +44,84 @@
 export default {
     data() {
         return {
-            total:0, 
-            profit:0,           
-            inputData: [5, 10, 20, 50, 100, 'All' ],
-           
+            total: 0,
+            profit: 0,
+            inputData: [5, 10, 20, 50, 100, 'All'],
+
+            
+            
         }
     },
-    
+
     methods: {
-        Plus(){
+        Plus() {
             this.total++
         },
-        Div(){            
-            this.total--           
-        },
-        
-        value: function(num) {
-            
-            return this.total += num;
-            
+        Div() {
+            this.total--
         },
 
-        
-        
-        
+        value: function (num) {
+
+            return this.total += num;
+
+        },
+
+
+
+
     },
 }
 </script>
 <style scoped>
-    .container-fluid{
-        border: 1px solid black;
-        height: 100vh;
-    }
-    input{
-        width: 100%;
-    }
+.container-fluid {
+    border: 1px solid black;
+    height: 100vh;
+}
 
-    
-    
-    .value{
-        width: 59px;
-        font-size: 14px;
-    }
+input {
+    width: 100%;
+}
 
-    .value-profit{
-        font-size: 30px;
-        color: var(--green);
-    }
-    .btn-success{
-        background-color: var(--green);
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 30px;
-    }
 
-    .btn-danger{
-        background-color: var(--red);
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 30px;
-    }
+
+.value {
+    width: 59px;
+    font-size: 14px;
+}
+
+.value-profit {
+    font-size: 30px;
+    color: var(--green);
+}
+
+.btn-success {
+    background-color: var(--green);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.btn-danger {
+    background-color: var(--red);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+
+.text-order{
+    font-size: 14px;
+
+}
+.text-count{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.badge{
+    background-color: var(--bg-color);
+    height:70px
+}
+
 </style>
