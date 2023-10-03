@@ -1,5 +1,10 @@
 <template lang="">
     <div class="container">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+            
+        </div>
         <div class="group-input">
             <p>Giá trị</p>
             <div class="d-flex gap-1 justify-content-between">
@@ -28,26 +33,37 @@
                 </div>
                 <h2 class="value-profit text-center justify-content-center">+ ${{ total*1.95 }}</h2>
             </div>
-            <div class="mt-2 d-flex flex-column gap-2">
-                <button type="button" class="btn btn-success w-100">BUY</button>
-                <span class="badge text-dark">
-                    <p class="text-order">Please Order</p>
-                    <p class="text-count">15s</p>
-                </span>
-                <button type="button" class="btn btn-danger w-100">SELL</button>
-            </div>
-            
+            <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
+                <div v-if="minutes % 2 ==0" class="mt-2 d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-success w-100">BUY</button>
+                    <span class="badge text-dark">
+                        <p class="text-order">Please Order</p>                                         
+                        <p class="text-count">{{seconds}}s</p>         
+                    </span>    
+                    <button type="button" class="btn btn-danger w-100">SELL</button>    
+                </div>  
+                <div v-else class="mt-2 d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-success w-100" disabled>BUY</button>
+                    <span class="badge text-dark">
+                        <p class="text-order">Waiting Result</p>                                         
+                        <p class="text-count">{{seconds}}s</p>         
+                    </span>    
+                    <button type="button" class="btn btn-danger w-100" disabled>SELL</button>    
+                </div>  
+            </vue-countdown> 
         </div>
     </div>
 </template>
 <script>
 export default {
     data() {
+        const now = new Date();
+        const newYear = new Date(now.getFullYear() + 1, 0, 1);
         return {
             total: 0,
             profit: 0,
             inputData: [5, 10, 20, 50, 100, 'All'],
-
+            time: newYear - now,
             
             
         }
@@ -62,14 +78,8 @@ export default {
         },
 
         value: function (num) {
-
             return this.total += num;
-
         },
-
-
-
-
     },
 }
 </script>
