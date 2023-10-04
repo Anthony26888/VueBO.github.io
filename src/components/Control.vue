@@ -2,7 +2,7 @@
 <template lang="">
     <div class="container">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Order</button>
           </li>
@@ -17,20 +17,22 @@
           <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="container">
                 <p>Giá trị</p>
-                <div class=" m-auto justify-item-center ">
-                    <div class="d-flex gap-1 justify-content-between">
+                <div class=" m-auto justify-item-center ">                
+                    <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                         <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
                         <input type="num" class="text-end w-50" v-model="total">                    
-                        <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                      
-                    </div>
-                    <div class="d-flex flex-wrap justify-content-between mt-2 border-input">
+                        <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                
+                    </div>             
+                    <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                         <button type="button" @click="value(inputData[0])" class="btn btn-outline-secondary value">+{{inputData[0]}}</button>
                         <button type="button" @click="value(inputData[1])" class="btn btn-outline-secondary value">+{{inputData[1]}}</button>
-                        <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>
+                        <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>                                        
+                    </div>  
+                    <div class="btn-group flex-wrap mt-1 justify-content-center w-100" role="group" aria-label="Button group name">                       
                         <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value mt-2">+{{inputData[3]}}</button>
                         <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value mt-2">+{{inputData[4]}}</button> 
                         <button type="button" @click="value(inputData[5])" class="btn btn-outline-secondary value mt-2">{{inputData[5]}}</button>                
-                    </div>  
+                    </div>
                 </div>            
                 <div class="mt-2">
                     <div class="d-flex justify-content-center">
@@ -129,67 +131,63 @@ export default {
 }
 </script>
 <style scoped>
-.container-fluid {
-    border: 1px solid black;
-    height: 100vh;
-}
+    .container-fluid {
+        border: 1px solid black;
+        height: 100vh;
+    }
 
-input {
-    width: 100%;
-}
-
-
-
-.value {
-    width: 55px;
-    font-size: 14px;
-}
-
-.value-profit {
-    font-size: 30px;
-    color: var(--green);
-}
-
-.btn-success {
-    background-color: var(--green);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-}
-
-.btn-danger {
-    background-color: var(--red);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-}
+    input {
+        width: 100%;
+    }
 
 
-.text-order{
-    font-size: 14px;
 
-}
-.text-count{
-    font-size: 18px;
-    font-weight: 700;
-}
+    .value {
+        width: 55px;
+        font-size: 14px;
+    }
 
-.badge{
-    background-color: var(--bg-color);
-    height:70px
-}
+    .value-profit {
+        font-size: 30px;
+        color: var(--green);
+    }
 
-.text-buy{
-    color: var(--green);
-}
+    .btn-success {
+        background-color: var(--green);
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 30px;
+    }
 
-.text-sell{
-    color: var(--red);
-}
+    .btn-danger {
+        background-color: var(--red);
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 30px;
+    }
 
-@media screen and (max-width: 1400px) {
-  .border-input {
-    width: 180px;
-  }
-}
+
+    .text-order{
+        font-size: 14px;
+
+    }
+    .text-count{
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .badge{
+        background-color: var(--bg-color);
+        height:70px
+    }
+
+    .text-buy{
+        color: var(--green);
+    }
+
+    .text-sell{
+        color: var(--red);
+    }
+
+
 </style>

@@ -2,6 +2,7 @@
 import Chart from './components/Chart.vue'
 import Control from './components/Control.vue'
 import Navbar from './components/Navbar.vue';
+import Result from './components/Result.vue';
 import Toolbar from './components/Toolbar.vue';
 
 </script>
@@ -11,7 +12,7 @@ import Toolbar from './components/Toolbar.vue';
     <Navbar/>
   </header>
   <main>
-    <div class="container-fluid">
+    <div class="container-fluid mt-3">
       <div class="row">
         <div class=" col-sm-12 col-md-1 col-lg-1">
           <Toolbar/>
@@ -21,6 +22,9 @@ import Toolbar from './components/Toolbar.vue';
         </div>
         <div class="col-sm-12 col-md-12 col-lg-2">
           <Control/>
+        </div>
+        <div class="col-12 mt-3">
+          <Result/>
         </div>
       </div>
       
