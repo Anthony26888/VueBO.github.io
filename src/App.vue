@@ -13,13 +13,13 @@ import Toolbar from './components/Toolbar.vue';
   <main>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-1">
+        <div class=" col-sm-12 col-md-1 col-lg-1">
           <Toolbar/>
         </div>
-        <div class="col-9 mt-3">
+        <div class=" col-sm-12 col-md-11 col-lg-9 mt-3">
           <Chart />
         </div>
-        <div class="col-2">
+        <div class="col-sm-12 col-md-12 col-lg-2">
           <Control/>
         </div>
       </div>

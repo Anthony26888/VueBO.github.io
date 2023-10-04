@@ -17,34 +17,30 @@
           <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="container">
                 <p>Giá trị</p>
-                <div class="d-flex gap-1 justify-content-center ">
-                    <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
-                    <input type="num" class="text-end w-50" v-model="total">                    
-                    <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                      
-                </div>
-                <div class="row mt-2 justify-content-center">
-                    <div class="col col-sm-4 text-center">
+                <div class=" m-auto justify-item-center ">
+                    <div class="d-flex gap-1 justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
+                        <input type="num" class="text-end w-50" v-model="total">                    
+                        <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                      
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between mt-2 border-input">
                         <button type="button" @click="value(inputData[0])" class="btn btn-outline-secondary value">+{{inputData[0]}}</button>
-                        <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary mt-2 value">+{{inputData[4]}}</button>
-                    </div>
-                    <div class="col col-sm-4 text-center">
                         <button type="button" @click="value(inputData[1])" class="btn btn-outline-secondary value">+{{inputData[1]}}</button>
-                        <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary mt-2 value">+{{inputData[3]}}</button>
-                    </div>  
-                    <div class="col col-sm-4 text-center">
                         <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>
-                        <button type="button" @click="value(inputData[5])" class="btn btn-outline-secondary mt-2 value">{{inputData[5]}}</button> 
-                    </div>
-                </div> 
+                        <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value mt-2">+{{inputData[3]}}</button>
+                        <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value mt-2">+{{inputData[4]}}</button> 
+                        <button type="button" @click="value(inputData[5])" class="btn btn-outline-secondary value mt-2">{{inputData[5]}}</button>                
+                    </div>  
+                </div>            
                 <div class="mt-2">
                     <div class="d-flex justify-content-center">
                         <p class="">Profit</p>
                         <p class="text-warning ms-2">95%</p>
                     </div>
-                    <h2 class="value-profit text-center justify-content-center">+ ${{ (total*1.95).toFixed(2) }}</h2>
+                    <h2 class="value-profit text-center justify-content-center">+ ${{ total*1.95 }}</h2>
                 </div>
                 <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
-                    <div v-if="minutes % 2 ==0" class="mt-5 d-flex flex-column gap-2">
+                    <div v-if="minutes % 2 ==0" class="mt-2 d-flex flex-column gap-2">
                         <button type="button" class="btn btn-success w-100">BUY</button>
                         <span class="badge text-dark">
                             <p class="text-order">Please Order</p>                                         
@@ -52,7 +48,7 @@
                         </span>    
                         <button type="button" class="btn btn-danger w-100">SELL</button>    
                     </div>  
-                    <div v-else class="mt-5 d-flex flex-column gap-2">
+                    <div v-else class="mt-2 d-flex flex-column gap-2">
                         <button type="button" class="btn btn-success w-100" disabled>BUY</button>
                         <span class="badge text-dark">
                             <p class="text-order">Waiting Result</p>                                         
@@ -60,7 +56,7 @@
                         </span>    
                         <button type="button" class="btn btn-danger w-100" disabled>SELL</button>    
                     </div>  
-                </vue-countdown> 
+                </vue-countdown>
             </div>
           </div>
 
@@ -145,7 +141,7 @@ input {
 
 
 .value {
-    width: 59px;
+    width: 55px;
     font-size: 14px;
 }
 
@@ -189,5 +185,11 @@ input {
 
 .text-sell{
     color: var(--red);
+}
+
+@media screen and (max-width: 1400px) {
+  .border-input {
+    width: 180px;
+  }
 }
 </style>
