@@ -111,8 +111,6 @@ export default {
             profit: 0,
             inputData: [5, 10, 20, 50, 100, 'All'],
             time: newYear - now,
-            
-            
         }
     },
 
