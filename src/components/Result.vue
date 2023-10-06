@@ -1,63 +1,18 @@
 <template lang="">
     <div class="container">
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col">
-                <div class="card border-secondary shadow">                  
-                    <div  class="card-body d-flex flex-wrap gap-1">                        
-                        <div v-for="value in item.slice(0,20)">
-                            <div  v-if="(value[4]-value[1])>0" class="rounded-cirle-green"></div>
-                            <div  v-else-if="(value[4]-value[1])==0" class="rounded-cirle-gray"></div>
+        <div class="row justify-content-start g-2">
+            <div class="col-12 w-100">
+                <div class="card border-secondary shadow">                      
+                    <div class="card-body d-flex flex-row flex-wrap gap-1">                        
+                        <div v-for="value in item.slice(0,100)">
+                            <div  v-if="(value)>0" class="rounded-cirle-green"></div>
+                            <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                             <div v-else class="rounded-cirle-red"></div>
                         </div>   
-                    </div>
+                    </div> 
                 </div>
             </div>
-            <div class="col">
-                <div class="card border-secondary shadow">                  
-                    <div class="card-body d-flex flex-wrap gap-1">
-                        <div v-for="value in item.slice(20,40)">
-                            <div  v-if="value>0" class="rounded-cirle-green"></div>
-                            <div v-else class="rounded-cirle-red"></div>
-                        </div>                
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-secondary shadow">                  
-                    <div class="card-body d-flex flex-wrap gap-1">
-                        <div class="card-body d-flex flex-wrap gap-1">
-                        <div v-for="value in item.slice(40,80)">
-                            <div  v-if="value>0" class="rounded-cirle-green"></div>
-                            <div v-else class="rounded-cirle-red"></div>
-                        </div>                
-                    </div>                   
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-secondary shadow">                  
-                    <div class="card-body d-flex flex-wrap gap-1">
-                        <div class="card-body d-flex flex-wrap gap-1">
-                        <div v-for="value in item.slice(80,120)">
-                            <div  v-if="value>0" class="rounded-cirle-green"></div>
-                            <div v-else class="rounded-cirle-red"></div>
-                        </div>                
-                    </div>                    
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card border-secondary shadow">                  
-                    <div class="card-body d-flex flex-wrap gap-1">
-                        <div class="card-body d-flex flex-wrap gap-1">
-                        <div v-for="value in item.slice(120,160)">
-                            <div  v-if="value>0" class="rounded-cirle-green"></div>
-                            <div v-else class="rounded-cirle-red"></div>
-                        </div>                
-                    </div>                    
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
     
@@ -66,25 +21,31 @@
 import axios from 'axios';
 export default {
     data() {
-        return {    
-               
-            item:[]
+        return {               
+            item:[],
+           
         }
     }, 
-    created() {
+    mounted() {
+        
         this.fetchData()
         setInterval(() =>{
-            this.fetchData();
-        },59999)
+           this.fetchData();
+        },6000)
+        
     },
+
     methods: {
         fetchData(){            
-            const url= 'https://api.binance.com/api/v3/uiKlines?symbol=BTCUSDT&interval=1m&limit=1'
+            const url= 'https://api.binance.com/api/v3/uiKlines?symbol=BTCUSDT&interval=1m&limit=1'            
             axios
             .get(url)
             .then((response) => {                 
-                const price = response.data
-                this.item = price
+                const price = response.data                
+                const total = price.map((x) =>x[4] - x[1] );
+                this.item.push(total)
+                
+                
             })    
             .catch(error => {
                 console.error('Error adding item:', error);
@@ -95,8 +56,9 @@ export default {
 </script>
 <style scoped>
     .card{
-        width: 180px;
-        height: 140px;
+       
+        height: 200px;
+        
     }
 
     .rounded-cirle-green{
