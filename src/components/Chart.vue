@@ -33,7 +33,7 @@ export default {
     this.fetchData()
     setInterval(() => {
       this.fetchData();
-    }, 3000);
+    }, 1000);
   },
   methods: {
     fetchData(){
