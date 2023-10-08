@@ -1,6 +1,6 @@
 
 <template lang="">
-    <div class="container">
+    <div class="">
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -29,7 +29,7 @@
         <!--Order-->
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <form @submit.prevent="order" class="container">
-                    <p>Availabel USD{{sec}}</p>
+                    <p>Availabel USD</p>
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
@@ -42,12 +42,12 @@
                             <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>                                        
                         </div>  
                         <div class="btn-group flex-wrap mt-1 justify-content-center w-100" role="group" aria-label="Button group name">                       
-                            <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value mt-2">+{{inputData[3]}}</button>
-                            <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value mt-2">+{{inputData[4]}}</button> 
-                            <button type="button" @click="value(inputData[5])" class="btn btn-outline-secondary value mt-2">{{inputData[5]}}</button>                
+                            <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value">+{{inputData[3]}}</button>
+                            <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value">+{{inputData[4]}}</button> 
+                            <button type="button" @click="value(money)" class="btn btn-outline-secondary value">{{inputData[5]}}</button>                
                         </div>
                     </div>            
-                    <div class="mt-2">
+                    <div class="mt-4">
                         <div class="d-flex justify-content-center">
                             <p>Profit</p>
                             <p class="text-warning ms-2">95%</p>                        
@@ -55,7 +55,7 @@
                         <h2 class="value-profit text-center justify-content-center">+ ${{ total*1.95 }}</h2>
                     </div>
                     <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
-                        <div v-if="minutes % 2 ==0" class="mt-2 d-flex flex-column gap-2">
+                        <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-column gap-2">
                             <button type="submit" class="btn btn-success w-100">BUY</button>
                             <span class="badge text-dark">
                                 <p class="text-order">Please Order</p>                                         
@@ -105,6 +105,7 @@ export default {
         const now = new Date();
         const newYear = new Date(now.getFullYear() + 1, 0, 1);
         return {
+            money:1000,
             total: 0,
             profit: 0,
             inputData: [5, 10, 20, 50, 100, 'All'],
@@ -137,18 +138,19 @@ export default {
         },
 
         order(){            
-            this.showAlert =true
-            this.status = true
+            this.showAlert =true            
             setTimeout(()=>{
                 this.showAlert = false
+               
             },2000)
             if(this.total){
                 this.display.push({qty:this.total, position:this.priceCoin, order:'BUY', timer:this.rightNow})
             }
 
            
-            if(this.sec==0){
-                this.display.splice(index,1)
+            const runtime = this.sec
+            if (runtime ==0){                
+                this.display.splice(0,10)
             }
           
             
@@ -197,7 +199,7 @@ export default {
     }
 
     .value {
-        width: 55px;
+        
         font-size: 14px;
     }
 

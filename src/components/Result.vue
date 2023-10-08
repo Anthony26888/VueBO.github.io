@@ -1,7 +1,7 @@
 <template lang="">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center g-2">
-            <div class="col-2 ">
+            <div class="col-3 ">
                 <div class="card border-secondary shadow ">                      
                     <div class="card-body row flex-wrap algin-item-center ">
                         <div class="col-3 ">
@@ -30,9 +30,8 @@
                         </div>       
                     </div> 
                 </div>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-2">
+            </div>            
+            <div class="col-3">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap gap-1 algin-item-center">
                         <div class="col-3">
@@ -61,9 +60,8 @@
                         </div>     
                     </div> 
                 </div>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-2">
+            </div>            
+            <div class="col-3">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap gap-1 ">
                         <div class="col-3">
@@ -92,9 +90,8 @@
                         </div>       
                     </div> 
                 </div>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-2">
+            </div>            
+            <div class="col-3">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap">
                         <div class="col-3">
@@ -128,7 +125,7 @@
                     </div> 
                 </div>
             </div>
-            <div class="col-1"></div>
+            
         </div>
     </div>
     

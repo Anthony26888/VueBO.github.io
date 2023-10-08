@@ -14,18 +14,17 @@ import Toolbar from './components/Toolbar.vue';
   <main>
     <div class="container-fluid mt-3">
       <div class="row">
-        <div class=" col-sm-12 col-md-1 col-lg-1">
+        <div class=" col-sm-12 col-md-1 col-lg-1 col-xxl-1">
           <Toolbar/>
         </div>
-        <div class=" col-sm-12 col-md-11 col-lg-9 mt-3">
+        <div class=" col-sm-12 col-md-11 col-lg-8 col-xxl-9 mt-3">
           <Chart />
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-2">
-          <Control/>
-        </div>
-        <div class="col-12 mt-3">
           <Result/>
         </div>
+        <div class="col-sm-12 col-md-12 col-lg-3 col-xxl-2">
+          <Control/>
+        </div>
+       
       </div>
       
       

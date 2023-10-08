@@ -9,28 +9,27 @@
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
           <ul class="nav ">
             <li class="nav-item">
-              <div class="btn-group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  Action
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
-              </div>
+              <button type="button" class="btn btn-secondary d-flex flex-column align-items-center justify-content-center">
+                <span class="text-account">Acount</span>
+                <span class="text-money">$1000</span>
+              </button>
+            </li>
+            <li class="nav-item ms-4">
+              <button type="button" class="btn btn-info">Buy USD</button>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
+                <i class="bi bi-person-bounding-box"></i>
+                <span >Profile</span>
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
+                <i class="bi bi-gear"></i>
+                <span >Setting</span>
+              </a>              
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
+            
           </ul>
           
         </div>
@@ -43,6 +42,24 @@ export default {
     
 }
 </script>
-<style lang="">
-    
+<style scoped>
+    .text-account{
+      font-size: 10px;
+    }
+    .text-money{
+      font-size: 14px;
+      font-weight: 700;
+      
+    }
+
+    button{
+      width: 130px;
+      height: 40px;
+      color:var(--white)
+    }
+
+    a{
+      width: 130px;
+      height: 40px;
+    }
 </style>
