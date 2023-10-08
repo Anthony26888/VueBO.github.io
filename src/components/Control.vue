@@ -11,6 +11,7 @@
                 </div>
             </div>
         </div>
+      
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -28,8 +29,8 @@
         <div class="tab-content">
         <!--Order-->
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <form @submit.prevent="order" class="container">
-                    <p>Availabel USD</p>
+                <form @submit.prevent="order" class="mt-3">
+                    <p>Availabel USD: ${{money}}</p>
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
@@ -52,11 +53,11 @@
                             <p>Profit</p>
                             <p class="text-warning ms-2">95%</p>                        
                         </div>
-                        <h2 class="value-profit text-center justify-content-center">+ ${{ total*1.95 }}</h2>
+                        <h2 class="value-profit text-center justify-content-center">+ ${{ (total*1.95).toLocaleString() }}</h2>
                     </div>
                     <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
                         <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-column gap-2">
-                            <button type="submit" class="btn btn-success w-100">BUY</button>
+                            <button type="submit" class="btn btn-success w-100" >BUY</button>
                             <span class="badge text-dark">
                                 <p class="text-order">Please Order</p>                                         
                                 <p class="text-count">{{seconds}}s</p>         
@@ -96,6 +97,7 @@
             </div>          
         </div>
     </div>
+
     
 </template>
 <script>
@@ -105,16 +107,18 @@ export default {
         const now = new Date();
         const newYear = new Date(now.getFullYear() + 1, 0, 1);
         return {
-            money:1000,
-            total: 0,
+            money:1000,            
+            total: 0,            
             profit: 0,
+            orderPrice:0,
             inputData: [5, 10, 20, 50, 100, 'All'],
             time: newYear - now,
             showAlert:false,          
             display:[],
             priceCoin:null,
             rightNow:null,   
-            sec:null,      
+            sec:null,  
+              
         }
     },
     mounted() {
@@ -138,7 +142,9 @@ export default {
         },
 
         order(){            
-            this.showAlert =true            
+            this.showAlert =true  
+            this.money = this.money - this.total 
+                 
             setTimeout(()=>{
                 this.showAlert = false
                
@@ -147,12 +153,39 @@ export default {
                 this.display.push({qty:this.total, position:this.priceCoin, order:'BUY', timer:this.rightNow})
             }
 
-           
-            const runtime = this.sec
-            if (runtime ==0){                
-                this.display.splice(0,10)
-            }
-          
+            const myInterval = setInterval(() =>{
+                const minute = new Date().getMinutes()
+                const second = new Date().getSeconds()
+                if ((minute%2)==0 && second ==57){                
+                    if(this.priceCoin>0){
+                        setTimeout(()=>{
+                            this.money = this.money + this.total*1.95
+                            this.display.splice(0,10)
+                            clearInterval(myInterval)
+                           
+                        },2000)
+                        
+                    }
+                    else{
+                        setTimeout(()=>{
+                            this.money = this.money + 10
+                            this.display.splice(0,10)
+                            clearInterval(myInterval)
+                            
+                        },2000)
+                    }
+                }  
+                console.log(this.priceCoin,minute,second) 
+            },1000)
+
+
+            
+            
+            console.log(this.orderPrice)
+            console.log(this.priceCoin)
+            
+            
+            
             
         },
 
@@ -174,15 +207,19 @@ export default {
         },
         
         fetchData(){            
-            const url= 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'            
+            const url= 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=1'            
             axios
             .get(url)
             .then((response) => {                 
-                this.priceCoin = response.data.price  
+                const price = response.data
+                const price1 = price.map((x) =>(x[1]));                
+                const price4 = price.map((x) =>(x[4]));
+                const total = (price4 - price1).toLocaleString()              
+                this.priceCoin = total     
             })    
             .catch(error => {
                 console.error('Error adding item:', error);
-            });     
+            });       
         }
 
     },
@@ -199,7 +236,7 @@ export default {
     }
 
     .value {
-        
+        width: 50px;
         font-size: 14px;
     }
 

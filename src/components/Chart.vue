@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     fetchData(){
-      const url= 'https://api.binance.com/api/v3/uiKlines?symbol=BTCUSDT&interval=1m&limit=100'
+      const url= 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=100'
         axios
         .get(url)
         .then((response) => {

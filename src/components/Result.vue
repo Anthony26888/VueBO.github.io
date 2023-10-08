@@ -1,41 +1,53 @@
 <template lang="">
     <div class="container-fluid">
         <div class="row justify-content-center g-2">
-            <div class="col-3 ">
+            <div class="col-1"></div>
+            <div class="col-2 ">
                 <div class="card border-secondary shadow ">                      
                     <div class="card-body row flex-wrap algin-item-center ">
-                        <div class="col-3 ">
+                        <div class="col-2 ">
                             <div v-for="value in item.slice(0,4)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                             
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
+                                <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
+                                <div v-else class="rounded-cirle-red"></div> 
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div v-for="value in item.slice(5,9)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
+                                <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(4,8)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                        <div class="col-2">
+                            <div v-for="value in item.slice(10,14)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
+                                <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(8,12)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                        <div class="col-2">
+                            <div v-for="value in item.slice(15,19)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
+                                <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
-                        </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(12,16)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                        </div> 
+                        <div class="col-2">
+                            <div v-for="value in item.slice(20,25)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
+                                <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
-                        </div>       
+                        </div>      
                     </div> 
                 </div>
             </div>            
-            <div class="col-3">
+            <div class="col-2 ms-5">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap gap-1 algin-item-center">
                         <div class="col-3">
-                            <div v-for="value in item.slice(16,20)">
+                            <div v-for="value in item.slice(20,24)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
@@ -57,11 +69,17 @@
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
+                        </div>
+                        <div class="col-3">
+                            <div v-for="value in item.slice(28,32)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
                         </div>     
                     </div> 
                 </div>
             </div>            
-            <div class="col-3">
+            <div class="col-2 ms-5">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap gap-1 ">
                         <div class="col-3">
@@ -87,11 +105,17 @@
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
-                        </div>       
+                        </div> 
+                        <div class="col-3">
+                            <div v-for="value in item.slice(44,48)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
+                        </div>      
                     </div> 
                 </div>
             </div>            
-            <div class="col-3">
+            <div class="col-2 ms-5">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap">
                         <div class="col-3">
@@ -121,11 +145,17 @@
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
-                        </div>       
+                        </div> 
+                        <div class="col-3">
+                            <div v-for="value in item.slice(60,64)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>
+                                <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
+                        </div>        
                     </div> 
                 </div>
-            </div>
-            
+            </div>                       
         </div>
     </div>
     
@@ -139,7 +169,7 @@ export default {
            
         }
     }, 
-    mounted() {        
+    created() {        
         this.fetchData()
         setInterval(() =>{
            this.fetchData();
@@ -147,18 +177,23 @@ export default {
         
     },
 
+
     methods: {
         fetchData(){            
-            const url= 'https://api.binance.com/api/v3/uiKlines?symbol=BTCUSDT&interval=1m&limit=1'            
+            const url= 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=1'            
             axios
             .get(url)
             .then((response) => {                 
-                const price = response.data                
-                const total = price.map((x) =>(x[4] - x[1]).toFixed(8) );                
+                const price = response.data
+                const price1 = price.map((x) =>(x[1]));                
+                const price4 = price.map((x) =>(x[4]));
+                const total = (price4 - price1).toLocaleString()              
                 const runtime = new Date().getSeconds()
-                if (runtime ==0){
-                    this.item.push(total)
-                }
+                if (runtime ==57){
+                    setTimeout(()=>{
+                        this.item.push(total)
+                    },2500)
+                }               
             })    
             .catch(error => {
                 console.error('Error adding item:', error);
@@ -168,7 +203,8 @@ export default {
 }
 </script>
 <style scoped>
-    .card{        
+    .card{     
+        width: 200px;   
         height: 160px;        
     }
 
