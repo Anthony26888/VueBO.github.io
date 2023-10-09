@@ -1,6 +1,6 @@
 
 <template lang="">
-    <div class="">
+    <div class="container">
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -97,7 +97,7 @@
             </div>          
         </div>
     </div>
-
+   
     
 </template>
 <script>
@@ -116,16 +116,13 @@ export default {
             showAlert:false,          
             display:[],
             priceCoin:null,
-            rightNow:null,   
-            sec:null,  
-              
+            showModal:false
         }
     },
     mounted() {
         this.fetchData()
         setInterval(()=>{
-            this.fetchData()
-            this.timer()
+            this.fetchData()           
         },1000)
     },
 
@@ -161,49 +158,24 @@ export default {
                         setTimeout(()=>{
                             this.money = this.money + this.total*1.95
                             this.display.splice(0,10)
-                            clearInterval(myInterval)
-                           
+                            clearInterval(myInterval)                           
                         },2000)
                         
                     }
                     else{
                         setTimeout(()=>{
-                            this.money = this.money + 10
+                            this.money = this.money + 0
                             this.display.splice(0,10)
-                            clearInterval(myInterval)
-                            
+                            clearInterval(myInterval)                            
                         },2000)
                     }
                 }  
-                console.log(this.priceCoin,minute,second) 
+     
             },1000)
-
-
-            
-            
-            console.log(this.orderPrice)
-            console.log(this.priceCoin)
-            
-            
-            
-            
-        },
-
-        timer(){
-            const time = new Date()          
-            const hours = time.getHours()
-            const minutes = time.getMinutes(2)
-            const seconds = time.getSeconds(2)
-            const timeNow = hours+':'+minutes+':'+seconds
-            this.rightNow = timeNow
-            this.sec = seconds
         },
 
         alertSell(){
-            this.showAlert =true
-            setTimeout(()=>{
-                this.showAlert = false
-            },5000)
+            this.showModal=true
         },
         
         fetchData(){            
@@ -280,6 +252,8 @@ export default {
     .text-sell{
         color: var(--red);
     }
+
+
 
 
 </style>
