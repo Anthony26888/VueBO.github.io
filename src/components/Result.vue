@@ -12,28 +12,28 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <div v-for="value in item.slice(5,9)">
+                            <div v-for="value in item.slice(4,8)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
                                 <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
                         <div class="col-2">
-                            <div v-for="value in item.slice(10,14)">
+                            <div v-for="value in item.slice(8,12)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
                                 <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
                         <div class="col-2">
-                            <div v-for="value in item.slice(15,19)">
+                            <div v-for="value in item.slice(12,16)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
                                 <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div> 
                         <div class="col-2">
-                            <div v-for="value in item.slice(20,25)">
+                            <div v-for="value in item.slice(16,20)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div> 
                                 <div  v-else-if="(value) == 0.00" class="rounded-cirle-gray"></div>                                                             
                                 <div v-else class="rounded-cirle-red"></div>
@@ -44,33 +44,33 @@
             </div>            
             <div class="col-2">
                 <div class="card border-secondary shadow">                      
-                    <div class="card-body row flex-wrap gap-1 algin-item-center">
-                        <div class="col-3">
+                    <div class="card-body row flex-wrap algin-item-center ">
+                        <div class="col-2">
                             <div v-for="value in item.slice(20,24)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(20,24)">
+                        <div class="col-2">
+                            <div v-for="value in item.slice(24,28)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(24,28)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
-                                <div v-else class="rounded-cirle-red"></div>
-                            </div>
-                        </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(28,32)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(28,32)">
+                        <div class="col-2">
+                            <div v-for="value in item.slice(32,36)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div v-for="value in item.slice(36,40)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
@@ -80,33 +80,33 @@
             </div>            
             <div class="col-2">
                 <div class="card border-secondary shadow">                      
-                    <div class="card-body row flex-wrap gap-1 ">
-                        <div class="col-3">
-                            <div v-for="value in item.slice(32,36)">
+                    <div class="card-body row flex-wrap algin-item-center  ">
+                        <div class="col-2">
+                            <div v-for="value in item.slice(40,44)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(36,40)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
-                                <div v-else class="rounded-cirle-red"></div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div v-for="value in item.slice(40,44)">
-                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
-                                <div v-else class="rounded-cirle-red"></div>
-                            </div>
-                        </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(44,48)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div v-for="value in item.slice(48,52)">
+                                <div  v-if="(value)>0" class="rounded-cirle-green"></div>                                
+                                <div v-else class="rounded-cirle-red"></div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div v-for="value in item.slice(52,56)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div> 
-                        <div class="col-3">
-                            <div v-for="value in item.slice(44,48)">
+                        <div class="col-2">
+                            <div v-for="value in item.slice(56,60)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>                               
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
@@ -117,35 +117,35 @@
             <div class="col-2">
                 <div class="card border-secondary shadow">                      
                     <div class="card-body row flex-wrap">
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(48,52)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(52,56)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(56,60)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(60,64)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
                                 <div v-else class="rounded-cirle-red"></div>
                             </div>
                         </div> 
-                        <div class="col-3">
+                        <div class="col-2">
                             <div v-for="value in item.slice(60,64)">
                                 <div  v-if="(value)>0" class="rounded-cirle-green"></div>
                                 <div  v-else-if="(value)==0" class="rounded-cirle-gray"></div>
@@ -203,7 +203,7 @@ export default {
 </script>
 <style scoped>
     .card{     
-        width: 200px;   
+        width: 180px;   
         height: 160px;        
     }
 

@@ -30,7 +30,7 @@
         <!--Order-->
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <form @submit.prevent="" class="mt-3">
-                    <p>Availabel USD: ${{money}}</p>
+                    <p>Availabel USD: ${{money.toLocaleString()}}</p>
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
@@ -101,17 +101,13 @@
     
     <div v-show="showModal" class=modal-win @click="closeModal()">
         <div class="card"> 
-            <img src="../assets/vite-svgrepo-com.svg" alt="" class="mx-auto ">  
+            <img src="../assets/img/logo-eagle.png" alt="" class="mx-auto ">  
             <div class="card-body text-center">
                 <span class="congrat">Congratulation</span><br>
                 <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
-            </div>
+            </div>                 
         </div>
     </div>
-    
-   
-    
-    
     
 </template>
 <script>
@@ -130,13 +126,15 @@ export default {
             showAlert:false,          
             display:[],
             priceCoin:null, 
-            showModal:false,        
+            showModal:false,  
+            timeTrade:null,      
         }
     },
     mounted() {
         this.fetchData()
         setInterval(()=>{
-            this.fetchData()           
+            this.fetchData()   
+            this.fetchTimer()        
         },1000)
     },
 
@@ -198,7 +196,7 @@ export default {
                 
                 },2000)
                 if(this.total){
-                    this.display.push({qty:this.total, position:this.priceCoin, order:'SELL', timer:this.rightNow})
+                    this.display.push({qty:this.total, position:this.priceCoin, order:'SELL', timer:this.timeTrade})
                 }
 
                 const myInterval = setInterval(() =>{
@@ -222,56 +220,14 @@ export default {
                                 this.total = 0                        
                             },2000)
                         }
-                    }  
-        
+                    }          
                 },1000)
             }
-        },
-
-        order(){            
-            this.showAlert =true  
-            this.money = this.money - this.total 
-                 
-            setTimeout(()=>{
-                this.showAlert = false
-               
-            },2000)
-            if(this.total){
-                this.display.push({qty:this.total, position:this.priceCoin, order:'BUY', timer:this.rightNow})
-            }
-
-            const myInterval = setInterval(() =>{
-                const minute = new Date().getMinutes()
-                const second = new Date().getSeconds()
-                if ((minute%2)==0 && second ==57){                
-                    if(this.priceCoin>0){
-                        setTimeout(()=>{
-                            this.money = this.money + this.total*1.95
-                            this.display.splice(0,10)
-                            clearInterval(myInterval)
-                            this.showModal=true                           
-                        },2000)
-                        
-                    }
-                    else{
-                        setTimeout(()=>{
-                            this.money = this.money + 0
-                            this.display.splice(0,10)
-                            clearInterval(myInterval)                            
-                        },2000)
-                    }
-                }  
-     
-            },1000)
         },
 
         closeModal(){
             this.showModal=false
             this.total=0
-        },
-
-        alertSell(){
-            this.showModal=true
         },
         
         fetchData(){            
@@ -288,12 +244,23 @@ export default {
             .catch(error => {
                 console.error('Error adding item:', error);
             });       
+        },
+
+        fetchTimer(){
+            const now = new Date()            
+            const hour = now.getHours()
+            const minute = now.getHours()
+            const second = now.getSeconds()
+            const time = hour + ':' + minute + ':' + second
+            this.timeTrade = time
         }
 
     },
 }
 </script>
 <style scoped>
+
+   
     .container-fluid {
         border: 1px solid black;
         height: 100vh;
@@ -356,9 +323,12 @@ export default {
         /* bring your own prefixes */
         transform: translate(-50%, -50%);
         width: 400px;
-        height: 200px;
-    
+        height: 250px;
+        background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+        
     }
+
+    
 
     .modal-win{        
         position: fixed; /* Stay in place */
@@ -373,8 +343,9 @@ export default {
     }
 
     img{
-        width: 70px;
-        height: 70px;
+        margin-top: -50px;
+        width: 180px;
+        height: 170px;
         
     }
 
@@ -384,7 +355,7 @@ export default {
     }
 
     .money-win{
-        font-size: 20px;
+        font-size: 25px;
         color:var(--green)
     }
 

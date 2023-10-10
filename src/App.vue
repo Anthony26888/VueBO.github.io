@@ -31,4 +31,6 @@ import Result from './components/Result.vue';
 
 <style scoped>
 
+ 
+ 
 </style>
