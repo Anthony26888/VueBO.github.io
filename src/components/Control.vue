@@ -97,7 +97,20 @@
             </div>          
         </div>
     </div>
+    
+    <div v-show="showModal" class=modal-win @click="closeModal()">
+        <div class="card"> 
+            <img src="../assets/vite-svgrepo-com.svg" alt="" class="mx-auto ">  
+            <div class="card-body text-center">
+                <span class="congrat">Congratulation</span><br>
+                <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
+            </div>
+        </div>
+    </div>
+    
    
+    
+    
     
 </template>
 <script>
@@ -115,8 +128,8 @@ export default {
             time: newYear - now,
             showAlert:false,          
             display:[],
-            priceCoin:null,
-            showModal:false
+            priceCoin:null, 
+            showModal:true,        
         }
     },
     mounted() {
@@ -158,7 +171,8 @@ export default {
                         setTimeout(()=>{
                             this.money = this.money + this.total*1.95
                             this.display.splice(0,10)
-                            clearInterval(myInterval)                           
+                            clearInterval(myInterval)
+                            this.showModal=true                           
                         },2000)
                         
                     }
@@ -172,6 +186,11 @@ export default {
                 }  
      
             },1000)
+        },
+
+        closeModal(){
+            this.showModal=false
+            this.total=0
         },
 
         alertSell(){
@@ -253,7 +272,44 @@ export default {
         color: var(--red);
     }
 
+    .card{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 200px;
+    
+    }
 
+    .modal-win{        
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    img{
+        width: 70px;
+        height: 70px;
+        
+    }
+
+    .congrat{
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .money-win{
+        font-size: 20px;
+        color:var(--green)
+    }
 
 
 </style>
