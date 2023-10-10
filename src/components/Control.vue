@@ -29,7 +29,7 @@
         <div class="tab-content">
         <!--Order-->
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <form @submit.prevent="order" class="mt-3">
+                <form @submit.prevent="" class="mt-3">
                     <p>Availabel USD: ${{money}}</p>
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
@@ -57,12 +57,12 @@
                     </div>
                     <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
                         <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-column gap-2">
-                            <button type="submit" class="btn btn-success w-100" >BUY</button>
+                            <button type="submit" @click="submit('buy')" class="btn btn-success w-100" >BUY</button>
                             <span class="badge text-dark">
                                 <p class="text-order">Please Order</p>                                         
                                 <p class="text-count">{{seconds}}s</p>         
                             </span>    
-                            <button type="button" @click="alertSell" class="btn btn-danger w-100">SELL</button>    
+                            <button type="submit" @click="submit('sell')" class="btn btn-danger w-100">SELL</button>    
                         </div>  
                         <div v-else class="mt-2 d-flex flex-column gap-2">
                             <button type="button"  class="btn btn-success w-100" disabled>BUY</button>
@@ -86,7 +86,8 @@
                             <small class="text-muted"></small>
                         </div>
                         <div class="d-flex w-100 justify-content-between">
-                            <p class="mb-1 text-buy">{{value.order}}</p>
+                            <p v-if="value.order == 'BUY'" class="mb-1 text-buy">{{value.order}}</p>
+                            <p v-else class="mb-1 text-sell">{{value.order}}</p>
                             <small class="text-muted ">${{value.qty}}</small>
                         </div>  
                         <div class="d-flex w-100 justify-content-between">
@@ -129,7 +130,7 @@ export default {
             showAlert:false,          
             display:[],
             priceCoin:null, 
-            showModal:true,        
+            showModal:false,        
         }
     },
     mounted() {
@@ -149,6 +150,82 @@ export default {
 
         value: function (num) {
             return this.total += num;
+        },
+
+        submit: function (action){
+            if(action == 'buy'){
+                this.showAlert =true  
+                this.money = this.money - this.total 
+                    
+                setTimeout(()=>{
+                    this.showAlert = false
+                
+                },2000)
+                if(this.total){
+                    this.display.push({qty:this.total, position:this.priceCoin, order:'BUY', timer:this.rightNow})
+                }
+
+                const myInterval = setInterval(() =>{
+                    const minute = new Date().getMinutes()
+                    const second = new Date().getSeconds()
+                    if ((minute%2)==0 && second ==57){                
+                        if(this.priceCoin>0){
+                            setTimeout(()=>{
+                                this.money = this.money + this.total*1.95
+                                this.display.splice(0,10)
+                                clearInterval(myInterval)
+                                this.showModal=true                           
+                            },2000)
+                            
+                        }
+                        else{
+                            setTimeout(()=>{
+                                this.money = this.money + 0
+                                this.display.splice(0,10)
+                                clearInterval(myInterval)   
+                                this.total = 0                         
+                            },2000)
+                        }
+                    }  
+        
+                },1000)
+            }else{
+                this.showAlert =true  
+                this.money = this.money - this.total 
+                    
+                setTimeout(()=>{
+                    this.showAlert = false
+                
+                },2000)
+                if(this.total){
+                    this.display.push({qty:this.total, position:this.priceCoin, order:'SELL', timer:this.rightNow})
+                }
+
+                const myInterval = setInterval(() =>{
+                    const minute = new Date().getMinutes()
+                    const second = new Date().getSeconds()
+                    if ((minute%2)==0 && second ==57){                
+                        if(this.priceCoin<0){
+                            setTimeout(()=>{
+                                this.money = this.money + this.total*1.95
+                                this.display.splice(0,10)
+                                clearInterval(myInterval)
+                                this.showModal=true                           
+                            },2000)
+                            
+                        }
+                        else{
+                            setTimeout(()=>{
+                                this.money = this.money + 0
+                                this.display.splice(0,10)
+                                clearInterval(myInterval)    
+                                this.total = 0                        
+                            },2000)
+                        }
+                    }  
+        
+                },1000)
+            }
         },
 
         order(){            

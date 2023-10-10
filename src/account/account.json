@@ -1,0 +1,12 @@
+{
+    "account": [
+        {
+            "id": 0,
+            "username": "dang26888",
+            "password": "123",
+            "name": "HaiDang",
+            "usdt": 1000,
+            "history": []            
+        }
+    ]
+}

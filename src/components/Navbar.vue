@@ -11,7 +11,7 @@
             <li class="nav-item">
               <button type="button" class="btn btn-secondary d-flex flex-column align-items-center justify-content-center">
                 <span class="text-account">Acount</span>
-                <span class="text-money">$1000</span>
+                <span class="text-money">${{moneyUser}}</span>
               </button>
             </li>
             <li class="nav-item ms-4">
@@ -26,7 +26,7 @@
             <li class="nav-item">
               <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
                 <i class="bi bi-gear"></i>
-                <span >Setting</span>
+                <span>Setting</span>
               </a>              
             </li>
             
@@ -38,8 +38,21 @@
     
 </template>
 <script>
+//json
+import axios from 'axios';
+import dataUser from '../account/account.json'
 export default {
-    
+    data() {
+      return {
+        moneyUser: 0
+      }
+    },
+    mounted() {
+     
+    },
+    methods: {
+      
+    },
 }
 </script>
 <style scoped>
