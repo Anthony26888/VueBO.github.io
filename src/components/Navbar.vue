@@ -13,7 +13,7 @@
                 <button class="btn d-flex flex-column align-items-center justify-content-center">
                   <i class="animation"></i>
                   <span>Account</span>
-                  <span>$1000</span>
+                  <span v-for="value in dataUser">${{value.usd}}</span>
                   <i class="animation"></i>
                 </button>
               </div>              
@@ -47,18 +47,32 @@
 <script>
 //json
 import axios from 'axios';
-import dataUser from '../account/account.json'
 export default {
     data() {
       return {
-        moneyUser: 0
+        userName:'dang26888',
+        dataUser:[],
       }
     },
     mounted() {
-     
+      setInterval(()=>{
+        this.fetchUser()
+                   
+      },1000)
     },
     methods: {
-      
+      fetchUser(){
+        const user = this.userName
+        const url= `http://localhost:3000/account?user=${user}`
+        axios.get(url)
+          .then((response) =>{
+            const dataAccount = response.data
+            this.dataUser = dataAccount
+          })
+          .catch(error => {
+            console.error('Error adding item:', error);
+          });
+      }
     },
 }
 </script>

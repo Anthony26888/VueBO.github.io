@@ -108,6 +108,8 @@
             </div>                 
         </div>
     </div>
+
+   
     
 </template>
 <script>
@@ -117,7 +119,7 @@ export default {
         const now = new Date();
         const newYear = new Date(now.getFullYear() + 1, 0, 1);
         return {
-            money:1000,            
+            money:0,            
             total: 0,            
             profit: 0,
             orderPrice:0,
@@ -127,15 +129,19 @@ export default {
             display:[],
             priceCoin:null, 
             showModal:false,  
-            timeTrade:null,      
+            timeTrade:null, 
+            userName:'dang26888',
+            idUser:null,
+            
         }
     },
     mounted() {
         this.fetchData()
         setInterval(()=>{
             this.fetchData()   
-            this.fetchTimer()        
+            this.fetchTimer()                    
         },1000)
+        this.fetchUser()      
     },
 
     methods: {
@@ -156,12 +162,13 @@ export default {
                 this.money = this.money - this.total 
                     
                 setTimeout(()=>{
-                    this.showAlert = false
-                
+                    this.showAlert = false                                  
                 },2000)
                 if(this.total){
                     this.display.push({qty:this.total, position:this.priceCoin, order:'BUY', timer:this.rightNow})
                 }
+
+                
 
                 const myInterval = setInterval(() =>{
                     const minute = new Date().getMinutes()
@@ -172,7 +179,19 @@ export default {
                                 this.money = this.money + this.total*1.95
                                 this.display.splice(0,10)
                                 clearInterval(myInterval)
-                                this.showModal=true                           
+                                this.showModal=true   
+                                const user = this.idUser
+                                const url= `http://localhost:3000/account/1}`
+                                axios.patch(url,{
+                                
+                                    usd:`${this.money}`
+                                })
+                                .then((response) =>{
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });                        
                             },2000)
                             
                         }
@@ -181,7 +200,18 @@ export default {
                                 this.money = this.money + 0
                                 this.display.splice(0,10)
                                 clearInterval(myInterval)   
-                                this.total = 0                         
+                                this.total = 0  
+                                const user = this.idUser
+                                const url= `http://localhost:3000/account/1`
+                                axios.patch(url,{                                
+                                    usd:`${this.money}`
+                                })
+                                .then((response) =>{
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });                
                             },2000)
                         }
                     }  
@@ -208,7 +238,19 @@ export default {
                                 this.money = this.money + this.total*1.95
                                 this.display.splice(0,10)
                                 clearInterval(myInterval)
-                                this.showModal=true                           
+                                this.showModal=true   
+                                const user = this.idUser
+                                const url= `http://localhost:3000/account/1`
+                                axios.patch(url,{
+                                
+                                    usd:`${this.money}`
+                                })
+                                .then((response) =>{
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });                    
                             },2000)
                             
                         }
@@ -217,7 +259,18 @@ export default {
                                 this.money = this.money + 0
                                 this.display.splice(0,10)
                                 clearInterval(myInterval)    
-                                this.total = 0                        
+                                this.total = 0 
+                                const user = this.idUser
+                                const url= `http://localhost:3000/account/1`
+                                axios.patch(url,{                                
+                                    usd:`${this.money}`
+                                })
+                                .then((response) =>{
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });                       
                             },2000)
                         }
                     }          
@@ -253,7 +306,25 @@ export default {
             const second = now.getSeconds()
             const time = hour + ':' + minute + ':' + second
             this.timeTrade = time
-        }
+        },
+
+        fetchUser(){
+            const user = this.userName
+            const url= `http://localhost:3000/account?user=${user}`
+            axios.get(url)
+            .then((response) =>{
+                const dataAccount = response.data
+                const moneyUser = dataAccount.map((x) =>(x.usd))
+                const id = dataAccount.map((x)=>(x[0]))
+                this.money = moneyUser
+                this.idUser = id
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
+        },
+
+     
 
     },
 }
