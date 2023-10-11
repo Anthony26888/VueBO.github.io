@@ -7,18 +7,8 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
-          <ul class="nav ">
+          <ul class="nav ">            
             <li class="nav-item">
-              <div>
-                <button class="btn d-flex flex-column align-items-center justify-content-center">
-                  <i class="animation"></i>
-                  <span>Account</span>
-                  <span v-for="value in dataUser">${{value.usd}}</span>
-                  <i class="animation"></i>
-                </button>
-              </div>              
-            </li>
-            <li class="nav-item ms-4">
               <div>
                 <button class="btn"><i class="animation"></i>BUY USD<i class="animation"></i>
                 </button>
@@ -47,33 +37,16 @@
 <script>
 //json
 import axios from 'axios';
+
 export default {
     data() {
       return {
-        userName:'dang26888',
-        dataUser:[],
+      
       }
     },
-    mounted() {
-      setInterval(()=>{
-        this.fetchUser()
-                   
-      },1000)
-    },
-    methods: {
-      fetchUser(){
-        const user = this.userName
-        const url= `http://localhost:3000/account?user=${user}`
-        axios.get(url)
-          .then((response) =>{
-            const dataAccount = response.data
-            this.dataUser = dataAccount
-          })
-          .catch(error => {
-            console.error('Error adding item:', error);
-          });
-      }
-    },
+
+ 
+
 }
 </script>
 <style scoped>
