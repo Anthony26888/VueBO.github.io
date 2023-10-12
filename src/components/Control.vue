@@ -1,6 +1,6 @@
 
 <template lang="">
-    <div class="container">
+    <div class="container mt-3">
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -29,13 +29,15 @@
         <div class="tab-content">
         <!--Order-->
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="wallet w-100 mt-3">
+                    <div class="d-flex justify-content-between card-body">
+                        <p class="text-muted ms-2">Total Balance:</p>
+                        <p class="money-wallet mr-2">${{Number(money).toLocaleString()}}</p>
+                    </div>                            
+                                            
+                </div>
                 <form @submit.prevent="" class="mt-3">
-                    <div class="card text-white bg-light">
-                      <div class="card-body text-center">
-                        <p class="card-text text-muted">Total Balance</p>
-                        <h4 class="card-title text-dark">${{Number(money).toLocaleString()}}</h4>                        
-                    </div>
-                    </div>
+                    
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
@@ -105,8 +107,8 @@
     </div>
     
     <div v-show="showModal" class=modal-win @click="closeModal()">
-        <div class="card-modal "> 
-            <img src="../assets/img/logo-eagle.png" alt="" class="mx-auto">  
+        <div class="card"> 
+            <img src="../assets/img/logo-eagle.png" alt="" class="mx-auto">   
             <div class="card-body text-center">
                 <span class="congrat">Congratulation</span><br>
                 <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
@@ -133,7 +135,7 @@ export default {
             showAlert: false,
             display: [],
             priceCoin: null,
-            showModal: true,
+            showModal: false,
             timeTrade: null,
             userName: 'dang26888',
             idUser: null,
@@ -390,11 +392,10 @@ input {
     color: var(--red);
 }
 
-.card-modal {
+.card{
     position: fixed;
     top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
+    left: 50%;  
     transform: translate(-50%, -50%);
     width: 400px;
     height: 250px;
@@ -417,11 +418,9 @@ input {
 
 }
 
-img {
-    margin-top: -50px;
+img{
     width: 180px;
-    height: 170px;
-   
+    margin-top:-50px ;
 }
 
 .congrat {
@@ -434,6 +433,30 @@ img {
     color: var(--green)
 }
 
+.wallet{
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);    
+    border-radius: 20px;
+}
+
+.money-wallet{
+    color: #1F2937;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    text-align: left; 
+}
+.title-text {
+    margin-left: 0.5rem;
+    color: #374151;
+    font-size: 18px;
+}
+.percent {
+    margin-left: 0.5rem;
+    color: #02972f;
+    font-weight: 600;
+    display: flex;
+}
 
 
 
