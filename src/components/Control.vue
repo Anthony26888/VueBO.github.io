@@ -36,12 +36,11 @@
                     </div>                            
                                             
                 </div>
-                <form @submit.prevent="" class="mt-3">
-                    
+                <form @submit.prevent="" class="mt-3">                    
                     <div class=" m-auto justify-item-center ">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
-                            <input type="num" class="text-end w-50" v-model="total" >                    
+                            <input type="num" class="text-end w-50" min="0" :max="money" v-model="total" >                    
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                
                         </div>             
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
@@ -84,9 +83,9 @@
             </div>
 
 
-            <!--Detail-->
+            <!--Status-->
             <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div v-for="value in display" class="list-group mt-3">
+                <div v-for="value in status" class="list-group mt-3">
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" aria-current="true">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">BTC/USD</h5>
@@ -102,7 +101,29 @@
                         </div>
                     </a>
                 </div> 
-            </div>          
+            </div>     
+            
+
+            <!--History-->
+            <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="profile-tab">
+                <div v-for="value in history" class="list-group mt-3">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">BTC/USD</h5>
+                            <small class="text-muted"></small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <p v-if="value.order == 'BUY'" class="mb-1 text-buy">{{value.order}}</p>
+                            <p v-else class="mb-1 text-sell">{{value.order}}</p>
+                            <small class="text-muted ">${{value.qty}}</small>
+                        </div>  
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted">{{value.timer}}</small>
+                            <small class="text-muted ">${{value.reward}}</small>                           
+                        </div>
+                    </a>
+                </div> 
+            </div>      
         </div>
     </div>
     
@@ -133,13 +154,13 @@ export default {
             inputData: [5, 10, 20, 50, 100, 'All'],
             time: newYear - now,
             showAlert: false,
-            display: [],
+            status: [],
+            history:[],
             priceCoin: null,
             showModal: false,
             timeTrade: null,
             userName: 'dang26888',
             idUser: null,
-
         }
     },
     mounted() {
@@ -166,15 +187,15 @@ export default {
         submit: function (action) {
             if (action == 'buy') {
                 this.showAlert = true
-                this.money = this.money - this.total
+                this.money = Math.max(0, this.money - this.total) || 0
 
                 setTimeout(() => {
                     this.showAlert = false
                 }, 2000)
-                if (this.total) {
-                    this.display.push({ qty: this.total, position: this.priceCoin, order: 'BUY', timer: this.rightNow })
-                }
 
+                if (this.total) {
+                    this.status.push({ qty: this.total, order: 'BUY', timer: this.rightNow })
+                }
 
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
@@ -182,42 +203,54 @@ export default {
                     if ((minute % 2) == 0 && second == 57) {
                         if (this.priceCoin > 0) {
                             setTimeout(() => {
-                                this.money = this.money + this.total * 1.95
-                                this.display.splice(0, 10)
-                                clearInterval(myInterval)
-                                this.showModal = true
+                                //const gift = this.total - (this.total*0.5)
+                                //this.money = this.money + this.total * 1.95
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
-                                axios.patch(url, {
+                                //const list = [qty= this.total, reward= gift, order= 'BUY', timer= this.rightNow]
+                                //const historyList = JSON.stringify(list)
+                                this.status.splice(0, 10)
+                                clearInterval(myInterval)
+                                this.showModal = true
+                               
 
-                                    usd: `${this.money}`
+                                //PATCH MONEY
+                                axios.patch(url, {
+                                    usd: `${this.money}`,
+                                    //history: `${historyList}`
                                 })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                .then((response) => {
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });                       
                             }, 2000)
 
                         }
                         else {
                             setTimeout(() => {
+                                //const gift = this.total - (this.total*0.5)
                                 this.money = this.money + 0
-                                this.display.splice(0, 10)
-                                clearInterval(myInterval)
-                                this.total = 0
                                 const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
+                                // url = `http://localhost:3000/account/${user}`
+                                //const list = [qty= this.total, reward= gift, order= 'BUY', timer= this.rightNow]
+                                // historyList = JSON.stringify(list)
+                                this.status.splice(0, 10)
+                                clearInterval(myInterval)                        
+                               
+
+                                //PATCH MONEY
                                 axios.patch(url, {
-                                    usd: `${this.money}`
+                                    usd: `${this.money}`,
+                                    //history: `${historyList}`
                                 })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                .then((response) => {
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });  
                             }, 2000)
                         }
                     }
@@ -225,14 +258,14 @@ export default {
                 }, 1000)
             } else {
                 this.showAlert = true
-                this.money = this.money - this.total
+                this.money = Math.max(0, this.money - this.total) || 0
 
                 setTimeout(() => {
                     this.showAlert = false
-
                 }, 2000)
+
                 if (this.total) {
-                    this.display.push({ qty: this.total, position: this.priceCoin, order: 'SELL', timer: this.timeTrade })
+                    this.status.push({ qty: this.total, position: this.priceCoin, order: 'SELL', timer: this.timeTrade })
                 }
 
                 const myInterval = setInterval(() => {
@@ -242,28 +275,27 @@ export default {
                         if (this.priceCoin < 0) {
                             setTimeout(() => {
                                 this.money = this.money + this.total * 1.95
-                                this.display.splice(0, 10)
+                                this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
                                 axios.patch(url, {
-
                                     usd: `${this.money}`
                                 })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                .then((response) => {
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });
                             }, 2000)
 
                         }
                         else {
                             setTimeout(() => {
                                 this.money = this.money + 0
-                                this.display.splice(0, 10)
+                                this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.total = 0
                                 const user = this.idUser
@@ -271,12 +303,12 @@ export default {
                                 axios.patch(url, {
                                     usd: `${this.money}`
                                 })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                .then((response) => {
+                                    console.log(response.data)
+                                })
+                                .catch(error => {
+                                    console.error('Error adding item:', error);
+                                });
                             }, 2000)
                         }
                     }
@@ -318,16 +350,18 @@ export default {
             const user = this.userName
             const url = `http://localhost:3000/account?user=${user}`
             axios.get(url)
-                .then((response) => {
-                    const dataAccount = response.data
-                    const moneyUser = dataAccount.map((x) => (x.usd))
-                    const id = dataAccount.map((x) => (x.id))
-                    this.money = moneyUser.join("")
-                    this.idUser = id
-                })
-                .catch(error => {
-                    console.error('Error adding item:', error);
-                });
+            .then((response) => {
+                const dataAccount = response.data
+                const moneyUser = dataAccount.map((x) => (x.usd))
+                const id = dataAccount.map((x) => (x.id))
+                const historyUser = dataAccount.history
+                this.money = moneyUser.join("")
+                this.idUser = id
+                this.history = historyUser
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
         },
 
 
@@ -419,8 +453,8 @@ input {
 }
 
 img{
-    width: 180px;
-    margin-top:-50px ;
+    width: 250px;
+    margin-top:-100px ;
 }
 
 .congrat {
@@ -441,7 +475,7 @@ img{
 
 .money-wallet{
     color: #1F2937;
-    font-size: 2.25rem;
+    font-size: 2.0rem;
     line-height: 2.5rem;
     font-weight: 700;
     text-align: left; 
@@ -451,12 +485,7 @@ img{
     color: #374151;
     font-size: 18px;
 }
-.percent {
-    margin-left: 0.5rem;
-    color: #02972f;
-    font-weight: 600;
-    display: flex;
-}
+
 
 
 

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"json-server --watch ./src/data/account.json\" \"live-server\" --port 3000",
+    "start": "npx json-server --watch ./src/data/account.json --port3000",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "gh-pages": "^6.0.0",
     "json-server": "^0.17.4",
     "vite": "^4.4.5"
   }

@@ -1,6 +1,7 @@
 <template lang="">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
       <div class="container-fluid">
+        <img src="../assets/img/logo-eagle.png" alt="">
         <a class="navbar-brand" href="#">EAGLE BASE</a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +53,11 @@ export default {
 <style scoped>
 
     @import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
+
+    img{
+      width: 30px;
+      height:30px
+    }
 
     .navbar-brand{
       font-family: 'Teko', sans-serif;
