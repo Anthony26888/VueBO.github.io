@@ -11,8 +11,7 @@
           <ul class="nav ">            
             <li class="nav-item">
               <div>
-                <button class="btn"><i class="animation"></i>BUY USD<i class="animation"></i>
-                </button>
+                <button class="btn"><i class="animation"></i>BUY USD<i class="animation"></i></button>
               </div>
             </li>
             <li class="nav-item">
@@ -26,10 +25,8 @@
                 <i class="bi bi-gear"></i>
                 <span>Setting</span>
               </a>              
-            </li>
-            
-          </ul>
-          
+            </li>            
+          </ul>          
         </div>
       </div>
     </nav>
@@ -37,7 +34,7 @@
 </template>
 <script>
 //json
-import axios from 'axios';
+
 
 export default {
     data() {

@@ -1,8 +1,8 @@
 <script setup>
-import Chart from './components/Chart.vue'
-import Control from './components/Control.vue'
-import Navbar from './components/Navbar.vue';
-import Result from './components/Result.vue';
+import Chart from '../components/Chart.vue'
+import Control from '../components/Control.vue'
+import Navbar from '../components/Navbar.vue';
+import Result from '../components/Result.vue';
 
 </script>
 
