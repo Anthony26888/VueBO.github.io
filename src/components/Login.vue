@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="w-75 mx-auto mt-5 d-flex flex-column">
+  <div class="w-100 mx-auto mt-5 d-flex flex-column">
     <span class="title-login mx-auto">Welcome</span>
     <div class="form-floating mb-3 mt-5">
       <input
@@ -54,7 +54,7 @@
         </svg>
         Google
       </button>
-      <button type="button" class="btn btn-google w-50" href="../main/main.js">
+      <button type="button" class="btn btn-google w-50">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -70,6 +70,11 @@
         Github
       </button>
     </div>
+    <div class="d-flex justify-content-center mt-3">
+      <span class="text-muted">Don't have an account</span>
+      <router-link to="/SignUp" class="ms-2">Sign up now</router-link><br>
+    </div>
+    
   </div>
 </template>
 <script>

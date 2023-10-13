@@ -1,0 +1,64 @@
+<template lang="">
+    <div class="w-100 mx-auto mt-5 d-flex flex-column">
+      <span class="title-login mx-auto">Sign Up</span>
+      <div class="form-floating mb-3 mt-5">
+        <input
+          type="text"
+          class="form-control"
+          name="formId1"
+          id="formId1"
+          placeholder=""
+        />
+        <label for="formId1">Username</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control"
+          name="formId1"
+          id="formId1"
+          placeholder=""
+        />
+        <label for="formId1">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control"
+          name="formId1"
+          id="formId1"
+          placeholder=""
+        />
+        <label for="formId1">Confirm Password</label>
+      </div>    
+      <button type="submit" class="btn btn-primary mt-3">Log in</button>
+
+      <div class="d-flex justify-content-center mt-3">
+        <span class="text-muted">Go Back</span>
+        <router-link to="/Home" class="ms-2">Log in</router-link><br>
+      </div>
+      
+    </div>
+  </template>
+<script>
+export default {};
+</script>
+<style scoped>
+.title-login {
+    font-family: Open Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    justify-content: center;
+}
+
+.btn-google {
+    border-color: var(--gray);
+}
+
+.btn-google:hover {
+    border-color: var(--blue);
+}
+</style>
+  
