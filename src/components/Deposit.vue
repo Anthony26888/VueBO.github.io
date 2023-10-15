@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar.vue';
         <div class="container">
             <div class="w-100 text-start total-money">             
               <div class="card-body">
-                <h4 class="text-muted">Total Balance (USD): $1,000</h4>              
+                <h4 class="text-muted">{{totalUSD}}: $1,000</h4>              
               </div>
             </div>
 
@@ -41,6 +41,7 @@ import Navbar from '../components/Navbar.vue';
 export default {
     data() {
         return {
+            totalUSD:'Total Balance (USD)',
             buyUSD: 'Deposit',
             sellUSD: 'Withdraw',
             history: 'History',
