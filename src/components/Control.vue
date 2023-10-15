@@ -31,7 +31,7 @@
             <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="wallet w-100 mt-3">
                     <div class="d-flex justify-content-between card-body">
-                        <p class="text-muted ms-2">Total Balance:</p>
+                        <p class="text-muted ms-2">Total:</p>
                         <p class="money-wallet mr-2">${{Number(money).toLocaleString()}}</p>
                     </div>                            
                                             
@@ -347,8 +347,8 @@ export default {
         },
 
         fetchUser() {
-            const user = this.userName
-            const url = `http://localhost:3000/account?user=${user}`
+            const getUser = localStorage.getItem("user")         
+            const url = `http://localhost:3000/account?user=${getUser}`
             axios.get(url)
             .then((response) => {
                 const dataAccount = response.data
@@ -363,9 +363,6 @@ export default {
                 console.error('Error adding item:', error);
             });
         },
-
-
-
     },
 }
 </script>

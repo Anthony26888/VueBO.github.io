@@ -29,7 +29,7 @@
           </div>
           <div class="form-floating mb-3">
             <input
-              type="text"
+              type="password"
               class="form-control"
               name="formId1"
               id="formId1"
@@ -122,6 +122,8 @@ export default {
         const user = dataAccount.find((u) =>u.user == this.UserName && u.password == this.Pass)
         if(user){
           this.$router.push('/Trading')
+          const local = localStorage.setItem("user", this.UserName)
+          console.log(local)
         }else{
           this.$router.push('/SignUp')
         }

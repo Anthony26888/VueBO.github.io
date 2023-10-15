@@ -5,7 +5,7 @@ import Login from './components/Login.vue'
 import Sign from './components/SignUp.vue'
 import LandingPage from './components/LandingPage.vue'
 import Trading from './components/Trading.vue'
-
+import Deposit from './components/Deposit.vue'
 const routes = [
    
     {
@@ -24,7 +24,10 @@ const routes = [
         path: '/Trading',
         component: Trading
     },  
-  
+    {
+        path: '/deposit',
+        component: Deposit
+    },
 
 
 ]

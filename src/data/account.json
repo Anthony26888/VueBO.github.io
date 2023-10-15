@@ -5,7 +5,7 @@
       "user": "dang26888",
       "password": "123",
       "usd": "46839000",
-      "history": [ ]
+      "history": []
     },
     {
       "id": "2",
@@ -13,6 +13,13 @@
       "password": "123",
       "usd": "500",
       "history": []
+    },
+    {
+      "user": "admin",
+      "password": "admin",
+      "usd": "100",
+      "history": [],
+      "id": "yFhSXjR"
     }
   ]
 }
