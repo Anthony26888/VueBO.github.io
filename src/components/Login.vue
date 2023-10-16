@@ -21,7 +21,7 @@
               id="formId1"
               placeholder=""
               v-model="UserName"
-              require
+              required
               
             />
             <div class="valid-feedback"></div>
