@@ -21,8 +21,12 @@
               id="formId1"
               placeholder=""
               v-model="UserName"
+<<<<<<< HEAD
               required
               
+=======
+              required              
+>>>>>>> 5cf13146cccd65e8aea14ffdd00a098094250928
             />
             <div class="valid-feedback"></div>
             <label for="formId1">Username</label>
@@ -36,10 +40,10 @@
               placeholder=""
               v-model="Pass"
               required
-            />
-            <div class="valid-feedback"></div>
+            />            
             <label for="formId1">Password</label>
           </div>
+          <span class="invaild" v-show="caution"><i class="bi bi-exclamation-circle me-2"></i>{{invaild}}</span>
           <label for="" class="text-end">
             <a href="">Forgot password?</a>
           </label>          
@@ -105,7 +109,8 @@ export default {
     return {
       title:'The future of Digital Asset Trading',
       description:'Eagle Base is the best place for traders to make a lot of profits. With a simple interface that delivers a world-class trading experience, Eagle Base offers everything you need in one platform!',
-       
+      invaild:'Username or Password is not correct',
+      caution:false,
       UserName:'',
       Pass:'',
     }
@@ -122,10 +127,10 @@ export default {
         const user = dataAccount.find((u) =>u.user == this.UserName && u.password == this.Pass)
         if(user){
           this.$router.push('/Trading')
-          const local = localStorage.setItem("user", this.UserName)
-          console.log(local)
+          const local = localStorage.setItem("user", this.UserName)      
+          this.caution=false    
         }else{
-          this.$router.push('/SignUp')
+          this.caution=true
         }
       })
       .catch(error => {
@@ -151,5 +156,9 @@ export default {
 
   .btn-google:hover {
     border-color: var(--blue);
+  }
+
+  .invaild{
+    color:var(--red)
   }
 </style>
