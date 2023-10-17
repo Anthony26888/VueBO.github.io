@@ -1,6 +1,6 @@
 <template lang="">
   <div id="chart">
-    <apexchart type="candlestick" height="500" width="100%" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="candlestick" height="400" width="100%" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 <script>
@@ -38,23 +38,21 @@ export default {
   methods: {
     fetchData(){
       const url= 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=50'
-        axios
-        .get(url)
-        .then((response) => {
-          const candlesticks = response.data.map((item) => ({
-            x: new Date(item[0]),
-            y: [parseFloat(item[1]), parseFloat(item[2]), parseFloat(item[3]), parseFloat(item[4])],
-          }));
-          this.series = [
-            {
-              data:candlesticks
-            }
-          ]
-        })
-        
-      }
+      axios.get(url)
+      .then((response) => {
+      const candlesticks = response.data.map((item) => ({
+        x: new Date(item[0]),
+        y: [parseFloat(item[1]), parseFloat(item[2]), parseFloat(item[3]), parseFloat(item[4])],
+      }));
+      this.series = [
+        {
+          data:candlesticks
+        }
+      ]
+      })
     }
   }
+}
 
 </script>
 <style lang="">

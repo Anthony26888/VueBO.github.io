@@ -3,7 +3,6 @@
 </template>
 <script>
 export default {
-    name:'result-1',
     props:['result'],   
     mounted() {
         setInterval(() =>{          
@@ -20,9 +19,9 @@ export default {
             //line1
             ctx.beginPath();
             ctx.arc(20, 20, 13, 0, 2 * Math.PI);
-            if(this.result[0] == 'red' ){
+            if(this.result[80] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[0] == 'green'){
+            }else if(this.result[80] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -32,9 +31,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(20, 50, 13, 0, 2 * Math.PI);
-            if(this.result[1] == 'red' ){
+            if(this.result[81] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[1] == 'green'){
+            }else if(this.result[81] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -44,9 +43,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(20, 80, 13, 0, 2 * Math.PI);
-            if(this.result[2] == 'red' ){
+            if(this.result[82] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[2] == 'green'){
+            }else if(this.result[82] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -56,9 +55,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(20, 110, 13, 0, 2 * Math.PI);
-            if(this.result[3] == 'red' ){
+            if(this.result[83] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[3] == 'green'){
+            }else if(this.result[83] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -70,9 +69,9 @@ export default {
             //line2
             ctx.beginPath();
             ctx.arc(50, 20, 13, 0, 2 * Math.PI);
-            if(this.result[4] == 'red' ){
+            if(this.result[84] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[4] == 'green'){
+            }else if(this.result[84] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -82,9 +81,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(50, 50, 13, 0, 2 * Math.PI);
-            if(this.result[5] == 'red' ){
+            if(this.result[85] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[5] == 'green'){
+            }else if(this.result[85] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -94,9 +93,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(50, 80, 13, 0, 2 * Math.PI);
-            if(this.result[6] == 'red' ){
+            if(this.result[86] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[6] == 'green'){
+            }else if(this.result[86] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -106,9 +105,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(50, 110, 13, 0, 2 * Math.PI);
-            if(this.result[7] == 'red' ){
+            if(this.result[87] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[7] == 'green'){
+            }else if(this.result[87] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -120,9 +119,9 @@ export default {
              //line3
              ctx.beginPath();
             ctx.arc(80, 20, 13, 0, 2 * Math.PI);
-            if(this.result[8] == 'red' ){
+            if(this.result[88] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[8] == 'green'){
+            }else if(this.result[88] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -132,9 +131,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(80, 50, 13, 0, 2 * Math.PI);
-            if(this.result[9] == 'red' ){
+            if(this.result[89] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[9] == 'green'){
+            }else if(this.result[89] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -144,9 +143,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(80, 80, 13, 0, 2 * Math.PI);
-            if(this.result[10] == 'red' ){
+            if(this.result[90] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[10] == 'green'){
+            }else if(this.result[90] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -156,9 +155,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(80, 110, 13, 0, 2 * Math.PI);
-            if(this.result[11] == 'red' ){
+            if(this.result[91] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[11] == 'green'){
+            }else if(this.result[91] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -170,9 +169,9 @@ export default {
             //line4
             ctx.beginPath();
             ctx.arc(110, 20, 13, 0, 2 * Math.PI);
-            if(this.result[12] == 'red' ){
+            if(this.result[92] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[12] == 'green'){
+            }else if(this.result[92] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -182,9 +181,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(110, 50, 13, 0, 2 * Math.PI);
-            if(this.result[13] == 'red' ){
+            if(this.result[93] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[13] == 'green'){
+            }else if(this.result[93] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -194,9 +193,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(110, 80, 13, 0, 2 * Math.PI);
-            if(this.result[14] == 'red' ){
+            if(this.result[94] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[14] == 'green'){
+            }else if(this.result[94] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -206,9 +205,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(110, 110, 13, 0, 2 * Math.PI);
-            if(this.result[15] == 'red' ){
+            if(this.result[95] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[15] == 'green'){
+            }else if(this.result[95] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -220,9 +219,9 @@ export default {
              //line5
              ctx.beginPath();
             ctx.arc(140, 20, 13, 0, 2 * Math.PI);
-            if(this.result[16] == 'red' ){
+            if(this.result[96] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[16] == 'green'){
+            }else if(this.result[96] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -232,9 +231,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(140, 50, 13, 0, 2 * Math.PI);
-            if(this.result[17] == 'red' ){
+            if(this.result[97] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[17] == 'green'){
+            }else if(this.result[97] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -244,9 +243,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(140, 80, 13, 0, 2 * Math.PI);
-            if(this.result[18] == 'red' ){
+            if(this.result[98] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[18] == 'green'){
+            }else if(this.result[98] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"
@@ -256,9 +255,9 @@ export default {
 
             ctx.beginPath();
             ctx.arc(140, 110, 13, 0, 2 * Math.PI);
-            if(this.result[19] == 'red' ){
+            if(this.result[99] == 'red' ){
                 ctx.fillStyle="red"
-            }else if(this.result[19] == 'green'){
+            }else if(this.result[99] == 'green'){
                 ctx.fillStyle="green"
             }else{
                 ctx.fillStyle="#D3D3D3"

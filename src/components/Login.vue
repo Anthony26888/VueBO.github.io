@@ -21,12 +21,7 @@
               id="formId1"
               placeholder=""
               v-model="UserName"
-<<<<<<< HEAD
-              required
-              
-=======
-              required              
->>>>>>> 5cf13146cccd65e8aea14ffdd00a098094250928
+              required 
             />
             <div class="valid-feedback"></div>
             <label for="formId1">Username</label>

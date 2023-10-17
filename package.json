@@ -21,7 +21,8 @@
     "mitt": "^3.0.1",
     "vue": "^3.2.36",
     "vue-router": "^4.2.5",
-    "vue3-apexcharts": "^1.4.4"
+    "vue3-apexcharts": "^1.4.4",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

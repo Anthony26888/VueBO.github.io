@@ -28,31 +28,24 @@
        
         <div class="tab-content">
         <!--Order-->
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="wallet w-100 mt-3">
-                    <div class="d-flex justify-content-between card-body">
-                        <p class="text-muted ms-2">Total:</p>
-                        <p class="money-wallet mr-2">${{Number(money).toLocaleString()}}</p>
-                    </div>                            
-                                            
-                </div>
+            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">                
                 <form @submit.prevent="" class="mt-3">                    
-                    <div class=" m-auto justify-item-center ">                
+                    <div class="d-flex flex-column w-75 mx-auto">                
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
                             <input type="num" class="text-end w-50" min="0" :max="money" v-model="total" >                    
                             <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                
-                        </div>             
+                        </div> 
                         <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" @click="value(inputData[0])" class="btn btn-outline-secondary value">+{{inputData[0]}}</button>
                             <button type="button" @click="value(inputData[1])" class="btn btn-outline-secondary value">+{{inputData[1]}}</button>
-                            <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>                                        
-                        </div>  
-                        <div class="btn-group flex-wrap mt-1 justify-content-center w-100" role="group" aria-label="Button group name">                       
+                            <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>                
+                        </div> 
+                        <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
                             <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value">+{{inputData[3]}}</button>
                             <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value">+{{inputData[4]}}</button> 
-                            <button type="button" @click="value(money)" class="btn btn-outline-secondary value">{{inputData[5]}}</button>                
-                        </div>
+                            <button type="button" @click="value(money)" class="btn btn-outline-secondary value">{{inputData[5]}}</button>                 
+                        </div>  
                     </div>            
                     <div class="mt-4">
                         <div class="d-flex justify-content-center">
@@ -163,13 +156,15 @@ export default {
             idUser: null,
         }
     },
-    mounted() {
-        this.fetchData()
+    mounted() {       
         setInterval(() => {
             this.fetchData()
             this.fetchTimer()
+            this.$emit('sendMoney', this.money)
         }, 1000)
         this.fetchUser()
+        
+        
     },
 
     methods: {
@@ -196,19 +191,15 @@ export default {
                 if (this.total) {
                     this.status.push({ qty: this.total, order: 'BUY', timer: this.rightNow })
                 }
-
+                
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
                     if ((minute % 2) == 0 && second == 57) {
                         if (this.priceCoin > 0) {
-                            setTimeout(() => {
-                                //const gift = this.total - (this.total*0.5)
-                                //this.money = this.money + this.total * 1.95
+                            setTimeout(() => {                                
                                 const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
-                                //const list = [qty= this.total, reward= gift, order= 'BUY', timer= this.rightNow]
-                                //const historyList = JSON.stringify(list)
+                                const url = `http://localhost:3000/account/${user}`                               
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
@@ -230,12 +221,10 @@ export default {
                         }
                         else {
                             setTimeout(() => {
-                                //const gift = this.total - (this.total*0.5)
-                                this.money = this.money + 0
                                 const user = this.idUser
-                                // url = `http://localhost:3000/account/${user}`
-                                //const list = [qty= this.total, reward= gift, order= 'BUY', timer= this.rightNow]
-                                // historyList = JSON.stringify(list)
+                                const url = `http://localhost:3000/account/${user}`
+                               
+                                this.money = this.money + 0                                                           
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)                        
                                
@@ -331,6 +320,7 @@ export default {
                     const price4 = price.map((x) => (x[4]));
                     const total = (price4 - price1).toLocaleString()
                     this.priceCoin = total
+                    
                 })
                 .catch(error => {
                     console.error('Error adding item:', error);
@@ -358,6 +348,7 @@ export default {
                 this.money = moneyUser.join("")
                 this.idUser = id
                 this.history = historyUser
+                
             })
             .catch(error => {
                 console.error('Error adding item:', error);
@@ -464,24 +455,6 @@ img{
     color: var(--green)
 }
 
-.wallet{
-    background-color: #fff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);    
-    border-radius: 20px;
-}
-
-.money-wallet{
-    color: #1F2937;
-    font-size: 2.0rem;
-    line-height: 2.5rem;
-    font-weight: 700;
-    text-align: left; 
-}
-.title-text {
-    margin-left: 0.5rem;
-    color: #374151;
-    font-size: 18px;
-}
 
 
 
