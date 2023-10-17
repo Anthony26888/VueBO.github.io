@@ -56,12 +56,12 @@
                     </div>
                     <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
                         <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-column gap-2">
-                            <button type="submit" @click="submit('buy')" class="btn btn-success w-100" >BUY</button>
+                            <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
                             <span class="badge text-dark">
                                 <p class="text-order">Please Order</p>                                         
                                 <p class="text-count">{{seconds}}s</p>         
                             </span>    
-                            <button type="submit" @click="submit('sell')" class="btn btn-danger w-100">SELL</button>    
+                            <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
                         </div>  
                         <div v-else class="mt-2 d-flex flex-column gap-2">
                             <button type="button"  class="btn btn-success w-100" disabled>BUY</button>
@@ -207,8 +207,7 @@ export default {
 
                                 //PATCH MONEY
                                 axios.patch(url, {
-                                    usd: `${this.money}`,
-                                    //history: `${historyList}`
+                                    usd: `${this.money}`,                                    
                                 })
                                 .then((response) => {
                                     console.log(response.data)
@@ -231,8 +230,7 @@ export default {
 
                                 //PATCH MONEY
                                 axios.patch(url, {
-                                    usd: `${this.money}`,
-                                    //history: `${historyList}`
+                                    usd: `${this.money}`,                                   
                                 })
                                 .then((response) => {
                                     console.log(response.data)
@@ -267,6 +265,8 @@ export default {
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
+
+                                //PATCH MONEY
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
                                 axios.patch(url, {
@@ -287,6 +287,8 @@ export default {
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.total = 0
+
+                                
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
                                 axios.patch(url, {

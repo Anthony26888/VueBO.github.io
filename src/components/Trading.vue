@@ -1,7 +1,6 @@
 <script setup>
 import Chart from '../components/Chart.vue'
 import Control from '../components/Control.vue'
-
 import Result from '../components/Result.vue';
 </script>
 <template lang="">
@@ -15,20 +14,18 @@ import Result from '../components/Result.vue';
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
-            <ul class="nav ">
+            <ul class="nav gap-3">
               <li class="nav-item">
-                <div class="border rounded wallet">$1000</div>
+                <div class="border rounded wallet d-flex flex-column">
+                  <span class="text-real-acc text-light">Real Account</span>
+                  <b class="text-center text-light fw-bolder">${{Number(Money).toLocaleString()}}</b>
+                </div>
               </li>     
-              <li class="nav-item">
-                <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
-      
-                  <span >{{Number(Money).toLocaleString()}}</span>
-                </a>
-              </li>        
+                      
               <li class="nav-item">
                 <div>
                   <router-link to="/deposit">
-                    <button class="btn"><i class="animation"></i>BUY USD<i class="animation"></i></button>
+                    <button class="btn"><i class="animation"></i>Deposit<i class="animation"></i></button>
                   </router-link>
                 </div>
               </li>
@@ -84,24 +81,19 @@ export default {
     @import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
 
     .wallet{
-      outline: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #40B3A2;
-      min-width: 100px;
-      border: 0;
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
-      box-sizing: border-box;
-      padding: 10px 20px;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      overflow: hidden;
+      width: 144px;
+      height: 50px;
+      background-color: #8b8d96;
       cursor: pointer;
+    }
+
+    .text-real-acc{
+      font-size: 12px; 
+      margin-left: 5px;
+    }
+
+    b{
+      font-size: 20px;
     }
 
     img{
@@ -138,12 +130,13 @@ export default {
       align-items: center;
       justify-content: space-between;
       background: #40B3A2;
-      min-width: 100px;
+      width: 144px;
+      height: 50px;
       border: 0;
       border-radius: 4px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
       box-sizing: border-box;
-      padding: 16px 20px;
+     
       color: #fff;
       font-size: 12px;
       font-weight: 600;
