@@ -51,11 +51,11 @@ import Result from '../components/Result.vue';
     <main>
     <div class="container-fluid mt-3">
       <div class="row">
-          <div class=" col-sm-12 col-md-12 col-lg-8 col-xl-9 mt-3">
+          <div class=" col-sm-12 col-md-12 col-lg-8 col-xl-10 mt-3">
             <Chart />
             <Result/>
           </div>
-          <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3">
+          <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2">
             <Control @sendMoney = "handleDataFromChild"/>
           </div>       
       </div>

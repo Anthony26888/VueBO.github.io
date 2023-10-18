@@ -48,12 +48,12 @@
                     <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
                 </div>  
                 <div v-else class="mt-2 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
-                    <button type="button"  class="btn btn-success w-75 mx-auto" disabled>BUY</button>
+                    <button type="button"  class="btn btn-success w-75 mx-auto disable-button" disabled>BUY</button>
                     <span class="badge text-dark">
                         <p class="text-order">Waiting Result</p>                                         
                         <p class="text-count">{{seconds}}s</p>         
                     </span>    
-                    <button type="button" class="btn btn-danger w-75 mx-auto" disabled>SELL</button>    
+                    <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
                 </div>  
             </vue-countdown>            
         </form>                    
@@ -326,6 +326,7 @@ input {
     font-size: 20px;
     font-weight: 700;
     line-height: 30px;
+    cursor: pointer;
 }
 
 .btn-danger {
@@ -333,8 +334,13 @@ input {
     font-size: 20px;
     font-weight: 700;
     line-height: 30px;
+    cursor: pointer;
 }
 
+.disable-button{
+    background-color: var(--gray1);
+    cursor:not-allowed;
+}
 .text-order {
     font-size: 14px;
 
