@@ -16,7 +16,8 @@
             <div class="d-flex flex-column w-100 mx-auto">                
                 <div class="d-flex justify-content-center">
                     <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
-                    <input type="num" class="text-end ms-2" min="0" :max="money" v-model="total" >                    
+                    <input type="num" class="form-control text-end ms-2" name="formId1" id="formId1" placeholder="" min="0" :max="money" v-model="total"/>
+                           
                     <button type="button" class="btn btn-outline-secondary btnValue ms-2" v-on:click="Plus">+</button>                
                 </div> 
                 <div class="d-none d-sm-block d-md-none d-lg-block mt-2 text-center">
@@ -134,6 +135,7 @@ export default {
                     if ((minute % 2) == 0 && second == 57) {
                         if (this.priceCoin > 0) {
                             setTimeout(() => {
+                                this.money = this.money + this.total * 1.95
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
                                 this.status.splice(0, 10)
@@ -302,8 +304,7 @@ export default {
 }
 
 input {
-    width: 180px;
-    border-radius: 5px;
+    width: 180px;  
 }
 
 .value {

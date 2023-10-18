@@ -6,8 +6,7 @@ import Result from '../components/Result.vue';
 <template lang="">
     <header>
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div class="container-fluid">
-          
+        <div class="container-fluid">          
           <router-link to="/Trading" class="navbar-brand ms-2">
             <img src="../assets/img/logo-eagle.png" alt="">
             <span class="logo-text">Eagle Base</span>

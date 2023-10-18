@@ -56,6 +56,12 @@ export default {
 
 </script>
 <style scoped>
+  @media only screen and (min-width: 350px) {
+    .chart{
+      height: 390px;
+    }
+  }
+
   @media only screen and (min-width: 400px) {
     .chart{
       height: 500px;
@@ -64,12 +70,12 @@ export default {
 
   @media only screen and (min-width: 600px) {
     .chart{
-      height: 550px;
+      height: 450px;
     }
   }
   @media only screen and (min-width: 900px) {
     .chart{
-      height: 250px;
+      height: 850px;
     }
   }
 
@@ -85,9 +91,15 @@ export default {
     }
   }
 
+  @media only screen and (min-width: 1400px) {
+    .chart{
+      height: 550px;
+    }
+  }
+
   @media only screen and (min-width: 1900px) {
     .chart{
-      height: 800px;
+      height: 650px;
     }
   }
 
