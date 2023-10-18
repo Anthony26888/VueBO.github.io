@@ -1,0 +1,18 @@
+<div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div v-for="value in status" class="list-group mt-3">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">BTC/USD</h5>
+                            <small class="text-muted"></small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <p v-if="value.order == 'BUY'" class="mb-1 text-buy">{{value.order}}</p>
+                            <p v-else class="mb-1 text-sell">{{value.order}}</p>
+                            <small class="text-muted ">${{value.qty}}</small>
+                        </div>  
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted">{{value.timer}}</small>                           
+                        </div>
+                    </a>
+                </div> 
+            </div>  

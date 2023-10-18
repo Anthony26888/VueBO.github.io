@@ -12,112 +12,50 @@
             </div>
         </div>
       
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Order</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Status</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="profile" aria-selected="false">History</button>
-            </li>          
-        </ul>
-        
-       
-        <div class="tab-content">
-        <!--Order-->
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">                
-                <form @submit.prevent="" class="mt-3">                    
-                    <div class="d-flex flex-column w-75 mx-auto">                
-                        <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
-                            <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
-                            <input type="num" class="text-end w-50" min="0" :max="money" v-model="total" >                    
-                            <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Plus">+</button>                
-                        </div> 
-                        <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
-                            <button type="button" @click="value(inputData[0])" class="btn btn-outline-secondary value">+{{inputData[0]}}</button>
-                            <button type="button" @click="value(inputData[1])" class="btn btn-outline-secondary value">+{{inputData[1]}}</button>
-                            <button type="button" @click="value(inputData[2])" class="btn btn-outline-secondary value">+{{inputData[2]}}</button>                
-                        </div> 
-                        <div class="btn-group flex-wrap mt-2 justify-content-center w-100" role="group" aria-label="Button group name">
-                            <button type="button" @click="value(inputData[3])" class="btn btn-outline-secondary value">+{{inputData[3]}}</button>
-                            <button type="button" @click="value(inputData[4])" class="btn btn-outline-secondary value">+{{inputData[4]}}</button> 
-                            <button type="button" @click="value(money)" class="btn btn-outline-secondary value">{{inputData[5]}}</button>                 
-                        </div>  
-                    </div>            
-                    <div class="mt-4">
-                        <div class="d-flex justify-content-center">
-                            <p>Profit</p>
-                            <p class="text-warning ms-2">95%</p>                        
-                        </div>
-                        <h2 class="value-profit text-center justify-content-center">+ ${{ (total*1.95).toLocaleString() }}</h2>
-                    </div>
-                    <vue-countdown :time="time" :interval="100" v-slot="{minutes, seconds}">
-                        <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-column gap-2">
-                            <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
-                            <span class="badge text-dark">
-                                <p class="text-order">Please Order</p>                                         
-                                <p class="text-count">{{seconds}}s</p>         
-                            </span>    
-                            <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
-                        </div>  
-                        <div v-else class="mt-2 d-flex flex-column gap-2">
-                            <button type="button"  class="btn btn-success w-100" disabled>BUY</button>
-                            <span class="badge text-dark">
-                                <p class="text-order">Waiting Result</p>                                         
-                                <p class="text-count">{{seconds}}s</p>         
-                            </span>    
-                            <button type="button" class="btn btn-danger w-100" disabled>SELL</button>    
-                        </div>  
-                    </vue-countdown>
-                </form>
-            </div>
-
-
-            <!--Status-->
-            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div v-for="value in status" class="list-group mt-3">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">BTC/USD</h5>
-                            <small class="text-muted"></small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <p v-if="value.order == 'BUY'" class="mb-1 text-buy">{{value.order}}</p>
-                            <p v-else class="mb-1 text-sell">{{value.order}}</p>
-                            <small class="text-muted ">${{value.qty}}</small>
-                        </div>  
-                        <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted">{{value.timer}}</small>                           
-                        </div>
-                    </a>
+        <form @submit.prevent="" class="mt-3">                    
+            <div class="d-flex flex-column w-100 mx-auto">                
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
+                    <input type="num" class="text-end ms-2" min="0" :max="money" v-model="total" >                    
+                    <button type="button" class="btn btn-outline-secondary btnValue ms-2" v-on:click="Plus">+</button>                
                 </div> 
-            </div>     
+                <div class="d-none d-sm-block d-md-none d-lg-block mt-2 text-center">
+                    <button type="button" @click="value(inputData[0])" class="btn btn-secondary value">+{{inputData[0]}}</button>
+                    <button type="button" @click="value(inputData[1])" class="btn btn-secondary ms-2 value">+{{inputData[1]}}</button>
+                    <button type="button" @click="value(inputData[2])" class="btn btn-secondary ms-2 value">+{{inputData[2]}}</button>                
+                </div> 
+                <div class="d-none d-sm-block d-md-none d-lg-block mt-2 text-center">
+                    <button type="button" @click="value(inputData[3])" class="btn btn-secondary value">+{{inputData[3]}}</button>
+                    <button type="button" @click="value(inputData[4])" class="btn btn-secondary ms-2 value">+{{inputData[4]}}</button> 
+                    <button type="button" @click="value(money)" class="btn btn-secondary ms-2 value">{{inputData[5]}}</button>               
+                </div>  
+                
+                <div class="d-flex justify-content-center align-item-center mt-3">
+                    <p class="mt-2">Profit</p>
+                    <p class="text-warning ms-2 mt-2">95%</p>
+                    <h2 class="value-profit ms-2">+ ${{ (total*1.95).toLocaleString() }}</h2>                        
+                </div>
+            </div>            
             
-
-            <!--History-->
-            <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="profile-tab">
-                <div v-for="value in history" class="list-group mt-3">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">BTC/USD</h5>
-                            <small class="text-muted"></small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <p v-if="value.order == 'BUY'" class="mb-1 text-buy">{{value.order}}</p>
-                            <p v-else class="mb-1 text-sell">{{value.order}}</p>
-                            <small class="text-muted ">${{value.qty}}</small>
-                        </div>  
-                        <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted">{{value.timer}}</small>
-                            <small class="text-muted ">${{value.reward}}</small>                           
-                        </div>
-                    </a>
-                </div> 
-            </div>      
-        </div>
+            <vue-countdown  :time="time" :interval="100" v-slot="{minutes, seconds}">
+                <div v-if="minutes % 2 ==0" class="mt-4 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
+                    <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
+                    <span class="badge text-dark">
+                        <p class="text-order">Please Order</p>                                         
+                        <p class="text-count">{{seconds}}s</p>         
+                    </span>    
+                    <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
+                </div>  
+                <div v-else class="mt-2 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
+                    <button type="button"  class="btn btn-success w-75 mx-auto" disabled>BUY</button>
+                    <span class="badge text-dark">
+                        <p class="text-order">Waiting Result</p>                                         
+                        <p class="text-count">{{seconds}}s</p>         
+                    </span>    
+                    <button type="button" class="btn btn-danger w-75 mx-auto" disabled>SELL</button>    
+                </div>  
+            </vue-countdown>            
+        </form>                    
     </div>
     
     <div v-show="showModal" class=modal-win @click="closeModal()">
@@ -129,8 +67,6 @@
             </div>                 
         </div>
     </div>
-
-   
     
 </template>
 <script>
@@ -148,7 +84,7 @@ export default {
             time: newYear - now,
             showAlert: false,
             status: [],
-            history:[],
+            history: [],
             priceCoin: null,
             showModal: false,
             timeTrade: null,
@@ -156,15 +92,15 @@ export default {
             idUser: null,
         }
     },
-    mounted() {       
+    mounted() {
         setInterval(() => {
             this.fetchData()
             this.fetchTimer()
             this.$emit('sendMoney', this.money)
         }, 1000)
         this.fetchUser()
-        
-        
+
+
     },
 
     methods: {
@@ -191,30 +127,30 @@ export default {
                 if (this.total) {
                     this.status.push({ qty: this.total, order: 'BUY', timer: this.rightNow })
                 }
-                
+
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
                     if ((minute % 2) == 0 && second == 57) {
                         if (this.priceCoin > 0) {
-                            setTimeout(() => {                                
+                            setTimeout(() => {
                                 const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`                               
+                                const url = `http://localhost:3000/account/${user}`
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
-                               
+
 
                                 //PATCH MONEY
                                 axios.patch(url, {
-                                    usd: `${this.money}`,                                    
+                                    usd: `${this.money}`,
                                 })
-                                .then((response) => {
-                                    console.log(response.data)
-                                })
-                                .catch(error => {
-                                    console.error('Error adding item:', error);
-                                });                       
+                                    .then((response) => {
+                                        console.log(response.data)
+                                    })
+                                    .catch(error => {
+                                        console.error('Error adding item:', error);
+                                    });
                             }, 2000)
 
                         }
@@ -222,22 +158,22 @@ export default {
                             setTimeout(() => {
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
-                               
-                                this.money = this.money + 0                                                           
+
+                                this.money = this.money + 0
                                 this.status.splice(0, 10)
-                                clearInterval(myInterval)                        
-                               
+                                clearInterval(myInterval)
+
 
                                 //PATCH MONEY
                                 axios.patch(url, {
-                                    usd: `${this.money}`,                                   
+                                    usd: `${this.money}`,
                                 })
-                                .then((response) => {
-                                    console.log(response.data)
-                                })
-                                .catch(error => {
-                                    console.error('Error adding item:', error);
-                                });  
+                                    .then((response) => {
+                                        console.log(response.data)
+                                    })
+                                    .catch(error => {
+                                        console.error('Error adding item:', error);
+                                    });
                             }, 2000)
                         }
                     }
@@ -272,12 +208,12 @@ export default {
                                 axios.patch(url, {
                                     usd: `${this.money}`
                                 })
-                                .then((response) => {
-                                    console.log(response.data)
-                                })
-                                .catch(error => {
-                                    console.error('Error adding item:', error);
-                                });
+                                    .then((response) => {
+                                        console.log(response.data)
+                                    })
+                                    .catch(error => {
+                                        console.error('Error adding item:', error);
+                                    });
                             }, 2000)
 
                         }
@@ -288,18 +224,18 @@ export default {
                                 clearInterval(myInterval)
                                 this.total = 0
 
-                                
+
                                 const user = this.idUser
                                 const url = `http://localhost:3000/account/${user}`
                                 axios.patch(url, {
                                     usd: `${this.money}`
                                 })
-                                .then((response) => {
-                                    console.log(response.data)
-                                })
-                                .catch(error => {
-                                    console.error('Error adding item:', error);
-                                });
+                                    .then((response) => {
+                                        console.log(response.data)
+                                    })
+                                    .catch(error => {
+                                        console.error('Error adding item:', error);
+                                    });
                             }, 2000)
                         }
                     }
@@ -322,7 +258,7 @@ export default {
                     const price4 = price.map((x) => (x[4]));
                     const total = (price4 - price1).toLocaleString()
                     this.priceCoin = total
-                    
+
                 })
                 .catch(error => {
                     console.error('Error adding item:', error);
@@ -339,22 +275,22 @@ export default {
         },
 
         fetchUser() {
-            const getUser = localStorage.getItem("user")         
+            const getUser = localStorage.getItem("user")
             const url = `http://localhost:3000/account?user=${getUser}`
             axios.get(url)
-            .then((response) => {
-                const dataAccount = response.data
-                const moneyUser = dataAccount.map((x) => (x.usd))
-                const id = dataAccount.map((x) => (x.id))
-                const historyUser = dataAccount.history
-                this.money = moneyUser.join("")
-                this.idUser = id
-                this.history = historyUser
-                
-            })
-            .catch(error => {
-                console.error('Error adding item:', error);
-            });
+                .then((response) => {
+                    const dataAccount = response.data
+                    const moneyUser = dataAccount.map((x) => (x.usd))
+                    const id = dataAccount.map((x) => (x.id))
+                    const historyUser = dataAccount.history
+                    this.money = moneyUser.join("")
+                    this.idUser = id
+                    this.history = historyUser
+
+                })
+                .catch(error => {
+                    console.error('Error adding item:', error);
+                });
         },
     },
 }
@@ -366,11 +302,15 @@ export default {
 }
 
 input {
-    width: 100%;
+    width: 180px;
+    border-radius: 5px;
 }
 
 .value {
-    width: 50px;
+    width: 80px;
+    font-size: 14px;
+    background-color: var(--gray1);
+    font-weight: bolder;
     font-size: 14px;
 }
 
@@ -378,6 +318,7 @@ input {
     font-size: 30px;
     color: var(--green);
 }
+
 
 .btn-success {
     background-color: var(--green);
@@ -416,10 +357,10 @@ input {
     color: var(--red);
 }
 
-.card{
+.card {
     position: fixed;
     top: 50%;
-    left: 50%;  
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
     height: 250px;
@@ -430,11 +371,11 @@ input {
 
 
 .modal-win {
-    position: fixed; 
-    z-index: 1; 
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%;  
+    width: 100%;
     height: 100%;
     overflow: auto;
     background-color: rgb(0, 0, 0);
@@ -442,9 +383,9 @@ input {
 
 }
 
-img{
+img {
     width: 250px;
-    margin-top:-100px ;
+    margin-top: -100px;
 }
 
 .congrat {
@@ -456,10 +397,4 @@ img{
     font-size: 25px;
     color: var(--green)
 }
-
-
-
-
-
-
 </style>

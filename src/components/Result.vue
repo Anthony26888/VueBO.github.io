@@ -1,26 +1,26 @@
 <script setup>
-import Result1 from './Result-1.vue';
-import Result2 from './Result-2.vue';
-import Result3 from './Result-3.vue';
-import Result4 from './Result-4.vue';
-import Result5 from './Result-5.vue';
+import Result1 from './child-components/Result-1.vue';
+import Result2 from './child-components/Result-2.vue';
+import Result3 from './child-components/Result-3.vue';
+import Result4 from './child-components/Result-4.vue';
+import Result5 from './child-components/Result-5.vue';
 </script>
 <template lang="">
     <div class="container-fluid mt-3">
-        <div class="d-flex justify-content-center gap-4 tablet">
-            <div>
+        <div class="d-flex justify-content-center">
+            <div class="ms-4">
                 <Result-1 :result="result"/>
             </div>
-            <div>
+            <div class="ms-4">
                 <Result-2 :result="result"/>
             </div>
-            <div class="d-none d-sm-block">
+            <div class="d-none d-sm-block ms-4">
                 <Result-3 :result="result"/>
             </div>
-            <div class="d-none d-sm-block">
+            <div class="d-none d-sm-block ms-4">
                 <Result-4 :result="result"/>
             </div>
-            <div class="d-none d-sm-block d-md-none d-lg-block d-lg-none d-xl-block">
+            <div class="d-none d-sm-block d-md-none d-lg-block d-lg-none d-xl-block ms-4">
                 <Result-5 :result="result"/>
             </div>          
         </div>

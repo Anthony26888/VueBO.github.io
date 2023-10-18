@@ -1,6 +1,6 @@
 <template lang="">
   <div id="chart">
-    <apexchart type="candlestick" height="600" width="100%" :options="chartOptions" :series="series"></apexchart>
+    <apexchart class="chart" type="candlestick" height="100%" width="100%" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 <script>
@@ -55,6 +55,41 @@ export default {
 }
 
 </script>
-<style lang="">
+<style scoped>
+  @media only screen and (min-width: 400px) {
+    .chart{
+      height: 500px;
+    }
+  }
+
+  @media only screen and (min-width: 600px) {
+    .chart{
+      height: 550px;
+    }
+  }
+  @media only screen and (min-width: 900px) {
+    .chart{
+      height: 250px;
+    }
+  }
+
+  @media only screen and (min-width: 1000px) {
+    .chart{
+      height: 500px;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .chart{
+      height: 400px;
+    }
+  }
+
+  @media only screen and (min-width: 1900px) {
+    .chart{
+      height: 800px;
+    }
+  }
+
   
 </style>

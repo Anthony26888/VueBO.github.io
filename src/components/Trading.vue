@@ -7,8 +7,11 @@ import Result from '../components/Result.vue';
     <header>
       <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-fluid">
-          <img src="../assets/img/logo-eagle.png" alt="">
-          <router-link to="/Trading" class="navbar-brand ms-2">Eagle Base</router-link>   
+          
+          <router-link to="/Trading" class="navbar-brand ms-2">
+            <img src="../assets/img/logo-eagle.png" alt="">
+            <span class="logo-text">Eagle Base</span>
+          </router-link>   
           <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -49,14 +52,15 @@ import Result from '../components/Result.vue';
     <main>
     <div class="container-fluid mt-3">
       <div class="row">
-        <div class=" col-sm-12 col-md-12 col-lg-8 col-xl-9 mt-3">
-          <Chart />
-          <Result/>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3">
-          <Control @sendMoney = "handleDataFromChild"/>
-        </div>       
+          <div class=" col-sm-12 col-md-12 col-lg-8 col-xl-9 mt-3">
+            <Chart />
+            <Result/>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3">
+            <Control @sendMoney = "handleDataFromChild"/>
+          </div>       
       </div>
+      
     </div>    
   </main>
 </template>
@@ -83,7 +87,7 @@ export default {
     .wallet{
       width: 144px;
       height: 50px;
-      background-color: #8b8d96;
+      background-color: var(--gray1);
       cursor: pointer;
     }
 
@@ -94,6 +98,12 @@ export default {
 
     b{
       font-size: 20px;
+    }
+
+    .logo-text{
+      font-size: 30px;
+      margin-left: 10px;
+      font-weight: 700;
     }
 
     img{
