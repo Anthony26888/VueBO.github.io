@@ -22,12 +22,13 @@ const routes = [
     },
     {
         path: '/Trading',
-        component: Trading
+        component: Trading,
+        children:[
+            {path: '', component: Trading},
+            {path: 'Deposit', component: Deposit}
+        ]
     },  
-    {
-        path: '/deposit',
-        component: Deposit
-    },
+    
 
 
 ]

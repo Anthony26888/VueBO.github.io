@@ -91,7 +91,7 @@ export default {
     }
   }
 
-  @media only screen and (min-width: 1400px) {
+  @media only screen and (min-width: 1600px) {
     .chart{
       height: 550px;
     }

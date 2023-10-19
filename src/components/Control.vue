@@ -1,6 +1,6 @@
 
 <template lang="">
-    <div class="container mt-3">
+    <div class="container-fuild mt-3">
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -13,14 +13,13 @@
         </div>
       
         <form @submit.prevent="" class="mt-3">                    
-            <div class="d-flex flex-column w-100 mx-auto">                
+            <div class="d-flex flex-column mx-auto">                
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary btnValue" v-on:click="Div">-</button>
-                    <input type="num" class="form-control text-end ms-2" name="formId1" id="formId1" placeholder="" min="0" :max="money" v-model="total"/>
-                           
-                    <button type="button" class="btn btn-outline-secondary btnValue ms-2" v-on:click="Plus">+</button>                
+                    <button type="button" class="btn btn-secondary" v-on:click="Div">-</button>
+                    <input type="num" class="form-control text-end ms-2 w-75" name="formId1" id="formId1" placeholder="" min="0" :max="money" v-model="total"/>                           
+                    <button type="button" class="btn btn-secondary ms-2" v-on:click="Plus">+</button>                
                 </div> 
-                <div class="d-none d-sm-block d-md-none d-lg-block mt-2 text-center">
+                <div class="d-none d-sm-block d-md-none d-lg-block mt-3 text-center">
                     <button type="button" @click="value(inputData[0])" class="btn btn-secondary value">+{{inputData[0]}}</button>
                     <button type="button" @click="value(inputData[1])" class="btn btn-secondary ms-2 value">+{{inputData[1]}}</button>
                     <button type="button" @click="value(inputData[2])" class="btn btn-secondary ms-2 value">+{{inputData[2]}}</button>                
@@ -31,9 +30,8 @@
                     <button type="button" @click="value(money)" class="btn btn-secondary ms-2 value">{{inputData[5]}}</button>               
                 </div>  
                 
-                <div class="d-flex justify-content-center align-item-center mt-3">
-                    <p class="mt-2">Profit</p>
-                    <p class="text-warning ms-2 mt-2">95%</p>
+                <div class="d-flex flex-lg-column text-center mx-auto mt-3">
+                    <p class="mt-2">Profit 95%</p>                    
                     <h2 class="value-profit ms-2">+ ${{ (total*1.95).toLocaleString() }}</h2>                        
                 </div>
             </div>            
@@ -403,5 +401,32 @@ img {
 .money-win {
     font-size: 25px;
     color: var(--green)
+}
+
+@media only screen and (min-width: 1200px) {
+    .value{
+      width: 50px;
+      height:40px;
+      font-size: 11px;
+      font-weight: 500px;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    .value{
+      width: 60px;
+      height: 50px;
+      font-size: 14px;
+    }
+    input{
+        width: 80px;
+    }
+}
+@media only screen and (min-width: 1900px) {
+    .value{
+      width: 80px;
+      height: 50px;
+      font-size: 14px;
+    }
 }
 </style>

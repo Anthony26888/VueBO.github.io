@@ -2,6 +2,7 @@
 import Chart from '../components/Chart.vue'
 import Control from '../components/Control.vue'
 import Result from '../components/Result.vue';
+import Deposit from '../components/Deposit.vue'
 </script>
 <template lang="">
     <header>
@@ -16,7 +17,7 @@ import Result from '../components/Result.vue';
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
-            <ul class="nav gap-3">
+            <ul class="nav gap-1">
               <li class="nav-item">
                 <div class="border rounded wallet d-flex flex-column">
                   <span class="text-real-acc text-light">Real Account</span>
@@ -26,20 +27,18 @@ import Result from '../components/Result.vue';
                       
               <li class="nav-item">
                 <div>
-                  <router-link to="/deposit">
-                    <button class="btn"><i class="animation"></i>Deposit<i class="animation"></i></button>
+                  <router-link to="/Trading/Deposit">
+                    <button class="btn ms-3" @click="deposit"><i class="animation"></i>Deposit<i class="animation"></i></button>
                   </router-link>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
-                  <i class="bi bi-person-bounding-box"></i>
+                <a class="nav-link ms-3" href="#" tabindex="-1" aria-disabled="true">                  
                   <span >Profile</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex flex-column align-items-center justify-content-center" href="#" tabindex="-1" aria-disabled="true">
-                  <i class="bi bi-gear"></i>
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">                  
                   <span>Setting</span>
                 </a>              
               </li>            
@@ -49,18 +48,20 @@ import Result from '../components/Result.vue';
       </nav>
     </header>
     <main>
+    
     <div class="container-fluid mt-3">
-      <div class="row">
+      <div v-show="app" class="row">
           <div class=" col-sm-12 col-md-12 col-lg-8 col-xl-10 mt-3">
             <Chart />
             <Result/>
           </div>
           <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2">
             <Control @sendMoney = "handleDataFromChild"/>
-          </div>       
-      </div>
-      
+          </div>  
+      </div>    
+      <router-view></router-view>
     </div>    
+    
   </main>
 </template>
 <script>
@@ -68,6 +69,8 @@ export default {
   data() {
     return {
       Money:0,
+      app:true,
+      depositApp:false,
     }
   },
  
@@ -75,6 +78,10 @@ export default {
     
     handleDataFromChild(data) {  
       this.Money = data; 
+    },
+    deposit(){
+      this.app = false
+      this.depositApp = true
     }
   },
 }

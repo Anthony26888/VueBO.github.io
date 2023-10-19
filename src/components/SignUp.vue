@@ -1,5 +1,5 @@
 <script setup>
-  import NavbarLanding from './NavbarLanding.vue';
+  import NavbarLanding from './child-components/NavbarLanding.vue';
 </script>
 <template lang="">
   <NavbarLanding/>
