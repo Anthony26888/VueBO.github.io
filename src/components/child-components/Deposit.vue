@@ -21,7 +21,27 @@
             <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
-                
+                <div class="card text-dark bg-light mb-3 mt-4 ">      
+                    <div class="card-body d-flex">
+                        <img src="https://cronbase2.net/img/icon-usdt.f667059b.svg" alt=""> 
+                        <p class="card-text ms-2">USDT</p><br>
+                        <p class="card-text text-muted ms-2">Tether</p> 
+                        <span class="text-muted justify-content-end">$0</span>
+                        
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="d-flex justify-content-around">
+                            <div class="d-flex">
+                                <img src="../../assets/img/logo/deposit.svg" alt="">
+                                <span class="ms-2 text-success">Deposit</span>
+                            </div>
+                            <div class="d-flex">
+                                <img src="../../assets/img/logo/withdraw.svg" alt="">
+                                <span class="ms-2 text-danger">Withdraw</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab"> profile </div>
         </div>

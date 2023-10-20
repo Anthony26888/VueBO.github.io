@@ -95,7 +95,7 @@ export default {
         this.Money = moneyUser.join("")
        
       })
-        .catch(error => {
+      .catch(error => {
           console.error('Error adding item:', error);
       });
     },
