@@ -1,7 +1,4 @@
-<script setup>
-import DepositTab from './child-components/DepositTab.vue'
 
-</script>
 <template lang="">
 
     <div class="container mt-5">
@@ -24,7 +21,7 @@ import DepositTab from './child-components/DepositTab.vue'
             <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
-                <DepositTab/>
+                
             </div>
             <div class="tab-pane" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab"> profile </div>
         </div>
@@ -37,15 +34,18 @@ export default {
             totalUSD: 'Total Balance (USD)',
             buyUSD: 'Deposit',
             sellUSD: 'Withdraw',
-            history: 'History',
             
+                  
         }
     },
 }
 </script>
 <style scoped>
-.logo-pay {
-    width: 32px;
-    height: 32px;
-}
+    .logo-pay {
+        width: 32px;
+        height: 32px;
+    }
+    .card{
+        width: 400px;
+    }
 </style>

@@ -1,17 +1,6 @@
 
 <template lang="">
-    <div class="container-fuild mt-3">
-        <div v-show="showAlert" class="position-relative">
-            <div class="position-absolute top-0 end-0">
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <i class="bi bi-check2-circle"></i>
-                    <div class="ms-2">
-                        <strong> Order Complete</strong> 
-                    </div>
-                </div>
-            </div>
-        </div>
-      
+    <div class="container-fuild mt-5">        
         <form @submit.prevent="" class="mt-3">                    
             <div class="d-flex flex-column mx-auto">                
                 <div class="d-flex justify-content-center">
@@ -59,11 +48,22 @@
     
     <div v-show="showModal" class=modal-win @click="closeModal()">
         <div class="card"> 
-            <img src="../assets/img/logo-eagle.png" alt="" class="mx-auto">   
+            <img src="../../assets/img/logo-eagle.png" alt="" class="mx-auto">   
             <div class="card-body text-center">
                 <span class="congrat">Congratulation</span><br>
                 <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
             </div>                 
+        </div>
+    </div>
+
+    <div v-show="showAlert" class="position-relative">
+        <div class="position-absolute top-0 end-0">
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+                <i class="bi bi-check2-circle"></i>
+                <div class="ms-2">
+                    <strong> Order Complete</strong> 
+                </div>
+            </div>
         </div>
     </div>
     
@@ -84,7 +84,8 @@ export default {
             showAlert: false,
             status: [],
             history: [],
-            priceCoin: null,
+            priceOpen:0,
+            priceClose:0,
             showModal: false,
             timeTrade: null,
             userName: 'dang26888',
@@ -118,6 +119,7 @@ export default {
             if (action == 'buy') {
                 this.showAlert = true
                 this.money = Math.max(0, this.money - this.total) || 0
+                this.patchData()
 
                 setTimeout(() => {
                     this.showAlert = false
@@ -131,49 +133,23 @@ export default {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
                     if ((minute % 2) == 0 && second == 57) {
-                        if (this.priceCoin > 0) {
+                        if (this.priceOpen < this.priceClose) {
                             setTimeout(() => {
-                                this.money = this.money + this.total * 1.95
-                                const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
+                                this.money = this.money + this.total * 1.95                                
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
-
-
                                 //PATCH MONEY
-                                axios.patch(url, {
-                                    usd: `${this.money}`,
-                                })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                this.patchData()
                             }, 2000)
-
                         }
                         else {
                             setTimeout(() => {
-                                const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
-
                                 this.money = this.money + 0
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
-
-
                                 //PATCH MONEY
-                                axios.patch(url, {
-                                    usd: `${this.money}`,
-                                })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                this.patchData()
                             }, 2000)
                         }
                     }
@@ -182,6 +158,7 @@ export default {
             } else {
                 this.showAlert = true
                 this.money = Math.max(0, this.money - this.total) || 0
+                this.patchData()
 
                 setTimeout(() => {
                     this.showAlert = false
@@ -195,25 +172,14 @@ export default {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
                     if ((minute % 2) == 0 && second == 57) {
-                        if (this.priceCoin < 0) {
+                        if (this.priceOpen > this.priceClose) {
                             setTimeout(() => {
                                 this.money = this.money + this.total * 1.95
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.showModal = true
-
                                 //PATCH MONEY
-                                const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
-                                axios.patch(url, {
-                                    usd: `${this.money}`
-                                })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                this.patchData()
                             }, 2000)
 
                         }
@@ -223,24 +189,26 @@ export default {
                                 this.status.splice(0, 10)
                                 clearInterval(myInterval)
                                 this.total = 0
-
-
-                                const user = this.idUser
-                                const url = `http://localhost:3000/account/${user}`
-                                axios.patch(url, {
-                                    usd: `${this.money}`
-                                })
-                                    .then((response) => {
-                                        console.log(response.data)
-                                    })
-                                    .catch(error => {
-                                        console.error('Error adding item:', error);
-                                    });
+                                //PATCH MONEY
+                                this.patchData()
                             }, 2000)
                         }
                     }
                 }, 1000)
             }
+        },
+        patchData(){
+            const user = this.idUser
+            const url = `http://localhost:3000/account/${user}`
+            axios.patch(url, {
+                usd: `${this.money}`
+            })
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
         },
 
         closeModal() {
@@ -256,9 +224,8 @@ export default {
                     const price = response.data
                     const price1 = price.map((x) => (x[1]));
                     const price4 = price.map((x) => (x[4]));
-                    const total = (price4 - price1).toLocaleString()
-                    this.priceCoin = total
-
+                    this.priceOpen = price1
+                    this.priceClose = price4
                 })
                 .catch(error => {
                     console.error('Error adding item:', error);
@@ -268,7 +235,7 @@ export default {
         fetchTimer() {
             const now = new Date()
             const hour = now.getHours()
-            const minute = now.getHours()
+            const minute = now.getMinutes()
             const second = now.getSeconds()
             const time = hour + ':' + minute + ':' + second
             this.timeTrade = time
