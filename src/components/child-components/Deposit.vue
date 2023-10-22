@@ -1,14 +1,15 @@
-
 <template lang="">
-
-    <div class="container mt-5">
-        <div class="w-100 text-start total-money mt-3">             
-            <div class="card-body">
-                <h4 class="text-muted">{{totalUSD}}: $1,000</h4>              
+    <div class="container-fuild total-money p-5">
+        <div class="w-100 text-start container">             
+            <div class="card-body ">
+                <h5 class="text-muted">{{totalUSD}}:</h5>
+                <h1> $1,000</h1>              
             </div>
         </div>
+    </div>
+    <div class="container">
             <!-- Nav tabs -->
-        <ul class="nav nav-tabs mt-5 nav-fill" id="myTab" role="tablist">
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#deposit" type="button" role="tab" aria-controls="home" aria-selected="true"><i class="bi bi-cash-coin me-2"></i>{{buyUSD}}</button>
             </li>
@@ -22,12 +23,15 @@
         <div class="tab-content">
             <div class="tab-pane active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
                 <div class="card text-dark bg-light mb-3 mt-4 ">      
-                    <div class="card-body d-flex">
-                        <img src="https://cronbase2.net/img/icon-usdt.f667059b.svg" alt=""> 
-                        <p class="card-text ms-2">USDT</p><br>
-                        <p class="card-text text-muted ms-2">Tether</p> 
-                        <span class="text-muted justify-content-end">$0</span>
-                        
+                    <div class="card-body d-flex justify-content-between">
+                        <div class="d-flex">
+                            <img src="https://cronbase2.net/img/icon-usdt.f667059b.svg" alt=""> 
+                            <div>
+                                <p class="card-text ms-2">USDT</p>
+                                <p class="card-text text-muted ms-2">Tether</p> 
+                            </div>                            
+                        </div>
+                        <span class="text-muted justify-content-end">$0</span>                        
                     </div>
                     <div class="card-footer text-muted">
                         <div class="d-flex justify-content-around">
@@ -42,8 +46,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-5">
+                    <h3>History Deposit and Withdraw</h3>
+                    <!-- Nav tabs -->
+                    <ul class="nav" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                      </li>
+                      
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab"> home </div>
+                      <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> profile </div>                      
+                    </div>
+                    
+                </div>
             </div>
-            <div class="tab-pane" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab"> profile </div>
+            <div class="tab-pane" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab"></div>
         </div>
     </div>
 </template>
@@ -67,5 +91,9 @@ export default {
     }
     .card{
         width: 400px;
+    }
+
+    .total-money{
+        background-color: var(--green1);
     }
 </style>

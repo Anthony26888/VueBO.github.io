@@ -1,6 +1,16 @@
 
 <template lang="">
-    <div class="container-fuild mt-5">        
+    <div class="container-fuild">       
+        <div v-show="showAlert" class="position-relative">
+            <div class="position-absolute top-0 end-0">
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <i class="bi bi-check2-circle"></i>
+                    <div class="ms-2">
+                        <strong> Order Complete</strong> 
+                    </div>
+                </div> 
+            </div>
+        </div> 
         <form @submit.prevent="" class="mt-3">                    
             <div class="d-flex flex-column mx-auto">                
                 <div class="d-flex justify-content-center">
@@ -43,7 +53,9 @@
                     <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
                 </div>  
             </vue-countdown>            
-        </form>                    
+        </form>  
+        
+                     
     </div>
     
     <div v-show="showModal" class=modal-win @click="closeModal()">
@@ -56,16 +68,9 @@
         </div>
     </div>
 
-    <div v-show="showAlert" class="position-relative">
-        <div class="position-absolute top-0 end-0">
-            <div class="alert alert-success d-flex align-items-center" role="alert">
-                <i class="bi bi-check2-circle"></i>
-                <div class="ms-2">
-                    <strong> Order Complete</strong> 
-                </div>
-            </div>
-        </div>
-    </div>
+    
+
+    
     
 </template>
 <script>
@@ -132,7 +137,7 @@ export default {
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
-                    if ((minute % 2) == 0 && second == 57) {
+                    if ((minute % 2) == 0 && second == 59) {
                         if (this.priceOpen < this.priceClose) {
                             setTimeout(() => {
                                 this.money = this.money + this.total * 1.95                                
@@ -171,7 +176,7 @@ export default {
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
-                    if ((minute % 2) == 0 && second == 57) {
+                    if ((minute % 2) == 0 && second == 59) {
                         if (this.priceOpen > this.priceClose) {
                             setTimeout(() => {
                                 this.money = this.money + this.total * 1.95

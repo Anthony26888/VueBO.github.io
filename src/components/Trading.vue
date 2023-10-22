@@ -65,7 +65,7 @@ import Control from "./child-components/Control.vue";
     </nav>
   </header>
   <main>
-    <div class="container-fluid mt-3">
+    <div class="container-fluid">
       <router-view></router-view>
     </div>
   </main>
