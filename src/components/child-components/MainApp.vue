@@ -10,9 +10,8 @@ import Result5 from "./Result-5.vue";
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-8 col-xl-10">
-        <!--Chart-->        
-        <div id="tv_chart_container"></div>
-
+        <!--Chart-->
+        <div id="tv_chart_container" ref="chartContainer"></div>
         <!--Result-->
         <div class="d-flex justify-content-center mt-3">
           <div class="ms-4">
@@ -41,85 +40,75 @@ import Result5 from "./Result-5.vue";
   </div>
 </template>
 <script>
+import { createChart } from "lightweight-charts";
 import axios from "axios";
 export default {
   data() {
     return {
-      
-      openPrice: null,
-      closePrice: null,
       result: [],
+      colorCandles:null,
     };
   },
   mounted() {
-    setInterval(() => {
-      this.fetchData();
-      this.limitResult();
-    }, 1000);
-    const widget = new TradingView.widget({
-      // Configuration options for the chart
-      // For example:
-      autosize: true,
-      symbol: "BINANCE:BTCUSDT",
-      interval: "1",
-      timezone: "Etc/UTC",
-      theme: "light",
-      style: "1",
-      locale: "en",
-      enable_publishing: false,
-      gridColor: "rgba(255, 255, 255, 0.06)",
-      hide_top_toolbar: true,
-      hide_legend: true,
-      allow_symbol_change: true,
-      save_image: false,         
-      charts_storage_url: "https://saveload.tradingview.com",
-      library_path: "/static/charting_library/",
-      container_id: "tv_chart_container",
+    const chart = createChart(this.$refs.chartContainer);
+
+    this.candleSeries = chart.addCandlestickSeries({
+      upColor: "green",
+      downColor: "red",
+      borderDownColor: "red",
+      borderUpColor: "green",
+      wickDownColor: "red",
+      wickUpColor: "green",
     });
-    widget.on('ready', () => {
-            const chart = widget.activeChart();
-            chart.subscribeCrosshairMove((param) => {
-                const seriesProperties = param.seriesPrices.get('main');
-                if (seriesProperties) {
-                    this.closePrice = seriesProperties.close;
-                    this.openPrice = seriesProperties.open;
-                }
-            });
-        });
-    
+
+    this.loadData(); // Load initial data
+    setInterval(this.loadData, 1000); // Refresh data every minute (adjust interval as needed)
+    setInterval(this.fetchColor, 1000)
   },
   methods: {
-    fetchData() {
-      const url =
-        "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=50";
-      axios.get(url).then((response) => {    
-        const price = response.data;
-        const price1 = price.map((x) => x[1]);
-        const price4 = price.map((x) => x[4]);
-        const runtime = new Date().getSeconds();
-        if (runtime == 0) {
-          setTimeout(() => {
-            if (price1 < price4) {
-              this.result.push("green");
-            } else if (price1 > price4) {
-              this.result.push("red");
-            } else {
-              this.result.push("gray");
-            }
-          }, 1000);
-        }
-      });
+    loadData() {
+      axios
+        .get("https://api.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1m&limit=50")
+        .then((response) => {
+          const data = response.data.map((item) => {
+            const [time, open, high, low, close] = item;
+            const color = close > open ? "green" : "red";
+            
+            this.colorCandles=color
+            return {
+              time: time,
+              open: parseFloat(open),
+              high: parseFloat(high),
+              low: parseFloat(low),
+              close: parseFloat(close),
+              color: color,
+            };
+          });
+
+          this.candleSeries.setData(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching Binance data:", error);
+        });
     },
-    limitResult() {
-      const check = this.result.length
-      if(check > 100){
-        this.result.splice(0, 100)
+    fetchColor(){
+      
+      const runtime = new Date().getSeconds()
+      if(runtime == 59){
+        this.result.push(this.colorCandles)
       }
-    },
+    }
   },
 };
 </script>
 <style scoped>
+#tv_chart_container {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 @media only screen and (min-width: 350px) {
   #tv_chart_container {
     height: 390px;

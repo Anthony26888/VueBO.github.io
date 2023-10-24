@@ -137,25 +137,21 @@ export default {
                 const myInterval = setInterval(() => {
                     const minute = new Date().getMinutes()
                     const second = new Date().getSeconds()
-                    if ((minute % 2) == 0 && second == 59) {
+                    if ((minute % 2) == 0 && second == 0) {
                         if (this.priceOpen < this.priceClose) {
-                            setTimeout(() => {
-                                this.money = this.money + this.total * 1.95                                
-                                this.status.splice(0, 10)
-                                clearInterval(myInterval)
-                                this.showModal = true
-                                //PATCH MONEY
-                                this.patchData()
-                            }, 2000)
+                            this.money = this.money + this.total * 1.95                                
+                            this.status.splice(0, 10)
+                            clearInterval(myInterval)
+                            this.showModal = true
+                            //PATCH MONEY
+                            this.patchData()
                         }
                         else {
-                            setTimeout(() => {
-                                this.money = this.money + 0
-                                this.status.splice(0, 10)
-                                clearInterval(myInterval)
-                                //PATCH MONEY
-                                this.patchData()
-                            }, 2000)
+                            this.money = this.money + 0
+                            this.status.splice(0, 10)
+                            clearInterval(myInterval)
+                             //PATCH MONEY
+                            this.patchData()
                         }
                     }
 
@@ -178,25 +174,21 @@ export default {
                     const second = new Date().getSeconds()
                     if ((minute % 2) == 0 && second == 59) {
                         if (this.priceOpen > this.priceClose) {
-                            setTimeout(() => {
-                                this.money = this.money + this.total * 1.95
-                                this.status.splice(0, 10)
-                                clearInterval(myInterval)
-                                this.showModal = true
-                                //PATCH MONEY
-                                this.patchData()
-                            }, 2000)
+                            this.money = this.money + this.total * 1.95
+                            this.status.splice(0, 10)
+                            clearInterval(myInterval)
+                            this.showModal = true
+                            //PATCH MONEY
+                            this.patchData()
 
                         }
                         else {
-                            setTimeout(() => {
-                                this.money = this.money + 0
-                                this.status.splice(0, 10)
-                                clearInterval(myInterval)
-                                this.total = 0
-                                //PATCH MONEY
-                                this.patchData()
-                            }, 2000)
+                            this.money = this.money + 0
+                            this.status.splice(0, 10)
+                            clearInterval(myInterval)
+                            this.total = 0
+                            //PATCH MONEY
+                            this.patchData()
                         }
                     }
                 }, 1000)
@@ -223,18 +215,17 @@ export default {
 
         fetchData() {
             const url = 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=1'
-            axios
-                .get(url)
-                .then((response) => {
-                    const price = response.data
-                    const price1 = price.map((x) => (x[1]));
-                    const price4 = price.map((x) => (x[4]));
-                    this.priceOpen = price1
-                    this.priceClose = price4
-                })
-                .catch(error => {
-                    console.error('Error adding item:', error);
-                });
+            axios.get(url)
+            .then((response) => {
+                const price = response.data
+                const price1 = price.map((x) => (x[1]));
+                const price4 = price.map((x) => (x[4]));
+                this.priceOpen = price1
+                this.priceClose = price4
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
         },
 
         fetchTimer() {
