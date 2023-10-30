@@ -40,6 +40,7 @@ import Result5 from "./Result-5.vue";
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
+
 import axios from "axios";
 export default {
   data() {
@@ -86,9 +87,7 @@ export default {
           
           Highcharts.stockChart(this.$refs.chart, {
             rangeSelector: {
-              buttons: [],
-              selected: 0,
-              inputEnabled: false
+              enabled: false,
             },           
             title: {
               text: 'BTC/USD',
@@ -96,29 +95,52 @@ export default {
               x: 70,
               y:80,
             },
-            series: [
-              {
-                type: "candlestick",
-                name: "BTC/USDT",
-                data: high,
+            series: [{
+              type: "candlestick",
+              name: "BTC/USDT",
+              data: high,
+            }],
+
+            plotOptions: {
+              candlestick: {
                 color: "red",
-                upColor: "green",                
-              }
-            ],
-           
-            yAxis: {
-                lineWidth: 1,
-                tickWidth: 1,
-                
-                labels: {
-                  align: 'left'
-                },                
-            },
-           
-            exporting: {
-              enabled: false, // Disable the context menu
+                upColor: "green",
+              },
+              
             },
         
+       
+           
+            yAxis: {
+              lineWidth: 1,
+              tickWidth: 1,
+                
+              labels: {
+                align: 'left'
+              },   
+                    
+            },
+            xAxis: {
+              type: 'linear', // Treat x-axis as a linear numeric axis
+            },
+
+            scrollbar:{
+              enabled:false,
+            },
+
+            navigator: {
+              enabled: false
+            },
+
+            chart: {
+                zooming: {
+                    mouseWheel: {
+                        enabled:false // Set the scroll zoom sensitivity
+                    }
+                }
+            },
+        
+         
         });
           
         })
@@ -129,7 +151,7 @@ export default {
     fetchColor(){
       
       const runtime = new Date().getSeconds()
-      if(runtime == 59){
+      if(runtime == 57){
         this.result.push(this.colorCandles)
       }
     }
