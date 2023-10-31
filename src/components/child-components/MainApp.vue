@@ -74,9 +74,9 @@ export default {
             close: parseFloat(item[4]),        
           }));
 
-          const dataColor = response.data
-          const openColor = dataColor.map(item =>{ item[1]})
-          const closeColor = dataColor.map(item =>{ item[4]})
+          const dataColor = response.data[49]
+          const openColor = dataColor[1]
+          const closeColor = dataColor[4]
           const isBullish = closeColor > openColor;
           this.colorCandles = isBullish ? 'green' : 'red';
           
@@ -99,6 +99,7 @@ export default {
               type: "candlestick",
               name: "BTC/USDT",
               data: high,
+          
             }],
 
             plotOptions: {
@@ -145,7 +146,7 @@ export default {
           
         })
         .catch((error) => {
-          console.error("Error fetching Binance data:", error);
+          console.error("Rrror:", error);
         });
     },
     fetchColor(){
