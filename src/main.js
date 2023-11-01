@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons';
 import VueApexCharts from "vue3-apexcharts";
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import router from './router.js'
+
 const app = createApp(App);
 app.component(VueCountdown.name, VueCountdown);
 app.use(VueApexCharts);

@@ -1,6 +1,7 @@
 <template lang="">
   <div class="row">
-    <div class="col-8 d-flex flex-column flex-wrap w-50 justify-content-center ms-3 border-title">
+    <div class="col-8 d-flex flex-column flex-wrap w-50 justify-content-center ms-3 border-title mx-auto">
+      <img class="mx-auto" src="../../assets/img/bg-template.png" alt="">
       <h3>{{ title }}</h3>
       <span class="text-muted">{{ description }}</span>
     </div>
@@ -156,5 +157,10 @@ export default {
 
 .invaild {
   color: var(--red);
+}
+
+img{
+  width: 500px;
+  height: 500px;
 }
 </style>

@@ -12,7 +12,7 @@ import Result5 from "./Result-5.vue";
       <div class="col-sm-12 col-md-12 col-lg-8 col-xl-10">
         <!--Chart-->
    
-        <div class="tv_chart_container" ref="chart"></div>
+        <div class="tv_chart_container" id="chart"></div>
         <!--Result-->
         <div class="d-flex justify-content-center mt-3">
           <div class="ms-4">
@@ -40,9 +40,23 @@ import Result5 from "./Result-5.vue";
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
+import HighchartsMore from "highcharts/highcharts-more";
+import HighchartsExporting from "highcharts/modules/exporting";
+import HighchartsExportData from "highcharts/modules/export-data";
+import HighchartsAccessibility from "highcharts/modules/accessibility";
+import HighchartsVue from 'highcharts-vue'
+
+HighchartsMore(Highcharts);
+HighchartsExporting(Highcharts);
+HighchartsExportData(Highcharts);
+HighchartsAccessibility(Highcharts);
 
 import axios from "axios";
 export default {
+  name: 'CandlestickChart',
+  components: {
+    HighchartsVue,
+  },
   data() {
     return {
       result: [],
@@ -54,9 +68,6 @@ export default {
     
     setInterval(this.loadData, 1000); // Refresh data every minute (adjust interval as needed)
     setInterval(this.fetchColor, 1000)
-
-
-    
   },
 
   methods: {
@@ -74,18 +85,19 @@ export default {
             close: parseFloat(item[4]),        
           }));
 
+          const volumeChart = response.data.map(item => ({
+            x: item[0],            
+            volume: parseFloat(item[5]),        
+          }));
+
           const dataColor = response.data[49]
-          const openColor = dataColor[1]
-          const closeColor = dataColor[4]
+          const openColor = Number(dataColor[1]).toFixed(2)
+          const closeColor = Number(dataColor[4]).toFixed(2)
           const isBullish = closeColor > openColor;
           this.colorCandles = isBullish ? 'green' : 'red';
+
           
-          const volume = response.data.map(item => ({
-            x: item[0],
-            volume: parseFloat(item[5]),                  
-          }));
-          
-          Highcharts.stockChart(this.$refs.chart, {
+          Highcharts.stockChart('chart', {
             rangeSelector: {
               enabled: false,
             },           
@@ -98,28 +110,68 @@ export default {
             series: [{
               type: "candlestick",
               name: "BTC/USDT",
+              id:"candles",
               data: high,
           
             }],
 
             plotOptions: {
               candlestick: {
-                color: "red",
-                upColor: "green",
+                color: 'red',
+                lineColor: 'red',
+                upColor: 'green',
+                upLineColor: 'green',
               },
-              
             },
-        
-       
-           
             yAxis: {
               lineWidth: 1,
               tickWidth: 1,
                 
               labels: {
                 align: 'left'
-              },   
-                    
+              },  
+              plotLines: [{
+                color: 'rgba(0,0,0,.5)',           
+                value: closeColor,
+                width: 1,  
+                label: {   
+                  useHTML: true,
+                  text: closeColor,
+                  align: 'right',
+                  x: 60,
+                  y:0,  
+                  style: {
+                    fontsize:5,
+                    backgroundColor:'rgba(0,0,0,1)',
+                    border:'1px solid rgba(0,0,0,1)',                    
+                    color:'rgba(255,255,255,0.9)',
+                    fontWeight:'bold',
+                    padding:'3px'
+                  }              
+                },   
+              },
+              {
+                color: 'rgba(0,0,0,.5)',           
+                value: closeColor,
+                width: 0,  
+                label: {   
+                  useHTML: true,
+                  text: closeColor,
+                  align: 'right',
+                  x: 60,
+                  y:30,  
+                  style: {
+                    fontsize:5,
+                    backgroundColor:'rgba(0,0,0,1)',
+                    border:'1px solid rgba(0,0,0,1)',                    
+                    color:'rgba(255,255,255,0.9)',
+                    fontWeight:'bold',
+                    padding:'3px'
+                  }              
+                },   
+              }
+            ]
+              
             },
             xAxis: {
               type: 'linear', // Treat x-axis as a linear numeric axis

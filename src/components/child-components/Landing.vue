@@ -1,6 +1,6 @@
 <template lang="">
   <div class="position-absolute top-50 start-50 translate-middle text-center d-flex flex-column">
-    <img class="text-center" src="../../assets/img/bg-template.png" alt="">
+    <img class="mx-auto" src="../../assets/img/bg-template.png" alt="">
     <h1>{{ title }}</h1>
     <span class="text-muted">{{ description }}</span>
     <router-link to="/Login">
@@ -27,7 +27,8 @@ export default {
 </script>
 <style scoped>
   img{
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 500px;
+
   }
 </style>
