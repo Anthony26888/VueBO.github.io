@@ -1,6 +1,5 @@
 <script setup>
-
-import Control from "./child-components/Control.vue";
+import AccountApi from "./components-fetch-api/Fetch-Account.vue"
 </script>
 <template lang="">
   <header>
@@ -30,7 +29,7 @@ import Control from "./child-components/Control.vue";
               <div class="border rounded wallet d-flex flex-column">
                 <span class="text-real-acc text-light">Real Account</span>
                 <b class="text-center text-light fw-bolder"
-                  >${{ Number(Money).toLocaleString() }}</b
+                  >${{ Money }}</b
                 >
               </div>
             </li>
@@ -69,6 +68,7 @@ import Control from "./child-components/Control.vue";
       <router-view></router-view>
     </div>
   </main>
+  <AccountApi @MoneyUser="FetchMoney"/>
 </template>
 <script>
 import axios from 'axios';
@@ -78,27 +78,10 @@ export default {
       Money: 0,    
     };
   },
-  mounted() {
-    setInterval(()=>{
-      this.fetchUser()
-    },1000)
-  },
- 
   methods: {
-    fetchUser() {
-      const getUser = localStorage.getItem("user")
-      const url = `http://localhost:3000/account?user=${getUser}`
-      axios.get(url)
-      .then((response) => {
-        const dataAccount = response.data
-        const moneyUser = dataAccount.map((x) => (x.usd))            
-        this.Money = moneyUser.join("")
-       
-      })
-      .catch(error => {
-          console.error('Error adding item:', error);
-      });
-    },
+    FetchMoney(data){
+      this.Money = data
+    }
   },
 };
 </script>
