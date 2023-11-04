@@ -36,6 +36,16 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
         </div>
       </div>
       <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2">
+        <div v-show="showAlert" class="position-relative">
+            <div class="position-absolute top-0 end-0">
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                    <i class="bi bi-check2-circle"></i>
+                    <div class="ms-2">
+                        <strong> Order Complete</strong> 
+                    </div>
+                </div> 
+            </div>
+        </div> 
         <form @submit.prevent="" class="mt-3">                    
             <div class="d-flex flex-column mx-auto">                
                 <div class="d-flex justify-content-center">
@@ -79,13 +89,25 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
       </div>
     </div>
   </div>
+  <div v-show="showModal" class=modal-win @click="closeModal()">
+    <div class="card"> 
+      <img src="../../assets/img/logo-eagle.png" alt="" class="mx-auto">   
+      <div class="card-body text-center">
+        <span class="congrat">Congratulation</span><br>
+        <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
+      </div>                 
+    </div>
+  </div>
   <BinanceApi @DataChart="FetchChart" />
   <BinanceApi @LastPrice="FetchPrice" />
   <BinanceApi @colorCandles="FetchColor"/>
   <AccountApi @MoneyUser="FetchMoney"/>
+  <AccountApi @UserName="FetchUser"/>
+  <AccountApi @IDUser="FetchID"/>
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
+import axios from "axios";
 export default {
   name: "MainApp",
   data() {
@@ -100,6 +122,7 @@ export default {
       inputData: [5, 10, 20, 50, 100, 'All'],
       total: '',
       MoneyUser:null,
+      UserName:null,
     };
   },
   mounted() {
@@ -123,7 +146,12 @@ export default {
     FetchMoney(data) {      
       this.MoneyUser = data;
     },
-
+    FetchUser(data) {      
+      this.UserName = data;
+    },
+    FetchID(data) {      
+      this.IDUser = data;
+    },
 
     //CHART
     loadChart() {
@@ -256,13 +284,12 @@ export default {
     submit: function (action) {
       if (action == 'buy') {
         this.showAlert = true
-        this.money = Math.max(0, this.money - this.total) || 0
+        this.MoneyUser = Math.max(0, this.MoneyUser - this.total) || 0
         this.patchData()
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
 
- 
         if ((this.GetMinutes % 2) == 0 && this.CountDown == 59) {
           if (this.colorCandles == 'green') {
             this.money = this.money + this.total * 1.95                                
@@ -308,11 +335,10 @@ export default {
         }
       }
     },
-    patchData(){
-      const user = this.idUser
-      const url = `http://localhost:3000/account/${user}`
+    patchData(){      
+      const url = `http://localhost:3000/account/${this.IDUser}`
       axios.patch(url, {
-        usd: `${this.money}`
+        usd: `${this.MoneyUser}`
       })
       .then((response) => {
         console.log(response.data)
@@ -320,6 +346,12 @@ export default {
       .catch(error => {
         console.error('Error adding item:', error);
       });
+    },
+
+    //CLOSE MODAL
+    closeModal() {
+      this.showModal = false
+      this.total = 0
     },
   }
 }
@@ -341,10 +373,7 @@ img {
 }
 
 
-.container-fluid {
-    border: 1px solid black;
-    height: 100vh;
-}
+
 
 input {
     width: 180px;  
@@ -480,7 +509,7 @@ img {
 
 @media only screen and (min-width: 1200px) {
   .tv_chart_container {
-    height: 700px;
+    height: 350px;
   }
   .value{
     width: 50px;
