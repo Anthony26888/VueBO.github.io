@@ -91,7 +91,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
   </div>
   <div v-show="showModal" class=modal-win @click="closeModal()">
     <div class="card"> 
-      <img src="../../assets/img/logo-eagle.png" alt="" class="mx-auto">   
+      <img src="../../assets/img/logo-eagle.png" alt="" class="mx-auto logo-modal">   
       <div class="card-body text-center">
         <span class="congrat">Congratulation</span><br>
         <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
@@ -123,6 +123,7 @@ export default {
       total: '',
       MoneyUser:null,
       UserName:null,
+      showModal:false,
     };
   },
   mounted() {
@@ -292,19 +293,15 @@ export default {
 
         if ((this.GetMinutes % 2) == 0 && this.CountDown == 59) {
           if (this.colorCandles == 'green') {
-            this.money = this.money + this.total * 1.95                                
-            this.status.splice(0, 10)
-            clearInterval(myInterval)
+            this.MoneyUser = this.MoneyUser + this.total * 1.95                                
+            this.status.splice(0, 10)           
             this.showModal = true
             //PATCH MONEY
             this.patchData()
           }
           else {
-            this.money = this.money + 0
-            this.status.splice(0, 10)
-            clearInterval(myInterval)
-            //PATCH MONEY
-            this.patchData()
+                  
+    
           }
         }
       } else {
@@ -446,9 +443,6 @@ input {
     background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
     border-radius: 10px;
 }
-
-
-
 .modal-win {
     position: fixed;
     z-index: 1;
@@ -462,8 +456,9 @@ input {
 
 }
 
-img {
-    width: 250px;
+.logo-modal{
+    width: 200px;
+    height: 200px;
     margin-top: -100px;
 }
 
