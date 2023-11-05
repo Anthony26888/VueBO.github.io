@@ -43,21 +43,7 @@ import AccountApi from "./components-fetch-api/Fetch-Account.vue"
                 </router-link>
               </div>
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link ms-3"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-              >
-                <span>Profile</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">
-                <span>Setting</span>
-              </a>
-            </li>
+            
           </ul>
         </div>
       </div>

@@ -18,7 +18,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
         
         <!--Result-->
         <div class="d-flex justify-content-center mt-3">
-          <div class="ms-4">
+          <div class="">
             <Result-1 :result="result" />
           </div>
           <div class="ms-4">
@@ -73,7 +73,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
               <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
               <span class="badge text-dark">
                 <p class="text-order">Please Order</p>                                         
-                <p class="text-count">{{CountDown+1}}s</p>         
+                <p class="text-count">{{CountDown}}s</p>         
               </span>    
               <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
             </div>  
@@ -81,7 +81,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
               <button type="button"  class="btn btn-success w-75 mx-auto disable-button" disabled>BUY</button>
               <span class="badge text-dark">
                 <p class="text-order">Waiting Result</p>                                         
-                <p class="text-count">{{CountDown+1}}s</p>         
+                <p class="text-count">{{CountDown}}s</p>         
               </span>    
               <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
             </div>              
@@ -115,6 +115,7 @@ export default {
       result: [],    
       CountDown: 0,
       GetMinutes:null,
+      GetSeconds:null,
       DataChart: null,
       LastPrice:null,
       colorCandles:null,
@@ -127,11 +128,13 @@ export default {
     };
   },
   mounted() {
-    setInterval(() => {
-      this.loadChart();
+    setInterval(() => {     
       this.fetchColor();
       this.countdown();
     }, 1000);
+    setInterval(()=>{
+      this.loadChart();
+    },100)
   },
 
   methods: {
@@ -266,8 +269,10 @@ export default {
     countdown() {
       const nowSeconds = 60 - new Date().getSeconds();
       const nowMinutes = new Date().getMinutes()
+      const nowSecond = new Date().getSeconds()
       this.CountDown = nowSeconds;
       this.GetMinutes = nowMinutes
+      this.GetSeconds = nowSecond
     },
 
     //BUTTON PLUS AND DIV
@@ -290,45 +295,44 @@ export default {
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
-
-        if ((this.GetMinutes % 2) == 0 && this.CountDown == 59) {
-          if (this.colorCandles == 'green') {
-            this.MoneyUser = this.MoneyUser + this.total * 1.95                                
-            this.status.splice(0, 10)           
-            this.showModal = true
-            //PATCH MONEY
-            this.patchData()
+        
+        const myInterval = setInterval(() => {
+          const minute = this.GetMinutes
+          const second = this.GetSeconds
+          if ((minute % 2) == 0 && second == 0) {
+            if (this.colorCandles= "green") {
+              const total = this.MoneyUser
+              this.MoneyUser =total + (this.total * 1.95)  
+              clearInterval(myInterval)
+              this.showModal = true
+              //PATCH MONEY
+              this.patchData()
+            }
+            else {
+              this.money = this.money + 0           
+              clearInterval(myInterval)
+              //PATCH MONEY
+              this.patchData()
+            }
           }
-          else {
-                  
-    
-          }
-        }
+        }, 1000)
+        
       } else {
         this.showAlert = true
-        this.money = Math.max(0, this.money - this.total) || 0
+        this.MoneyUser = Math.max(0, this.MoneyUser - this.total) || 0
         this.patchData()
-
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
 
-        if ((this.GetMinutes % 2) == 0 && this.CountDown == 59) {
+        if (this.CountDown == 59) {
           if (this.colorCandles == 'red') {
-            this.money = this.money + this.total * 1.95                                
-            this.status.splice(0, 10)
-            clearInterval(myInterval)
+            this.MoneyUser = this.MoneyUser + this.total * 1.95                                
+            this.status.splice(0, 10)         
             this.showModal = true
             //PATCH MONEY
             this.patchData()
-          }
-          else {
-            this.money = this.money + 0
-            this.status.splice(0, 10)
-            clearInterval(myInterval)
-            //PATCH MONEY
-            this.patchData()
-          }
+          }          
         }
       }
     },
@@ -487,9 +491,10 @@ input {
 
 @media only screen and (min-width: 600px) {
   .tv_chart_container {
-    height: 550px;
+    height: 350px;
   }
 }
+
 @media only screen and (min-width: 900px) {
   .tv_chart_container {
     height: 850px;
@@ -544,4 +549,5 @@ input {
     font-size: 14px;
   }
 }
+
 </style>
