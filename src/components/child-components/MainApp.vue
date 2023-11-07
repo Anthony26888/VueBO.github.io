@@ -1,5 +1,4 @@
 <script setup>
-import Control from "./Control.vue";
 import Result1 from "./Result-1.vue";
 import Result2 from "./Result-2.vue";
 import Result3 from "./Result-3.vue";
@@ -122,9 +121,10 @@ export default {
       
       inputData: [5, 10, 20, 50, 100, 'All'],
       total: '',
-      MoneyUser:null,
+      MoneyUser:0,
       UserName:null,
       showModal:false,
+      
     };
   },
   mounted() {
@@ -167,7 +167,7 @@ export default {
           text: "BTC/USD",
           align: "left",
           x: 70,
-          y: 80,
+          y: 50,
         },
         series: [
           {
@@ -300,16 +300,15 @@ export default {
           const minute = this.GetMinutes
           const second = this.GetSeconds
           if ((minute % 2) == 0 && second == 0) {
-            if (this.colorCandles= "green") {
-              const total = this.MoneyUser
-              this.MoneyUser =total + (this.total * 1.95)  
+            if (this.colorCandles= "green") {               
+              this.MoneyUser = this.MoneyUser + this.total
               clearInterval(myInterval)
               this.showModal = true
               //PATCH MONEY
               this.patchData()
             }
-            else {
-              this.money = this.money + 0           
+            else {          
+              this.MoneyUser = this.MoneyUser + this.total
               clearInterval(myInterval)
               //PATCH MONEY
               this.patchData()
@@ -445,7 +444,7 @@ input {
     width: 400px;
     height: 250px;
     background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    border-radius: 10px;
+    border-radius:18% 82% 15% 85% / 89% 13% 87% 11% ;
 }
 .modal-win {
     position: fixed;

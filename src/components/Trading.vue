@@ -35,15 +35,21 @@ import AccountApi from "./components-fetch-api/Fetch-Account.vue"
             </li>
 
             <li class="nav-item">
-              <div>
-                <router-link to="/Trading/Deposit">
-                  <button class="btn ms-3" @click="deposit">
-                    <i class="animation"></i>Deposit<i class="animation"></i>
-                  </button>
-                </router-link>
-              </div>
+              <router-link to="/Trading/Deposit">
+                <button class="button ms-3">
+                  <i class="animation"></i>Deposit<i class="animation"></i>
+                </button>
+              </router-link>
             </li>
             
+            <li class="nav-item">
+              <router-link to="/Login">
+                <button class="btn btn-light ms-3" @click="logout">
+                  Log Out<i class="bi-box-arrow-right ms-2"></i>
+                </button>
+              </router-link>
+            </li>
+
           </ul>
         </div>
       </div>
@@ -67,6 +73,9 @@ export default {
   methods: {
     FetchMoney(data){
       this.Money = data
+    },
+    logout(){
+      localStorage.removeItem("user");
     }
   },
 };
@@ -113,7 +122,7 @@ img {
   font-weight: 700;
 }
 
-button {
+.button {
   width: 130px;
   height: 40px;
   color: var(--white);
@@ -123,7 +132,7 @@ a {
   width: 130px;
   height: 40px;
 }
-.btn {
+.button {
   outline: 0;
   display: inline-flex;
   align-items: center;
@@ -145,11 +154,11 @@ a {
   cursor: pointer;
 }
 
-.btn:hover {
+.button:hover {
   opacity: 0.95;
 }
 
-.btn .animation {
+.button .animation {
   border-radius: 100%;
   animation: ripple 0.6s linear infinite;
 }
