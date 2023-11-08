@@ -17,7 +17,7 @@ export default {
         this.$emit('UserName', this.UserName)
         this.$emit('MoneyUser', this.MoneyUser)
         this.$emit('IDUser', this.IDUser)
-    },100)
+    },500)
   },
   methods: {
     fetchUser() {

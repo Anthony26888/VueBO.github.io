@@ -27,8 +27,8 @@ export default {
         )
         .then((response) => {
           const dataPrice = response.data[49];
-          const openPrice = Number(dataPrice[1]).toFixed(2);
-          const closePrice = Number(dataPrice[4]).toFixed(2);
+          const openPrice = Number(parseFloat(dataPrice[1])).toFixed(2);
+          const closePrice = Number(parseFloat(dataPrice[4])).toFixed(2);
           const isBullish = closePrice > openPrice;
           const high = response.data.map((item) => ({
             x: item[0],

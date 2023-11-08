@@ -124,7 +124,7 @@ export default {
       MoneyUser:0,
       UserName:null,
       showModal:false,
-      
+      Sum:0,
     };
   },
   mounted() {
@@ -260,8 +260,8 @@ export default {
 
     //COLOR CHART
     fetchColor() {
-      if (this.CountDown == 1) {
-        this.result.push(this.colorCandles);
+      if (this.CountDown == 3) {
+        this.result.push(this.colorCandles);        
       }
     },
 
@@ -296,19 +296,23 @@ export default {
           this.showAlert = false
         }, 2000)
         
+        
         const myInterval = setInterval(() => {
           const minute = this.GetMinutes
           const second = this.GetSeconds
           if ((minute % 2) == 0 && second == 0) {
-            if (this.colorCandles= "green") {               
-              this.MoneyUser = this.MoneyUser + this.total
+            const resultColor = this.result            
+            if (resultColor[resultColor.length - 1] = "green") {   
+              this.MoneyUser = Number(this.MoneyUser) + (this.total*1.95)
+              this.total = null
               clearInterval(myInterval)
               this.showModal = true
               //PATCH MONEY
               this.patchData()
             }
-            else {          
-              this.MoneyUser = this.MoneyUser + this.total
+            else {         
+              this.MoneyUser = Number(this.MoneyUser) + 0
+              this.total = null 
               clearInterval(myInterval)
               //PATCH MONEY
               this.patchData()
