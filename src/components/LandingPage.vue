@@ -1,9 +1,11 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-        <img src="../assets/img/logo-eagle.png" alt="">
-        <router-link to="/" class="navbar-brand ms-2">Eagle Base</router-link>
+      <div class="container-fluid">        
+        <router-link to="/" class="navbar-brand">
+          <img src="../assets/img/logo-eagle.png" alt="" />
+          <span class="logo-text ms-2">Eagle Base</span>
+        </router-link>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
           aria-label="Toggle navigation">
@@ -47,5 +49,13 @@ export default {
     img{
         width: 30px;
         height:30px
+    }
+    .logo-text{
+      font-size: 30px;
+      margin-left: 10px;
+      font-weight: 700;
+      background: -webkit-linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 </style>

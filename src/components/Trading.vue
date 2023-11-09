@@ -103,6 +103,9 @@ b {
   font-size: 30px;
   margin-left: 10px;
   font-weight: 700;
+  background: -webkit-linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 img {

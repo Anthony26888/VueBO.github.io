@@ -160,6 +160,10 @@ export default {
     //CHART
     loadChart() {
       Highcharts.stockChart("chart", {
+        chart: {
+          type: "candlestick",
+          backgroundColor: "rgba(0, 0, 0, 0)", // Transparent background
+        },
         rangeSelector: {
           enabled: false,
         },
@@ -175,6 +179,7 @@ export default {
             name: "BTC/USDT",
             id: "candles",
             data: this.DataChart,
+            
           },
         ],
 
@@ -183,7 +188,7 @@ export default {
             color: "red",
             lineColor: "red",
             upColor: "green",
-            upLineColor: "green",
+            upLineColor: "green",          
           },
         },
         yAxis: {
@@ -327,16 +332,30 @@ export default {
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
-
-        if (this.CountDown == 59) {
-          if (this.colorCandles == 'red') {
-            this.MoneyUser = this.MoneyUser + this.total * 1.95                                
-            this.status.splice(0, 10)         
-            this.showModal = true
-            //PATCH MONEY
-            this.patchData()
-          }          
-        }
+        
+        
+        const myInterval = setInterval(() => {
+          const minute = this.GetMinutes
+          const second = this.GetSeconds
+          if ((minute % 2) == 0 && second == 0) {
+            const resultColor = this.result            
+            if (resultColor[resultColor.length - 1] = "red") {   
+              this.MoneyUser = Number(this.MoneyUser) + (this.total*1.95)
+              this.total = null
+              clearInterval(myInterval)
+              this.showModal = true
+              //PATCH MONEY
+              this.patchData()
+            }
+            else {         
+              this.MoneyUser = Number(this.MoneyUser) + 0
+              this.total = null 
+              clearInterval(myInterval)
+              //PATCH MONEY
+              this.patchData()
+            }
+          }
+        }, 1000)
       }
     },
     patchData(){      
