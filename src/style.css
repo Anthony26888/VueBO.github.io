@@ -7,10 +7,7 @@
     --gray1: hsl(229, 10%, 57%);
     --green1:#40b3a2;
 }
-body{
-    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
-    
-}
+
 
 
 

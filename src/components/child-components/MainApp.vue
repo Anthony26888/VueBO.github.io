@@ -45,46 +45,76 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                 </div> 
             </div>
         </div> 
-        <form @submit.prevent="" class="mt-3">                    
-            <div class="d-flex flex-column mx-auto">                
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-secondary" v-on:click="Div">-</button>
-                    <input type="num" class="form-control text-end ms-2 w-75" name="formId1" id="formId1" placeholder="" min="0" :max="money" v-model="total"/>                           
-                    <button type="button" class="btn btn-secondary ms-2" v-on:click="Plus">+</button>                
-                </div> 
-                <div class="d-none d-sm-block d-md-none d-lg-block mt-3 text-center">
-                    <button type="button" @click="value(inputData[0])" class="btn btn-secondary value">+{{inputData[0]}}</button>
-                    <button type="button" @click="value(inputData[1])" class="btn btn-secondary ms-2 value">+{{inputData[1]}}</button>
-                    <button type="button" @click="value(inputData[2])" class="btn btn-secondary ms-2 value">+{{inputData[2]}}</button>                
-                </div> 
-                <div class="d-none d-sm-block d-md-none d-lg-block mt-2 text-center">
-                    <button type="button" @click="value(inputData[3])" class="btn btn-secondary value">+{{inputData[3]}}</button>
-                    <button type="button" @click="value(inputData[4])" class="btn btn-secondary ms-2 value">+{{inputData[4]}}</button> 
-                    <button type="button" @click="value(MoneyUser)" class="btn btn-secondary ms-2 value">{{inputData[5]}}</button>               
-                </div>                  
-                <div class="d-flex flex-lg-column text-center mx-auto mt-3">
-                    <p class="mt-2">Profit 95%</p>                    
-                    <h2 class="value-profit ms-2">+ ${{ (total*1.95).toLocaleString() }}</h2>                        
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Limit</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Stop Limit</button>
+          </li>
+        </ul>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <form @submit.prevent="" class="mt-3">                    
+              <div class="d-flex flex-column mx-auto">                
+                <div class="input-group mb-3">
+                  <span class="input-group-text">Price</span>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <span class="input-group-text">USDT</span>
                 </div>
-            </div>            
-            
-            <div v-if="this.GetMinutes % 2 ==0" class="mt-4 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
-              <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
-              <span class="badge text-dark">
-                <p class="text-order">Please Order</p>                                         
-                <p class="text-count">{{CountDown}}s</p>         
-              </span>    
-              <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
-            </div>  
-            <div v-else class="mt-2 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
-              <button type="button"  class="btn btn-success w-75 mx-auto disable-button" disabled>BUY</button>
-              <span class="badge text-dark">
-                <p class="text-order">Waiting Result</p>                                         
-                <p class="text-count">{{CountDown}}s</p>         
-              </span>    
-              <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
-            </div>              
-        </form>  
+                <div class="input-group mb-3">
+                  <span class="input-group-text">Size</span>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                  <span class="input-group-text">USDT</span>
+                </div>
+                <input type="range" class="form-range w-100" min="0" max="100" step="25" value="0" id="customRange3">
+                <div class="form-check ">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
+                  <label class="form-check-label" for="flexCheckDefault">TP/SL</label>
+                </div>
+                <div v-show="TPSL" class="mt-3">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Take-Profit</span>
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Stop Loss</span>
+                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                </div>
+                
+              </div>            
+              
+              <div v-if="this.GetMinutes % 2 ==0" class="mt-4 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
+                <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
+                <span class="badge text-dark">
+                  <p class="text-order">Please Order</p>                                         
+                  <p class="text-count">{{CountDown}}s</p>         
+                </span>    
+                <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
+              </div>  
+              <div v-else class="mt-2 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
+                <button type="button"  class="btn btn-success w-75 mx-auto disable-button" disabled>BUY</button>
+                <span class="badge text-dark">
+                  <p class="text-order">Waiting Result</p>                                         
+                  <p class="text-count">{{CountDown}}s</p>         
+                </span>    
+                <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
+              </div>              
+            </form> 
+          </div>
+          <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
+          <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab"> messages </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -111,6 +141,7 @@ export default {
   name: "MainApp",
   data() {
     return {
+      TPSL:false,
       result: [],    
       CountDown: 0,
       GetMinutes:null,
@@ -280,15 +311,8 @@ export default {
       this.GetSeconds = nowSecond
     },
 
-    //BUTTON PLUS AND DIV
-    Plus() {
-      this.total++
-    },
-    Div() {
-      this.total--
-    },
-    value: function (num) {
-      return this.total += num;
+    openTPSL(){
+      this.TPSL = true
     },
 
     //SUBMIT 
@@ -398,8 +422,11 @@ img {
 
 
 
-input {
-    width: 180px;  
+
+
+.form-check-input{
+  width: 20px;
+  height: 20px;
 }
 
 .value {
