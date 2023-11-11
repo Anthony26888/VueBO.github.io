@@ -148,8 +148,8 @@ export default {
 
 @media only screen and (min-width: 1200px) {
   img {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
   }
 }
 

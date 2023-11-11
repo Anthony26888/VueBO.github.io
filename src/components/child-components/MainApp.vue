@@ -1,40 +1,37 @@
 <script setup>
-import Result1 from "./Result-1.vue";
-import Result2 from "./Result-2.vue";
-import Result3 from "./Result-3.vue";
-import Result4 from "./Result-4.vue";
-import Result5 from "./Result-5.vue";
 import BinanceApi from "../components-fetch-api/Fetch-Binance.vue"
 import AccountApi from "../components-fetch-api/Fetch-Account.vue"
 </script>
 <template lang="">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-8 col-xl-10">
+      <div class="col-sm-12 col-md-12 col-lg-8 col-xl-9 col-xxl-10">
         <!--Chart-->
 
         <div class="tv_chart_container" id="chart"></div>
-        
-        <!--Result-->
-        <div class="d-flex justify-content-center mt-3">
-          <div class="">
-            <Result-1 :result="result" />
-          </div>
-          <div class="ms-4">
-            <Result-2 :result="result" />
-          </div>
-          <div class="d-none d-sm-block ms-4">
-            <Result-3 :result="result" />
-          </div>
-          <div class="d-none d-sm-block ms-4">
-            <Result-4 :result="result" />
-          </div>
-          <div class="d-none d-sm-block d-md-none d-lg-block d-lg-none d-xl-block ms-4">
-            <Result-5 :result="result" />
-          </div>
+    
+    
+          <!-- Status -->
+        <ul class="nav nav-underline" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Positions" type="button" role="tab" aria-controls="home" aria-selected="true">Positions</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#OpenOrder" type="button" role="tab" aria-controls="profile" aria-selected="false">Open Orders</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#OpenHistory" type="button" role="tab" aria-controls="messages" aria-selected="false">Open History</button>
+          </li>
+        </ul>
+          
+          <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="Positions" role="tabpanel" aria-labelledby="home-tab"> Positions </div>
+          <div class="tab-pane" id="OpenOrder" role="tabpanel" aria-labelledby="profile-tab"> Open Order </div>
+          <div class="tab-pane" id="OpenHistory" role="tabpanel" aria-labelledby="messages-tab"> Open History </div>
         </div>
-      </div>
-      <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2">
+      </div> 
+      <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-xxl-2">
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -44,89 +41,133 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                     </div>
                 </div> 
             </div>
-        </div> 
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Limit</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Stop Limit</button>
-          </li>
-        </ul>
-        
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <form @submit.prevent="" class="mt-3">                    
-              <div class="d-flex flex-column mx-auto">                
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Price</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                  <span class="input-group-text">USDT</span>
-                </div>
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Size</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                  <span class="input-group-text">USDT</span>
-                </div>
-                <input type="range" class="form-range w-100" min="0" max="100" step="25" value="0" id="customRange3">
-                <div class="form-check ">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
-                  <label class="form-check-label" for="flexCheckDefault">TP/SL</label>
-                </div>
-                <div v-show="TPSL" class="mt-3">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Take-Profit</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    <span class="input-group-text">USDT</span>
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Stop Loss</span>
-                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                    <span class="input-group-text">USDT</span>
-                  </div>
-                </div>
-                
-              </div>            
-              
-              <div v-if="this.GetMinutes % 2 ==0" class="mt-4 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
-                <button type="submit" @click="submit('buy')" class="btn btn-success w-75 mx-auto" >BUY</button>
-                <span class="badge text-dark">
-                  <p class="text-order">Please Order</p>                                         
-                  <p class="text-count">{{CountDown}}s</p>         
-                </span>    
-                <button type="submit" @click="submit('sell')" class="btn btn-danger w-75 mx-auto">SELL</button>    
-              </div>  
-              <div v-else class="mt-2 d-flex flex-sm-row flex-md-row flex-lg-column gap-2">
-                <button type="button"  class="btn btn-success w-75 mx-auto disable-button" disabled>BUY</button>
-                <span class="badge text-dark">
-                  <p class="text-order">Waiting Result</p>                                         
-                  <p class="text-count">{{CountDown}}s</p>         
-                </span>    
-                <button type="button" class="btn btn-danger w-75 mx-auto disable-button" disabled>SELL</button>    
-              </div>              
-            </form> 
-          </div>
-          <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
-          <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab"> messages </div>
         </div>
+
+        <form @submit.prevent="" class="mt-3">
+          <div class="d-flex mt-3 gap-2 justify-content-center">
+            <div>
+              <!-- Button trigger modal -->
+              <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#marginMode">
+                Cross
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="marginMode" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Margin Mode</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="button-chosse button-modal">Cross</button>
+                        <button type="button" class="button-chosse button-modal">Isolated</button>
+                      </div><br>
+                      <div class="container">
+                        <b class="mt-5">{{MarginMode1}}</b><br><br>
+                        <span class="mt-2">{{MarginMode2}}</span>
+                      </div><br><br>
+                      <button type="button" class="button-confirm button-modal w-100">Confirm</button>
+                    </div>                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <!-- Button trigger modal -->
+              <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#leverage">
+                20X
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="leverage" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content ">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Adjust Leverage</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                      <label for="basic-url" class="form-label"><b>Leverage</b></label>
+                      <div class="input-group mb-3">                        
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"> - </button>
+                        <input type="text" class="form-control" id="input-leverage" placeholder="" aria-label="" aria-describedby="button-addon1">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"> + </button>
+                      </div>
+                      <input type="range" class="w-100" min="0" max="100" step="25" value="0" name="" id=""><br>
+                      <span class="text-muted">{{Leverage1}}</span><br>
+                      <span class="text-muted">{{Leverage2}}</span><br><br>
+                      <button type="button" class="button-confirm button-modal w-100">Confirm</button>
+                    </div>                    
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </div>
+          
         
+          <!-- Order -->
+          <ul class="nav nav-underline" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Limit" type="button" role="tab" aria-controls="home" aria-selected="true">Limit</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Market" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#StopLimit" type="button" role="tab" aria-controls="messages" aria-selected="false">Stop Limit</button>
+            </li>
+          </ul>
+        
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="Limit" role="tabpanel" aria-labelledby="home-tab">
+                                  
+                <div class="d-flex flex-column mx-auto mt-3">                
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Price</span>
+                    <input type="text" class="form-control" aria-label="">
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Size</span>
+                    <input type="text" class="form-control" aria-label="">
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                  <input type="range" class="w-100" min="0" max="100" step="25" value="0">
+                  <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
+                    <label class="form-check-label ms-2" for="flexCheckDefault">TP/SL</label>
+                  </div>
+                  <div v-show="TPSL" class="mt-3">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Take-Profit</span>
+                      <input type="text" class="form-control" aria-label="">
+                      <span class="input-group-text">USDT</span>
+                    </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Stop Loss</span>
+                      <input type="text" class="form-control" aria-label="">
+                      <span class="input-group-text">USDT</span>
+                    </div>
+                  </div>                
+                </div> 
+                <div class="mt-3 d-flex gap-2">
+                  <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto" >BUY</button>                
+                  <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SELL</button>    
+                </div>                           
+              
+            </div>
+            <div class="tab-pane" id="Market" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
+            <div class="tab-pane" id="StopLimit" role="tabpanel" aria-labelledby="messages-tab"> messages </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  <div v-show="showModal" class=modal-win @click="closeModal()">
-    <div class="card"> 
-      <img src="../../assets/img/logo-eagle.png" alt="" class="mx-auto logo-modal">   
-      <div class="card-body text-center">
-        <span class="congrat">Congratulation</span><br>
-        <span class="money-win">+ ${{(total*1.95).toLocaleString()}}</span>
-      </div>                 
-    </div>
-  </div>
+  
   <BinanceApi @DataChart="FetchChart" />
   <BinanceApi @LastPrice="FetchPrice" />
   <BinanceApi @colorCandles="FetchColor"/>
@@ -141,50 +182,40 @@ export default {
   name: "MainApp",
   data() {
     return {
-      TPSL:false,
-      result: [],    
-      CountDown: 0,
-      GetMinutes:null,
-      GetSeconds:null,
-      DataChart: null,
-      LastPrice:null,
-      colorCandles:null,
-      
-      inputData: [5, 10, 20, 50, 100, 'All'],
-      total: '',
-      MoneyUser:0,
-      UserName:null,
-      showModal:false,
-      Sum:0,
-    };
+      TPSL: false,   
+      MarginMode1:'· Switching the margin mode will only apply it to the selected contract.',
+      MarginMode2:"Cross Margin Mode: All cross positions under the same margin asset share the same asset cross margin balance. In the event of liquidation, your assets full margin balance along with any remaining open positions under the asset may be forfeited.Isolated Margin Mode: Manage your risk on individual positions by restricting the amount of margin allocated to each. If the margin ratio of a position reached 100%, the position will be liquidated. Margin can be added or removed to positions using this mode.",
+      Leverage1:'. Maximum position at current leverage: 3,000,000 USDT',
+      Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.'
+    }
   },
   mounted() {
-    setInterval(() => {     
+    setInterval(() => {
       this.fetchColor();
       this.countdown();
     }, 1000);
-    setInterval(()=>{
+    setInterval(() => {
       this.loadChart();
-    },100)
+    }, 100)
   },
 
   methods: {
-    FetchChart(data) {     
+    FetchChart(data) {
       this.DataChart = data;
     },
-    FetchPrice(data) {     
+    FetchPrice(data) {
       this.LastPrice = data;
     },
-    FetchColor(data) {      
+    FetchColor(data) {
       this.colorCandles = data;
     },
-    FetchMoney(data) {      
+    FetchMoney(data) {
       this.MoneyUser = data;
     },
-    FetchUser(data) {      
+    FetchUser(data) {
       this.UserName = data;
     },
-    FetchID(data) {      
+    FetchID(data) {
       this.IDUser = data;
     },
 
@@ -210,7 +241,7 @@ export default {
             name: "BTC/USDT",
             id: "candles",
             data: this.DataChart,
-            
+
           },
         ],
 
@@ -219,7 +250,7 @@ export default {
             color: "red",
             lineColor: "red",
             upColor: "green",
-            upLineColor: "green",          
+            upLineColor: "green",
           },
         },
         yAxis: {
@@ -297,7 +328,7 @@ export default {
     //COLOR CHART
     fetchColor() {
       if (this.CountDown == 3) {
-        this.result.push(this.colorCandles);        
+        this.result.push(this.colorCandles);
       }
     },
 
@@ -311,8 +342,13 @@ export default {
       this.GetSeconds = nowSecond
     },
 
-    openTPSL(){
-      this.TPSL = true
+    openTPSL() {
+      if (!this.TPSL) {
+        this.TPSL = true
+      } else {
+        this.TPSL = false
+      }
+
     },
 
     //SUBMIT 
@@ -324,31 +360,31 @@ export default {
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
-        
-        
+
+
         const myInterval = setInterval(() => {
           const minute = this.GetMinutes
           const second = this.GetSeconds
           if ((minute % 2) == 0 && second == 0) {
-            const resultColor = this.result            
-            if (resultColor[resultColor.length - 1] = "green") {   
-              this.MoneyUser = Number(this.MoneyUser) + (this.total*1.95)
+            const resultColor = this.result
+            if (resultColor[resultColor.length - 1] = "green") {
+              this.MoneyUser = Number(this.MoneyUser) + (this.total * 1.95)
               this.total = null
               clearInterval(myInterval)
               this.showModal = true
               //PATCH MONEY
               this.patchData()
             }
-            else {         
+            else {
               this.MoneyUser = Number(this.MoneyUser) + 0
-              this.total = null 
+              this.total = null
               clearInterval(myInterval)
               //PATCH MONEY
               this.patchData()
             }
           }
         }, 1000)
-        
+
       } else {
         this.showAlert = true
         this.MoneyUser = Math.max(0, this.MoneyUser - this.total) || 0
@@ -356,24 +392,24 @@ export default {
         setTimeout(() => {
           this.showAlert = false
         }, 2000)
-        
-        
+
+
         const myInterval = setInterval(() => {
           const minute = this.GetMinutes
           const second = this.GetSeconds
           if ((minute % 2) == 0 && second == 0) {
-            const resultColor = this.result            
-            if (resultColor[resultColor.length - 1] = "red") {   
-              this.MoneyUser = Number(this.MoneyUser) + (this.total*1.95)
+            const resultColor = this.result
+            if (resultColor[resultColor.length - 1] = "red") {
+              this.MoneyUser = Number(this.MoneyUser) + (this.total * 1.95)
               this.total = null
               clearInterval(myInterval)
               this.showModal = true
               //PATCH MONEY
               this.patchData()
             }
-            else {         
+            else {
               this.MoneyUser = Number(this.MoneyUser) + 0
-              this.total = null 
+              this.total = null
               clearInterval(myInterval)
               //PATCH MONEY
               this.patchData()
@@ -382,17 +418,17 @@ export default {
         }, 1000)
       }
     },
-    patchData(){      
+    patchData() {
       const url = `http://localhost:3000/account/${this.IDUser}`
       axios.patch(url, {
         usd: `${this.MoneyUser}`
       })
-      .then((response) => {
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.error('Error adding item:', error);
-      });
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('Error adding item:', error);
+        });
     },
 
     //CLOSE MODAL
@@ -423,106 +459,116 @@ img {
 
 
 
-
-.form-check-input{
-  width: 20px;
-  height: 20px;
+.button-chosse{
+  width: 100px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 2px;
 }
 
-.value {
-    width: 80px;
-    font-size: 14px;
-    background-color: var(--gray1);
-    font-weight: bolder;
-    font-size: 14px;
+.button-modal{
+  width: 200px;
+  height: 50px;
+}
+.button-modal:focus{
+  background-color: var(--blue);
+  color:var(--white)
 }
 
-.value-profit {
-    font-size: 30px;
-    color: var(--green);
+.button-confirm{
+  border: none;
+  background-color: var(--blue);
+  color:var(--white);
+  border-radius:5px
 }
+
+
+
 
 
 .btn-success {
-    background-color: var(--green);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-    cursor: pointer;
+  background-color: var(--green);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  cursor: pointer;
 }
 
 .btn-danger {
-    background-color: var(--red);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 30px;
-    cursor: pointer;
+  background-color: var(--red);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  cursor: pointer;
 }
 
-.disable-button{
-    background-color: var(--gray1);
-    cursor:not-allowed;
+.disable-button {
+  background-color: var(--gray1);
+  cursor: not-allowed;
 }
+
 .text-order {
-    font-size: 14px;
+  font-size: 14px;
 
 }
 
 .text-count {
-    font-size: 18px;
-    font-weight: 700;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .badge {
-    background-color: var(--bg-color);
-    height: 70px
+  background-color: var(--bg-color);
+  height: 70px
 }
 
 .text-buy {
-    color: var(--green);
+  color: var(--green);
 }
 
 .text-sell {
-    color: var(--red);
+  color: var(--red);
 }
 
 .card {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 250px;
-    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
-    border-radius:18% 82% 15% 85% / 89% 13% 87% 11% ;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 250px;
+  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+  border-radius: 18% 82% 15% 85% / 89% 13% 87% 11%;
 }
+
 .modal-win {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 
 }
 
-.logo-modal{
-    width: 200px;
-    height: 200px;
-    margin-top: -100px;
+.logo-modal {
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
 }
 
 .congrat {
-    font-size: 18px;
-    font-weight: 700;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .money-win {
-    font-size: 25px;
-    color: var(--green)
+  font-size: 25px;
+  color: var(--green)
 }
 
 
@@ -560,9 +606,10 @@ img {
   .tv_chart_container {
     height: 350px;
   }
-  .value{
+
+  .value {
     width: 50px;
-    height:40px;
+    height: 40px;
     font-size: 11px;
     font-weight: 500px;
   }
@@ -572,12 +619,14 @@ img {
   .tv_chart_container {
     height: 350px;
   }
-  .value{
+
+  .value {
     width: 60px;
     height: 50px;
     font-size: 14px;
   }
-  input{
+
+  input {
     width: 80px;
   }
 }
@@ -592,11 +641,11 @@ img {
   .tv_chart_container {
     height: 650px;
   }
-  .value{
+
+  .value {
     width: 80px;
     height: 50px;
     font-size: 14px;
   }
 }
-
 </style>

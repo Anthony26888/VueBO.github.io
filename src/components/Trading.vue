@@ -5,7 +5,7 @@ import AccountApi from "./components-fetch-api/Fetch-Account.vue"
   <header>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
       <div class="container-fluid">
-        <router-link to="/Trading" class="navbar-brand ms-2">
+        <router-link to="/Trading" class="navbar-brand">
           <img src="../assets/img/logo-eagle.png" alt="" />
           <span class="logo-text">Eagle Base</span>
         </router-link>
