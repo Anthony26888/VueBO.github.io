@@ -48,7 +48,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
             <div>
               <!-- Button trigger modal -->
               <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#marginMode">
-                Cross
+                {{MarginSelect}}
               </button>
               
               <!-- Modal -->
@@ -61,14 +61,18 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                     </div>
                     <div class="modal-body">
                       <div class="d-flex justify-content-center gap-2">
-                        <button type="button" class="button-chosse button-modal">Cross</button>
-                        <button type="button" class="button-chosse button-modal">Isolated</button>
+                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" value="Cross" v-model="MarginSelect" checked>
+                        <label class="btn btn-outline-primary w-100" for="option1">Cross</label>
+
+                        <input type="radio" class="btn-check" name="options" id="option2" value="Isolated" v-model="MarginSelect" autocomplete="off">
+                        <label class="btn btn-outline-primary w-100" for="option2">Isolated</label>
+                        
                       </div><br>
                       <div class="container">
                         <b class="mt-5">{{MarginMode1}}</b><br><br>
                         <span class="mt-2">{{MarginMode2}}</span>
                       </div><br><br>
-                      <button type="button" class="button-confirm button-modal w-100">Confirm</button>
+                      <button type="button" class="button-confirm button-modal w-100" data-bs-dismiss="modal" aria-label="Close">Confirm</button>
                     </div>                    
                   </div>
                 </div>
@@ -78,7 +82,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
             <div>
               <!-- Button trigger modal -->
               <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#leverage">
-                20X
+                {{ValueLeverage}}X
               </button>
               
               <!-- Modal -->
@@ -92,14 +96,14 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                     <div class="modal-body ">
                       <label for="basic-url" class="form-label"><b>Leverage</b></label>
                       <div class="input-group mb-3">                        
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"> - </button>
-                        <input type="text" class="form-control" id="input-leverage" placeholder="" aria-label="" aria-describedby="button-addon1">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"> + </button>
+                        <button class="btn btn-outline-primary" type="button" id="button-addon1" @click="Div"> - </button>
+                        <input type="num" v-model="ValueLeverage" class="form-control text-center text-leverage" id="input-leverage" placeholder="" aria-label="" aria-describedby="button-addon1">
+                        <button class="btn btn-outline-primary" type="button" id="button-addon1" @click="Plus"> + </button>
                       </div>
-                      <input type="range" class="w-100" min="0" max="100" step="25" value="0" name="" id=""><br>
+                      <input type="range" v-on:input="LeverageChange" value="25" class="w-100" min="0" max="100" step="25"  name="" id=""><br>
                       <span class="text-muted">{{Leverage1}}</span><br>
                       <span class="text-muted">{{Leverage2}}</span><br><br>
-                      <button type="button" class="button-confirm button-modal w-100">Confirm</button>
+                      <button type="button" class="button-confirm button-modal w-100" data-bs-dismiss="modal" aria-label="Close">Confirm</button>
                     </div>                    
                   </div>                  
                 </div>
@@ -128,28 +132,28 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                 <div class="d-flex flex-column mx-auto mt-3">                
                   <div class="input-group mb-3">
                     <span class="input-group-text">Price</span>
-                    <input type="text" class="form-control" aria-label="">
+                    <input type="num" class="form-control text-center" v-model="LastPrice" aria-label="">
                     <span class="input-group-text">USDT</span>
                   </div>
                   <div class="input-group mb-3">
                     <span class="input-group-text">Size</span>
-                    <input type="text" class="form-control" aria-label="">
+                    <input type="num" min="0" :max="MoneyUser" v-model="DisplaySizeLimit" class="form-control text-center" aria-label="">
                     <span class="input-group-text">USDT</span>
                   </div>
-                  <input type="range" class="w-100" min="0" max="100" step="25" value="0">
+                  <input type="range" v-on:input="MoneyChange" class="w-100" min="0" max="100" step="25" value="0">
                   <div class="form-check mt-3">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
+                    <input class="form-check-input"  type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
                     <label class="form-check-label ms-2" for="flexCheckDefault">TP/SL</label>
                   </div>
                   <div v-show="TPSL" class="mt-3">
                     <div class="input-group mb-3">
                       <span class="input-group-text">Take-Profit</span>
-                      <input type="text" class="form-control" aria-label="">
+                      <input type="num" class="form-control text-center" aria-label="">
                       <span class="input-group-text">USDT</span>
                     </div>
                     <div class="input-group mb-3">
                       <span class="input-group-text">Stop Loss</span>
-                      <input type="text" class="form-control" aria-label="">
+                      <input type="num" class="form-control text-center" aria-label="">
                       <span class="input-group-text">USDT</span>
                     </div>
                   </div>                
@@ -157,8 +161,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                 <div class="mt-3 d-flex gap-2">
                   <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto" >BUY</button>                
                   <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SELL</button>    
-                </div>                           
-              
+                </div>  
             </div>
             <div class="tab-pane" id="Market" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
             <div class="tab-pane" id="StopLimit" role="tabpanel" aria-labelledby="messages-tab"> messages </div>
@@ -186,17 +189,23 @@ export default {
       MarginMode1:'· Switching the margin mode will only apply it to the selected contract.',
       MarginMode2:"Cross Margin Mode: All cross positions under the same margin asset share the same asset cross margin balance. In the event of liquidation, your assets full margin balance along with any remaining open positions under the asset may be forfeited.Isolated Margin Mode: Manage your risk on individual positions by restricting the amount of margin allocated to each. If the margin ratio of a position reached 100%, the position will be liquidated. Margin can be added or removed to positions using this mode.",
       Leverage1:'. Maximum position at current leverage: 3,000,000 USDT',
-      Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.'
+      Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.',
+      MarginSelect:'Cross',
+      ValueLeverage:20,
+      ValueMoney:0,
+      LastPrice:0,
+      MoneyUser:0,
+      DisplaySizeLimit:0,
+      DisplayPriceLimit:0,
     }
   },
   mounted() {
-    setInterval(() => {
-      this.fetchColor();
-      this.countdown();
-    }, 1000);
+  
+
     setInterval(() => {
       this.loadChart();
     }, 100)
+    this.DisplayPriceLimit = Number(this.LastPrice) + 200
   },
 
   methods: {
@@ -241,7 +250,6 @@ export default {
             name: "BTC/USDT",
             id: "candles",
             data: this.DataChart,
-
           },
         ],
 
@@ -280,27 +288,7 @@ export default {
                   padding: "5px",
                 },
               },
-            },
-            {
-              color: "rgba(0,0,0,.5)",
-              value: this.LastPrice,
-              width: 1,
-              label: {
-                useHTML: true,
-                text: "00 : " + this.CountDown,
-                align: "right",
-                x: 62,
-                y: 30,
-                style: {
-                  fontsize: 5,
-                  backgroundColor: "rgba(0,0,0,1)",
-                  border: "1px solid rgba(0,0,0,1)",
-                  color: "rgba(255,255,255,0.9)",
-                  fontWeight: "bold",
-                  padding: "3px",
-                },
-              },
-            },
+            }
           ],
         },
         xAxis: {
@@ -325,23 +313,6 @@ export default {
       });
     },
 
-    //COLOR CHART
-    fetchColor() {
-      if (this.CountDown == 3) {
-        this.result.push(this.colorCandles);
-      }
-    },
-
-    //COUNT DOWN
-    countdown() {
-      const nowSeconds = 60 - new Date().getSeconds();
-      const nowMinutes = new Date().getMinutes()
-      const nowSecond = new Date().getSeconds()
-      this.CountDown = nowSeconds;
-      this.GetMinutes = nowMinutes
-      this.GetSeconds = nowSecond
-    },
-
     openTPSL() {
       if (!this.TPSL) {
         this.TPSL = true
@@ -351,71 +322,32 @@ export default {
 
     },
 
+    //LEVERAGE
+    Div(){
+      this.ValueLeverage -= 1
+    },
+    Plus(){
+      this.ValueLeverage += 1
+    },
+
+    LeverageChange(evt){
+      this.ValueLeverage = evt.target.value
+    },
+
+    MoneyChange(evt){
+      this.ValueMoney = evt.target.value
+      const total = Number(this.MoneyUser) * (Number(this.ValueMoney)/100)
+      this.DisplaySizeLimit = total
+      
+    },
+
     //SUBMIT 
     submit: function (action) {
       if (action == 'buy') {
-        this.showAlert = true
-        this.MoneyUser = Math.max(0, this.MoneyUser - this.total) || 0
-        this.patchData()
-        setTimeout(() => {
-          this.showAlert = false
-        }, 2000)
-
-
-        const myInterval = setInterval(() => {
-          const minute = this.GetMinutes
-          const second = this.GetSeconds
-          if ((minute % 2) == 0 && second == 0) {
-            const resultColor = this.result
-            if (resultColor[resultColor.length - 1] = "green") {
-              this.MoneyUser = Number(this.MoneyUser) + (this.total * 1.95)
-              this.total = null
-              clearInterval(myInterval)
-              this.showModal = true
-              //PATCH MONEY
-              this.patchData()
-            }
-            else {
-              this.MoneyUser = Number(this.MoneyUser) + 0
-              this.total = null
-              clearInterval(myInterval)
-              //PATCH MONEY
-              this.patchData()
-            }
-          }
-        }, 1000)
+        
 
       } else {
-        this.showAlert = true
-        this.MoneyUser = Math.max(0, this.MoneyUser - this.total) || 0
-        this.patchData()
-        setTimeout(() => {
-          this.showAlert = false
-        }, 2000)
-
-
-        const myInterval = setInterval(() => {
-          const minute = this.GetMinutes
-          const second = this.GetSeconds
-          if ((minute % 2) == 0 && second == 0) {
-            const resultColor = this.result
-            if (resultColor[resultColor.length - 1] = "red") {
-              this.MoneyUser = Number(this.MoneyUser) + (this.total * 1.95)
-              this.total = null
-              clearInterval(myInterval)
-              this.showModal = true
-              //PATCH MONEY
-              this.patchData()
-            }
-            else {
-              this.MoneyUser = Number(this.MoneyUser) + 0
-              this.total = null
-              clearInterval(myInterval)
-              //PATCH MONEY
-              this.patchData()
-            }
-          }
-        }, 1000)
+        
       }
     },
     patchData() {
@@ -431,11 +363,6 @@ export default {
         });
     },
 
-    //CLOSE MODAL
-    closeModal() {
-      this.showModal = false
-      this.total = 0
-    },
   }
 }
 </script>
@@ -465,6 +392,7 @@ img {
   font-size: 15px;
   font-weight: 500;
   border-radius: 2px;
+
 }
 
 .button-modal{
@@ -481,6 +409,11 @@ img {
   background-color: var(--blue);
   color:var(--white);
   border-radius:5px
+}
+
+.text-leverage{
+  font-size: 18px;
+  font-weight: 500;
 }
 
 
@@ -503,25 +436,6 @@ img {
   cursor: pointer;
 }
 
-.disable-button {
-  background-color: var(--gray1);
-  cursor: not-allowed;
-}
-
-.text-order {
-  font-size: 14px;
-
-}
-
-.text-count {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.badge {
-  background-color: var(--bg-color);
-  height: 70px
-}
 
 .text-buy {
   color: var(--green);
@@ -531,45 +445,6 @@ img {
   color: var(--red);
 }
 
-.card {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 250px;
-  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
-  border-radius: 18% 82% 15% 85% / 89% 13% 87% 11%;
-}
-
-.modal-win {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-
-}
-
-.logo-modal {
-  width: 200px;
-  height: 200px;
-  margin-top: -100px;
-}
-
-.congrat {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.money-win {
-  font-size: 25px;
-  color: var(--green)
-}
 
 
 @media only screen and (min-width: 350px) {
