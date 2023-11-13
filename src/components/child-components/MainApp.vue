@@ -132,12 +132,12 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                 <div class="d-flex flex-column mx-auto mt-3">                
                   <div class="input-group mb-3">
                     <span class="input-group-text">Price</span>
-                    <input type="num" class="form-control text-center" v-model="LastPrice" aria-label="">
+                    <input type="num" class="form-control text-center" v-model="PriceLimit" aria-label="">
                     <span class="input-group-text">USDT</span>
                   </div>
                   <div class="input-group mb-3">
                     <span class="input-group-text">Size</span>
-                    <input type="num" min="0" :max="MoneyUser" v-model="DisplaySizeLimit" class="form-control text-center" aria-label="">
+                    <input type="num" min="0" :max="MoneyUser" v-model="SizeLimit" class="form-control text-center" aria-label="">
                     <span class="input-group-text">USDT</span>
                   </div>
                   <input type="range" v-on:input="MoneyChange" class="w-100" min="0" max="100" step="25" value="0">
@@ -148,12 +148,12 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                   <div v-show="TPSL" class="mt-3">
                     <div class="input-group mb-3">
                       <span class="input-group-text">Take-Profit</span>
-                      <input type="num" class="form-control text-center" aria-label="">
+                      <input type="num" class="form-control text-center" v-model="Target" aria-label="">
                       <span class="input-group-text">USDT</span>
                     </div>
                     <div class="input-group mb-3">
                       <span class="input-group-text">Stop Loss</span>
-                      <input type="num" class="form-control text-center" aria-label="">
+                      <input type="num" class="form-control text-center" v-model="Stoploss" aria-label="">
                       <span class="input-group-text">USDT</span>
                     </div>
                   </div>                
@@ -195,8 +195,11 @@ export default {
       ValueMoney:0,
       LastPrice:0,
       MoneyUser:0,
-      DisplaySizeLimit:0,
-      DisplayPriceLimit:0,
+      PriceLimit: 0,
+      SizeLimit:0,
+      TargetLimit:0,
+      StoplossLimit:0,
+      PositionLimit:{name:Highcharts, age:12},
     }
   },
   mounted() {
@@ -337,14 +340,20 @@ export default {
     MoneyChange(evt){
       this.ValueMoney = evt.target.value
       const total = Number(this.MoneyUser) * (Number(this.ValueMoney)/100)
-      this.DisplaySizeLimit = total
+      this.SizeLimit = total
       
     },
 
     //SUBMIT 
     submit: function (action) {
       if (action == 'buy') {
-        
+        if(this.PriceLimit > this.LastPrice){      
+          const Position ={price: this.PriceLimit, size: this.SizeLimit, target: this.TargetLimit, stoploss: this.StoplossLimits}
+          this.patchData()
+      
+        }else{
+          alert('Limit Price must to Last Price')
+        }
 
       } else {
         
@@ -353,7 +362,7 @@ export default {
     patchData() {
       const url = `http://localhost:3000/account/${this.IDUser}`
       axios.patch(url, {
-        usd: `${this.MoneyUser}`
+        position: `${this.PositionLimit}`
       })
         .then((response) => {
           console.log(response.data)
@@ -381,10 +390,6 @@ img {
   width: 25px;
   height: 25px;
 }
-
-
-
-
 
 .button-chosse{
   width: 100px;
@@ -416,8 +421,10 @@ img {
   font-weight: 500;
 }
 
-
-
+.form-check-input{
+  width: 20px;
+  height: 20px;
+}
 
 
 .btn-success {

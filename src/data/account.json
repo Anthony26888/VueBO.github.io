@@ -5,20 +5,20 @@
       "user": "dang26888",
       "password": "123",
       "usd": "46838975",
-      "history": []
+      "position": []
     },
     {
       "id": "2",
       "user": "haidang111195",
       "password": "123",
       "usd": "500",
-      "history": []
+      "position": []
     },
     {
       "user": "admin",
       "password": "admin",
       "usd": "418.5",
-      "history": [],
+      "position": "[object Object]",
       "id": "yFhSXjR"
     }
   ]
