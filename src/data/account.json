@@ -18,8 +18,8 @@
       "user": "admin",
       "password": "admin",
       "usd": "418.5",
-      "position": "[object Object]",
-      "id": "yFhSXjR"
+      "id": "yFhSXjR",
+      "position": "[{\"symbol\":\"BTCUSDT\",\"marginMode\":\"Cross\",\"leverage\":20,\"price\":\"38000\",\"size\":104.625,\"target\":0,\"stoploss\":0}]"
     }
   ]
 }

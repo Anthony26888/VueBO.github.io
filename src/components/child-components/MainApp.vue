@@ -14,7 +14,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
           <!-- Status -->
         <ul class="nav nav-underline" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Positions" type="button" role="tab" aria-controls="home" aria-selected="true">Positions</button>
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Positions" type="button" role="tab" aria-controls="Position" aria-selected="true">Positions</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#OpenOrder" type="button" role="tab" aria-controls="profile" aria-selected="false">Open Orders</button>
@@ -26,7 +26,32 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
           
           <!-- Tab panes -->
         <div class="tab-content">
-          <div class="tab-pane active" id="Positions" role="tabpanel" aria-labelledby="home-tab"> Positions </div>
+          <div class="tab-pane active" id="Positions" role="tabpanel" aria-labelledby="home-tab">
+            <div class="table-responsive mt-3">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Margin</th>
+                    <th scope="col">Entry Price</th>                                       
+                    <th scope="col">TP/SL</th>                    
+                    <th scope="col">PNL (ROI %)</th>
+                  </tr>
+                </thead>
+                <tbody>                
+                  <tr  v-for="value in JSON.parse(PositionUser)">
+                    <td >{{value.symbol}}</td>
+                    <td>{{value.size}}</td>
+                    <td>{{Number(value.size)*Number(value.leverage)}}</td>
+                    <td>{{value.price}}</td>
+                    <td>{{value.target}} / {{value.stoploss}}</td>
+                    <td>0</td>             
+                  </tr>
+                </tbody>
+              </table>
+            </div>            
+          </div>
           <div class="tab-pane" id="OpenOrder" role="tabpanel" aria-labelledby="profile-tab"> Open Order </div>
           <div class="tab-pane" id="OpenHistory" role="tabpanel" aria-labelledby="messages-tab"> Open History </div>
         </div>
@@ -177,6 +202,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
   <AccountApi @MoneyUser="FetchMoney"/>
   <AccountApi @UserName="FetchUser"/>
   <AccountApi @IDUser="FetchID"/>
+  <AccountApi @PositionUser="FetchPosition"/>
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
@@ -186,29 +212,33 @@ export default {
   data() {
     return {
       TPSL: false,   
+      showAlert:false,
       MarginMode1:'· Switching the margin mode will only apply it to the selected contract.',
       MarginMode2:"Cross Margin Mode: All cross positions under the same margin asset share the same asset cross margin balance. In the event of liquidation, your assets full margin balance along with any remaining open positions under the asset may be forfeited.Isolated Margin Mode: Manage your risk on individual positions by restricting the amount of margin allocated to each. If the margin ratio of a position reached 100%, the position will be liquidated. Margin can be added or removed to positions using this mode.",
       Leverage1:'. Maximum position at current leverage: 3,000,000 USDT',
       Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.',
       MarginSelect:'Cross',
+      
+      
+      MoneyUser:0,
+      PositionUser:[],
+      IDUser:null,
+
       ValueLeverage:20,
       ValueMoney:0,
-      LastPrice:0,
-      MoneyUser:0,
+      LastPrice:0,      
       PriceLimit: 0,
       SizeLimit:0,
       TargetLimit:0,
       StoplossLimit:0,
-      PositionLimit:{name:Highcharts, age:12},
+      PositionLimit:[],
     }
   },
   mounted() {
-  
-
     setInterval(() => {
       this.loadChart();
     }, 100)
-    this.DisplayPriceLimit = Number(this.LastPrice) + 200
+
   },
 
   methods: {
@@ -218,9 +248,6 @@ export default {
     FetchPrice(data) {
       this.LastPrice = data;
     },
-    FetchColor(data) {
-      this.colorCandles = data;
-    },
     FetchMoney(data) {
       this.MoneyUser = data;
     },
@@ -229,6 +256,9 @@ export default {
     },
     FetchID(data) {
       this.IDUser = data;
+    },
+    FetchPosition(data) {
+      this.PositionUser = data;
     },
 
     //CHART
@@ -341,15 +371,27 @@ export default {
       this.ValueMoney = evt.target.value
       const total = Number(this.MoneyUser) * (Number(this.ValueMoney)/100)
       this.SizeLimit = total
-      
     },
 
     //SUBMIT 
     submit: function (action) {
       if (action == 'buy') {
         if(this.PriceLimit > this.LastPrice){      
-          const Position ={price: this.PriceLimit, size: this.SizeLimit, target: this.TargetLimit, stoploss: this.StoplossLimits}
+          const Position = {
+            symbol:'BTCUSDT',
+            marginMode:this.MarginSelect,
+            leverage:this.ValueLeverage,            
+            price:this.PriceLimit,
+            size:this.SizeLimit,
+            target:this.TargetLimit,
+            stoploss:this.StoplossLimit
+          } 
+          this.PositionLimit.push(Position)
           this.patchData()
+          this.showAlert=true
+          setTimeout(()=>{
+            this.showAlert=false
+          },2000)
       
         }else{
           alert('Limit Price must to Last Price')
@@ -361,8 +403,9 @@ export default {
     },
     patchData() {
       const url = `http://localhost:3000/account/${this.IDUser}`
+      const data = JSON.stringify(this.PositionLimit)
       axios.patch(url, {
-        position: `${this.PositionLimit}`
+        position : data
       })
         .then((response) => {
           console.log(response.data)
@@ -451,6 +494,7 @@ img {
 .text-sell {
   color: var(--red);
 }
+
 
 
 

@@ -9,6 +9,7 @@ export default {
         UserName:null,
         MoneyUser:null,
         IDUser:null,
+        PositionUser:null,
     };
   },
   mounted() {
@@ -17,6 +18,7 @@ export default {
         this.$emit('UserName', this.UserName)
         this.$emit('MoneyUser', this.MoneyUser)
         this.$emit('IDUser', this.IDUser)
+        this.$emit('PositionUser', this.PositionUser)
     },500)
   },
   methods: {
@@ -31,9 +33,11 @@ export default {
           const dataMoney = Number(Money).toFixed(2) 
           const dataUser = dataAccount.map((x) => x.user);
           const dataID = dataAccount.map((x) => x.id);
+          const dataPosition = dataAccount.map((x) => x.position)
           this.UserName = dataUser
           this.MoneyUser = dataMoney
           this.IDUser = dataID
+          this.PositionUser = dataPosition
         })
         .catch((error) => {
           console.error("Error adding item:", error);
