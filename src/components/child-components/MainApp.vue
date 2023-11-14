@@ -40,13 +40,17 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                   </tr>
                 </thead>
                 <tbody>                
-                  <tr  v-for="value in JSON.parse(PositionUser)">
-                    <td >{{value.symbol}}</td>
-                    <td>{{value.size}}</td>
-                    <td>{{Number(value.size)*Number(value.leverage)}}</td>
-                    <td>{{value.price}}</td>
-                    <td>{{value.target}} / {{value.stoploss}}</td>
-                    <td>0</td>             
+                  <tr  v-for="value in PositionUser">
+                    <td >
+                      {{value.symbol}}
+                      <span class="border p-1 rounded">{{value.leverage}}x</span> 
+                      
+                    </td>
+                    <td>{{Number(value.size).toLocaleString()}}</td>
+                    <td>{{(Number(value.size)*Number(value.leverage)).toLocaleString()}}</td>
+                    <td>{{Number(value.price).toLocaleString()}}</td>
+                    <td>{{Number(value.target).toLocaleString()}} / {{Number(value.stoploss).toLocaleString()}}</td>
+                    <td>${{((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice))).toFixed(2)}}</td>             
                   </tr>
                 </tbody>
               </table>
@@ -493,6 +497,12 @@ img {
 
 .text-sell {
   color: var(--red);
+}
+
+.border{
+  background-color: var(--blue);
+  color: var(--white);
+  font-weight: 400;
 }
 
 

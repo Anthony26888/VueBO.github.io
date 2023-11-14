@@ -37,7 +37,7 @@ export default {
           this.UserName = dataUser
           this.MoneyUser = dataMoney
           this.IDUser = dataID
-          this.PositionUser = dataPosition
+          this.PositionUser = JSON.parse(dataPosition)
         })
         .catch((error) => {
           console.error("Error adding item:", error);
