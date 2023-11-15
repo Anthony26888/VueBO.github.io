@@ -180,53 +180,52 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Market" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#StopLimit" type="button" role="tab" aria-controls="messages" aria-selected="false">Stop Limit</button>
-            </li>
+            </li>            
           </ul>
         
           <!-- Tab panes -->
           <div class="tab-content">
-            <div class="tab-pane active" id="Limit" role="tabpanel" aria-labelledby="home-tab">
-                                  
-                <div class="d-flex flex-column mx-auto mt-3">                
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Price</span>
-                    <input type="num" class="form-control text-center" v-model="PriceLimit" aria-label="">
-                    <span class="input-group-text">USDT</span>
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Size</span>
-                    <input type="num" min="0" :max="MoneyUser" v-model="SizeLimit" class="form-control text-center" aria-label="">
-                    <span class="input-group-text">USDT</span>
-                  </div>
-                  <input type="range" v-on:input="MoneyChange" class="w-100" min="0" max="100" step="25" value="0">
-                  <div class="form-check mt-3">
-                    <input class="form-check-input"  type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
-                    <label class="form-check-label ms-2" for="flexCheckDefault">TP/SL</label>
-                  </div>
-                  <div v-show="TPSL" class="mt-3">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text">Take-Profit</span>
-                      <input type="num" class="form-control text-center" v-model="Target" aria-label="">
-                      <span class="input-group-text">USDT</span>
-                    </div>
-                    <div class="input-group mb-3">
-                      <span class="input-group-text">Stop Loss</span>
-                      <input type="num" class="form-control text-center" v-model="Stoploss" aria-label="">
-                      <span class="input-group-text">USDT</span>
-                    </div>
-                  </div>                
-                </div> 
-                <div class="mt-3 d-flex gap-2">
-                  <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto" >LONG</button>                
-                  <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SHORT</button>    
-                </div>  
+            <div class="tab-pane active" id="Limit" role="tabpanel" aria-labelledby="home-tab">                                  
+              <div class="input-group mb-3 mt-3">
+                <span class="input-group-text">Price</span>
+                <input type="num" class="form-control text-center" v-model="PriceLimit" aria-label="">
+                <span class="input-group-text">USDT</span>
+              </div>                  
             </div>
-            <div class="tab-pane" id="Market" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
-            <div class="tab-pane" id="StopLimit" role="tabpanel" aria-labelledby="messages-tab"> messages </div>
+            <div class="tab-pane" id="Market" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="input-group mb-3 mt-3">
+                <span class="input-group-text">Price</span>
+                <input type="num" class="form-control text-center" v-model="LastPrice" aria-label="">
+                <span class="input-group-text">USDT</span>
+              </div>  
+            </div>                
           </div>
+          <div class="input-group mb-3 ">
+            <span class="input-group-text">Size</span>
+            <input type="num" min="0" :max="MoneyUser" v-model="SizeLimit" class="form-control text-center" aria-label="">
+            <span class="input-group-text">USDT</span>
+          </div>
+          <input type="range" v-on:input="MoneyChange" class="w-100" min="0" max="100" step="25" value="0">
+          <div class="form-check mt-3">
+            <input class="form-check-input"  type="checkbox" value="" id="flexCheckDefault" @click="openTPSL">
+            <label class="form-check-label ms-2" for="flexCheckDefault">TP/SL</label>
+          </div>
+          <div v-show="TPSL" class="mt-3">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Take-Profit</span>
+              <input type="num" class="form-control text-center" v-model="Target" aria-label="">
+              <span class="input-group-text">USDT</span>
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">Stop Loss</span>
+              <input type="num" class="form-control text-center" v-model="Stoploss" aria-label="">
+              <span class="input-group-text">USDT</span>
+            </div>
+          </div>             
+          <div class="mt-3 d-flex gap-2">
+            <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto">LONG</button>                
+            <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SHORT</button>    
+          </div> 
         </form>
       </div>
     </div>
