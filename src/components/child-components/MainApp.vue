@@ -41,16 +41,43 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                 </thead>
                 <tbody>                
                   <tr  v-for="value in PositionUser">
-                    <td >
-                      {{value.symbol}}
-                      <span class="border p-1 rounded">{{value.leverage}}x</span> 
-                      
+                    <td class="table-light">
+                      <div class="d-flex flex-column gap-1">
+                        <div>
+                          <span>{{value.symbol}}</span>
+                        </div>
+                        <div v-if="value.mode == 'Long'">
+                          <span class="border border-buy rounded">{{value.mode}}</span>
+                          <span class="border border-leverage-buy rounded ms-2">{{value.leverage}}x</span> 
+                          <span class="text-muted ms-2">{{value.marginMode}}</span>                     
+                        </div>
+                        <div v-else>
+                          <span class="border border-sell rounded">{{value.mode}}</span>
+                          <span class="border border-leverage-sell rounded ms-2">{{value.leverage}}x</span> 
+                          <span class="text-muted ms-2">{{value.marginMode}}</span>                     
+                        </div>
+                      </div>
                     </td>
-                    <td>{{Number(value.size).toLocaleString()}}</td>
-                    <td>{{(Number(value.size)*Number(value.leverage)).toLocaleString()}}</td>
-                    <td>{{Number(value.price).toLocaleString()}}</td>
-                    <td>{{Number(value.target).toLocaleString()}} / {{Number(value.stoploss).toLocaleString()}}</td>
-                    <td>${{((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice))).toFixed(2)}}</td>             
+                    <td class="table-light">
+                      <span>${{Number(value.size).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>${{(Number(value.size)*Number(value.leverage)).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>${{Number(value.price).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>{{Number(value.target).toLocaleString()}} / {{Number(value.stoploss).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light" v-if="value.price > this.LastPrice">
+                      <span class="text-danger">${{((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice))).toFixed(2)}}</span>
+                      <span class="text-danger ms-2 ">({{((((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice)))*100)/ Number(value.size)).toFixed(2)}} %)</span>
+                    </td>  
+                    <td class="table-light" v-else>
+                      <span class="text-success">+${{((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice))).toFixed(2)}}</span>
+                      <span class="text-success ms-2 ">(+{{((((Number(this.LastPrice) - Number(value.price)) * (Number(value.size) / Number(this.LastPrice)))*100)/ Number(value.size)).toFixed(2)}} %)</span>
+                    </td> 
                   </tr>
                 </tbody>
               </table>
@@ -61,19 +88,23 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
         </div>
       </div> 
       <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 col-xxl-2">
+
+        <!--Alert-->
         <div v-show="showAlert" class="position-relative">
             <div class="position-absolute top-0 end-0">
                 <div class="alert alert-success d-flex align-items-center" role="alert">
                     <i class="bi bi-check2-circle"></i>
                     <div class="ms-2">
-                        <strong> Order Complete</strong> 
+                        <strong>{{TextAlert}}</strong> 
                     </div>
                 </div> 
             </div>
         </div>
 
+        <!--Form Order-->
         <form @submit.prevent="" class="mt-3">
           <div class="d-flex mt-3 gap-2 justify-content-center">
+            <!--Margin Mode-->
             <div>
               <!-- Button trigger modal -->
               <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#marginMode">
@@ -108,6 +139,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
               </div>
             </div>
 
+            <!--Leverage-->
             <div>
               <!-- Button trigger modal -->
               <button type="button" class="button-chosse" data-bs-toggle="modal" data-bs-target="#leverage">
@@ -188,8 +220,8 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
                   </div>                
                 </div> 
                 <div class="mt-3 d-flex gap-2">
-                  <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto" >BUY</button>                
-                  <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SELL</button>    
+                  <button type="submit" @click="submit('buy')" class="btn btn-success w-50 mx-auto" >LONG</button>                
+                  <button type="submit" @click="submit('sell')" class="btn btn-danger w-50 mx-auto">SHORT</button>    
                 </div>  
             </div>
             <div class="tab-pane" id="Market" role="tabpanel" aria-labelledby="profile-tab"> profile </div>
@@ -221,8 +253,8 @@ export default {
       MarginMode2:"Cross Margin Mode: All cross positions under the same margin asset share the same asset cross margin balance. In the event of liquidation, your assets full margin balance along with any remaining open positions under the asset may be forfeited.Isolated Margin Mode: Manage your risk on individual positions by restricting the amount of margin allocated to each. If the margin ratio of a position reached 100%, the position will be liquidated. Margin can be added or removed to positions using this mode.",
       Leverage1:'. Maximum position at current leverage: 3,000,000 USDT',
       Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.',
-      MarginSelect:'Cross',
-      
+      MarginSelect:'Cross',      
+      TextAlert:null,      
       
       MoneyUser:0,
       PositionUser:[],
@@ -241,7 +273,7 @@ export default {
   mounted() {
     setInterval(() => {
       this.loadChart();
-    }, 100)
+    }, 500)
 
   },
 
@@ -380,9 +412,10 @@ export default {
     //SUBMIT 
     submit: function (action) {
       if (action == 'buy') {
-        if(this.PriceLimit > this.LastPrice){      
+        if(this.PriceLimit < this.LastPrice){      
           const Position = {
             symbol:'BTCUSDT',
+            mode:'Long',
             marginMode:this.MarginSelect,
             leverage:this.ValueLeverage,            
             price:this.PriceLimit,
@@ -390,24 +423,47 @@ export default {
             target:this.TargetLimit,
             stoploss:this.StoplossLimit
           } 
-          this.PositionLimit.push(Position)
+          this.PositionUser.push(Position)
           this.patchData()
           this.showAlert=true
+          this.TextAlert= 'Create order completed.'
           setTimeout(()=>{
             this.showAlert=false
-          },2000)
+          },2000)         
       
         }else{
-          alert('Limit Price must to Last Price')
+          this.TextAlert= 'Price not correct.'
         }
 
       } else {
-        
+        if(this.PriceLimit > this.LastPrice){      
+          const Position = {
+            symbol:'BTCUSDT',
+            mode:'Short',
+            marginMode:this.MarginSelect,
+            leverage:this.ValueLeverage,            
+            price:this.PriceLimit,
+            size:this.SizeLimit,
+            target:this.TargetLimit,
+            stoploss:this.StoplossLimit
+          } 
+          this.PositionUser.push(Position)
+          this.patchData()
+          this.showAlert=true
+          this.TextAlert= 'Create order completed.'
+          setTimeout(()=>{
+            this.showAlert=false
+          },2000)
+          this.positionItem = 'position-item-sell'
+      
+        }else{
+          this.TextAlert= 'Price not correct.'
+        }
       }
     },
     patchData() {
       const url = `http://localhost:3000/account/${this.IDUser}`
-      const data = JSON.stringify(this.PositionLimit)
+      const data = JSON.stringify(this.PositionUser)
       axios.patch(url, {
         position : data
       })
@@ -444,7 +500,6 @@ img {
   font-size: 15px;
   font-weight: 500;
   border-radius: 2px;
-
 }
 
 .button-modal{
@@ -499,9 +554,35 @@ img {
   color: var(--red);
 }
 
-.border{
-  background-color: var(--blue);
+.border-buy{
+  background-color: var(--green);
   color: var(--white);
+  font-weight: 400;
+  padding: 2px 2px;
+  font-size: 12px;
+}
+
+.border-sell{
+  background-color: var(--red);
+  color: var(--white);
+  font-weight: 400;
+  padding: 2px 2px;
+  font-size: 12px;
+}
+
+.border-leverage-buy{
+  background-color: var(--gray);
+  color:var(--green);
+  padding: 2px 2px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.border-leverage-sell{
+  background-color: var(--gray);
+  color:var(--red);
+  padding: 2px 2px;
+  font-size: 12px;
   font-weight: 400;
 }
 

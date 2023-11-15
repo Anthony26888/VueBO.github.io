@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 :root{
     --white:#fff;
     --green: green;
-    --red: red;
-    --gray: #e8e8e8;
+    --red: #f1493f;
+    --gray: #ebebeb;
     --blue: #2d79f3;
     --gray1: hsl(229, 10%, 57%);
     --green1:#40b3a2;
 }
+h1, h2, h3, h4, h5, h6, span, p, b {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
 
 
 
