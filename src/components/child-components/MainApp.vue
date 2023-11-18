@@ -83,7 +83,59 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
               </table>
             </div>            
           </div>
-          <div class="tab-pane" id="OpenOrder" role="tabpanel" aria-labelledby="profile-tab"> Open Order </div>
+          <div class="tab-pane" id="OpenOrder" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="table-responsive mt-3">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Margin</th>
+                    <th scope="col">Entry Price</th>                                       
+                    <th scope="col">TP/SL</th>                    
+                    <th scope="col">Time</th>
+                  </tr>
+                </thead>
+                <tbody>                
+                  <tr  v-for="value in OpenOrderUser">
+                    <td class="table-light">
+                      <div class="d-flex flex-column gap-1">
+                        <div>
+                          <span>{{value.symbol}}</span>
+                        </div>
+                        <div v-if="value.mode == 'Long'">
+                          <span class="border border-buy rounded">{{value.mode}}</span>
+                          <span class="border border-leverage-buy rounded ms-2">{{value.leverage}}x</span> 
+                          <span class="text-muted ms-2">{{value.marginMode}}</span>                     
+                        </div>
+                        <div v-else>
+                          <span class="border border-sell rounded">{{value.mode}}</span>
+                          <span class="border border-leverage-sell rounded ms-2">{{value.leverage}}x</span> 
+                          <span class="text-muted ms-2">{{value.marginMode}}</span>                     
+                        </div>
+                      </div>
+                    </td>
+                    <td class="table-light">
+                      <span>${{Number(value.size).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>${{(Number(value.size)*Number(value.leverage)).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>${{Number(value.price).toLocaleString()}}</span>
+                    </td>
+                    <td class="table-light">
+                      <span>{{Number(value.target).toLocaleString()}} / {{Number(value.stoploss).toLocaleString()}}</span>
+                    </td>                      
+                    <td class="table-light">
+                      <span class="text-muted">{{DayOrder}}</span><br>
+                      <span class="text-muted">{{TimeOrder}}</span>
+                    </td> 
+                  </tr>
+                </tbody>
+              </table>
+            </div>       
+          </div>
           <div class="tab-pane" id="OpenHistory" role="tabpanel" aria-labelledby="messages-tab"> Open History </div>
         </div>
       </div> 
@@ -176,10 +228,10 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
           <!-- Order -->
           <ul class="nav nav-underline" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Limit" type="button" role="tab" aria-controls="home" aria-selected="true">Limit</button>
+              <button @click = "SelectOrder = 1" class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Limit" type="button" role="tab" aria-controls="home" aria-selected="true">Limit</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Market" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
+              <button @click = "SelectOrder = 2"  class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Market" type="button" role="tab" aria-controls="profile" aria-selected="false">Market</button>
             </li>            
           </ul>
         
@@ -202,7 +254,7 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
           </div>
           <div class="input-group mb-3 ">
             <span class="input-group-text">Size</span>
-            <input type="num" min="0" :max="MoneyUser" v-model="SizeLimit" class="form-control text-center" aria-label="">
+            <input type="num" min="0" :max="MoneyUser" v-model="Size" class="form-control text-center" aria-label="">
             <span class="input-group-text">USDT</span>
           </div>
           <input type="range" v-on:input="MoneyChange" class="w-100" min="0" max="100" step="25" value="0">
@@ -237,7 +289,9 @@ import AccountApi from "../components-fetch-api/Fetch-Account.vue"
   <AccountApi @MoneyUser="FetchMoney"/>
   <AccountApi @UserName="FetchUser"/>
   <AccountApi @IDUser="FetchID"/>
-  <AccountApi @PositionUser="FetchPosition"/>
+  <AccountApi @PositionUser="FetchLimit"/>
+  <AccountApi @OpenOrderUser="FetchMarket"/>
+  <AccountApi @HistoryUser="FetchHistory"/>
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
@@ -253,7 +307,8 @@ export default {
       Leverage1:'. Maximum position at current leverage: 3,000,000 USDT',
       Leverage2:'. Please note that leverage changing will also apply for open positions and open orders.',
       MarginSelect:'Cross',      
-      TextAlert:null,      
+      TextAlert:null,   
+      SelectOrder:1,   
       
       MoneyUser:0,
       PositionUser:[],
@@ -263,17 +318,23 @@ export default {
       ValueMoney:0,
       LastPrice:0,      
       PriceLimit: 0,
-      SizeLimit:0,
-      TargetLimit:0,
-      StoplossLimit:0,
-      PositionLimit:[],
+      Size:0,
+      Target:0,
+      Stoploss:0,            
+
+      DayOrder:null,
+      TimeOrder:null,
+
+      PositionUser:[],
+      OpenOrderUser:[]
     }
   },
   mounted() {
     setInterval(() => {
       this.loadChart();
     }, 500)
-
+   
+    
   },
 
   methods: {
@@ -292,8 +353,14 @@ export default {
     FetchID(data) {
       this.IDUser = data;
     },
-    FetchPosition(data) {
+    FetchLimit(data) {
       this.PositionUser = data;
+    },
+    FetchMarket(data) {
+      this.OpenOrderUser = data
+    },
+    FetchHistory(data) {
+      this.HistoryUser = data
     },
 
     //CHART
@@ -411,61 +478,98 @@ export default {
     //SUBMIT 
     submit: function (action) {
       if (action == 'buy') {
-        if(this.PriceLimit < this.LastPrice){      
-          const Position = {
+        if(this.SelectOrder == 1){
+          if(this.PriceLimit < this.LastPrice){      
+            const Limit = {
+              symbol:'BTCUSDT',
+              mode:'Long',
+              marginMode:this.MarginSelect,
+              leverage:this.ValueLeverage,            
+              price:this.PriceLimit,
+              size:this.SizeLimit,
+              target:this.TargetLimit,
+              stoploss:this.StoplossLimit
+            } 
+            this.OpenOrderUser.push(Limit)  
+            this.patchLimit()
+          }else{
+            this.TextAlert= 'Price not correct.'
+          }
+        }else{
+          const Market = {
             symbol:'BTCUSDT',
             mode:'Long',
             marginMode:this.MarginSelect,
             leverage:this.ValueLeverage,            
-            price:this.PriceLimit,
+            price:this.LastPrice,
             size:this.SizeLimit,
             target:this.TargetLimit,
             stoploss:this.StoplossLimit
           } 
-          this.PositionUser.push(Position)
-          this.patchData()
-          this.showAlert=true
-          this.TextAlert= 'Create order completed.'
-          setTimeout(()=>{
-            this.showAlert=false
-          },2000)         
-      
-        }else{
-          this.TextAlert= 'Price not correct.'
+          this.PositionUser.push(Market) 
+          this.patchMarket()
+          this.timeOrder()
         }
+        
+        this.showAlert=true
+        this.TextAlert= 'Create order completed.'
+        setTimeout(()=>{
+          this.showAlert=false
+        },2000)         
 
       } else {
-        if(this.PriceLimit > this.LastPrice){      
-          const Position = {
+        if(this.SelectOrder == 'false'){
+          if(this.PriceLimit > this.LastPrice){      
+            const Limit = {
+              symbol:'BTCUSDT',
+              mode:'Short',
+              marginMode:this.MarginSelect,
+              leverage:this.ValueLeverage,            
+              price:this.PriceLimit,
+              size:this.Size,
+              target:this.Target,
+              stoploss:this.Stoploss,
+              day:this.DayOrder,
+              time:this.TimeOrder
+            } 
+            this.OpenOrderUser.push(Limit)  
+            this.patchLimit()
+            this.timeOrder()
+          }else{
+            this.TextAlert= 'Price not correct.'
+          }
+        }else{
+          const Market = {
             symbol:'BTCUSDT',
             mode:'Short',
             marginMode:this.MarginSelect,
             leverage:this.ValueLeverage,            
-            price:this.PriceLimit,
-            size:this.SizeLimit,
-            target:this.TargetLimit,
-            stoploss:this.StoplossLimit
+            price:this.LastPrice,
+            size:this.Size,
+            target:this.Target,
+            stoploss:this.Stoploss,
+            day:this.DayOrder,
+            time:this.TimeOrder
           } 
-          this.PositionUser.push(Position)
-          this.patchData()
-          this.showAlert=true
-          this.TextAlert= 'Create order completed.'
-          setTimeout(()=>{
-            this.showAlert=false
-          },2000)
-          this.positionItem = 'position-item-sell'
-      
-        }else{
-          this.TextAlert= 'Price not correct.'
+          this.PositionUser.push(Market) 
+          this.patchMarket()
+          this.timeOrder()
         }
+        
+        this.showAlert=true
+        this.TextAlert= 'Create order completed.'
+        setTimeout(()=>{
+          this.showAlert=false
+        },2000)   
       }
     },
-    patchData() {
+    patchMarket() {
       const url = `http://localhost:3000/account/${this.IDUser}`
       const data = JSON.stringify(this.PositionUser)
+
       axios.patch(url, {
         position : data
-      })
+        })
         .then((response) => {
           console.log(response.data)
         })
@@ -473,6 +577,32 @@ export default {
           console.error('Error adding item:', error);
         });
     },
+
+    patchLimit() {
+      const url = `http://localhost:3000/account/${this.IDUser}`
+      const data = JSON.stringify(this.OpenOrderUser)
+
+      axios.patch(url, {
+        openorder : data
+        })
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('Error adding item:', error);
+        });
+    },
+    timeOrder(){
+      const now = new Date()
+      const day = now.getDay()
+      const month = now.getMonth()
+      const year = now.getFullYear()
+      const hours = now.getHours()
+      const minutes = now.getMinutes()
+      const seconds = now.getSeconds()
+      this.DayOrder = day + "-" + month + "-" + year
+      this.TimeOrder = hours + "-" + minutes + "-" + seconds
+    }
 
   }
 }

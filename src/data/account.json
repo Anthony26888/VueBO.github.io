@@ -5,21 +5,27 @@
       "user": "dang26888",
       "password": "123",
       "usd": "46838975",
-      "position": []
+      "position": "[]",
+      "openorder": "[]",
+      "history": "[]"
     },
     {
       "id": "2",
       "user": "haidang111195",
       "password": "123",
       "usd": "500",
-      "position": []
+      "position": "[]",
+      "openorder": "[]",
+      "history": "[]"
     },
     {
       "user": "admin",
       "password": "admin",
       "usd": "418.5",
       "id": "yFhSXjR",
-      "position": "[{\"symbol\":\"BTCUSDT\",\"mode\":\"Short\",\"marginMode\":\"Cross\",\"leverage\":20,\"price\":\"37000\",\"size\":\"20\",\"target\":0,\"stoploss\":0},{\"symbol\":\"BTCUSDT\",\"mode\":\"Long\",\"marginMode\":\"Cross\",\"leverage\":20,\"price\":\"35000\",\"size\":\"30\",\"target\":0,\"stoploss\":0}]"
+      "position": "[{\"symbol\":\"BTCUSDT\",\"mode\":\"Short\",\"marginMode\":\"Cross\",\"leverage\":20,\"price\":\"36411.09\",\"size\":\"20\",\"target\":0,\"stoploss\":0},{\"symbol\":\"BTCUSDT\",\"mode\":\"Long\",\"marginMode\":\"Cross\",\"leverage\":\"100\",\"price\":\"36402.01\",\"size\":\"1000\",\"target\":0,\"stoploss\":0}]",
+      "openorder": "[{\"symbol\":\"BTCUSDT\",\"mode\":\"Long\",\"marginMode\":\"Cross\",\"leverage\":20,\"price\":\"33000\",\"size\":\"50\",\"target\":0,\"stoploss\":0}]",
+      "history": "[]"
     }
   ]
 }
